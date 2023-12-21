@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="grey">#545454</color>
+    <color name="trans_grey">#66545454</color>
+    <color name="trans_black">#66000000</color>
+    <color name="toolbar_color">#ffffff</color>
+    <color name="greyy">#f3f4f6</color>
+    <color name="dark_purple">#673AB7</color>
+    <color name="purple">#9C27B0</color>
+    <color name="accent_color">#475bd8</color>
 </resources>
