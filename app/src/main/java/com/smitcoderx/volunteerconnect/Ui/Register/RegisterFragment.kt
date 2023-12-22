@@ -2,6 +2,7 @@ package com.smitcoderx.volunteerconnect.Ui.Register
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -80,13 +81,20 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun validateEmail(): Boolean {
-        return if (binding.tilEmail.editText?.text.isNullOrEmpty()) {
+        val isValid: Boolean
+        if (binding.tilEmail.editText?.text.isNullOrEmpty()) {
             binding.tilEmail.error = "Field cannot be Empty"
-            false
+            isValid = false
         } else {
-            binding.tilEmail.isErrorEnabled = false
-            true
+            if (!Patterns.EMAIL_ADDRESS.matcher(binding.tilEmail.editText?.text.toString()).matches()) {
+                binding.tilEmail.error = "Enter a Valid Email"
+                isValid = false
+            } else {
+                binding.tilEmail.isErrorEnabled = false
+                isValid = true
+            }
         }
+        return isValid
     }
 
     private fun validatePassword(): Boolean {
@@ -94,19 +102,31 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             binding.tilPass.error = "Field cannot be Empty"
             false
         } else {
-            binding.tilPass.isErrorEnabled = false
-            true
+            if(binding.tilPass.editText?.text.toString().length < 6) {
+                binding.tilPass.error = context?.getString(R.string.password_criteria)
+                false
+            } else {
+                binding.tilPass.isErrorEnabled = false
+                true
+            }
         }
     }
 
     private fun validateMobile(): Boolean {
-        return if (binding.tilMobile.editText?.text.isNullOrEmpty()) {
+        val isValid: Boolean
+        if (binding.tilMobile.editText?.text.isNullOrEmpty()) {
             binding.tilMobile.error = "Field cannot be Empty"
-            false
+            isValid = false
         } else {
-            binding.tilMobile.isErrorEnabled = false
-            true
+            if (!Patterns.PHONE.matcher(binding.tilMobile.editText?.text.toString()).matches() || binding.tilMobile.editText?.text?.length != 10) {
+                binding.tilMobile.error = "Enter a Valid Mobile Number"
+                isValid = false
+            } else {
+                binding.tilMobile.isErrorEnabled = false
+                isValid = true
+            }
         }
+        return isValid
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

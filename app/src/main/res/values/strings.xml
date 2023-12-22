@@ -22,7 +22,8 @@
     <string name="register_as_note">Register as an individual user or organization. Experience seamless collaboration and growth with us!</string>
     <string name="signup_note">Hello, I guess you are new around here. You can start using the application after sign up.</string>
     <string name="username">Username</string>
-    <string name="password_criteria">Your Password must be 6 or more characters long &amp; contain a mix of upper &amp; lower case letters, numbers &amp; symbols.</string>
+    <string name="password_criteria">Your Password must be 6 or more characters long.</string>
+<!--    <string name="password_criteria">Your Password must be 6 or more characters long &amp; contain a mix of upper &amp; lower case letters, numbers &amp; symbols.</string>-->
     <string name="create_account">Create an Account</string>
     <string name="signing_up">Already have an account? <b>Sign In</b></string>
     <string name="profile_picture">Profile Picture</string>
