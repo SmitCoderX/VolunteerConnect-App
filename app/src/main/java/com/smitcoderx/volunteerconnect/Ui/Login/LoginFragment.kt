@@ -2,7 +2,6 @@ package com.smitcoderx.volunteerconnect.Ui.Login
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -10,23 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.github.leandroborgesferreira.loadingbutton.animatedDrawables.ProgressType
 import com.smitcoderx.volunteerconnect.API.LoginData
 import com.smitcoderx.volunteerconnect.R
-import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
-import com.smitcoderx.volunteerconnect.Utils.Constants.getErrorDarkToast
-import com.smitcoderx.volunteerconnect.Utils.Constants.getInfoDarkToast
-import com.smitcoderx.volunteerconnect.Utils.Constants.getSuccessDarkToast
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.drawableToBitmap
 import com.smitcoderx.volunteerconnect.Utils.morphDoneAndRevert
 import com.smitcoderx.volunteerconnect.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 
 @AndroidEntryPoint
-class LoginFragment: Fragment(R.layout.fragment_login) {
+class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var binding: FragmentLoginBinding
     private val loginViewModel by viewModels<LoginViewModel>()
@@ -47,9 +39,9 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
         binding.btnLogin.setOnClickListener {
 
             if (binding.tilEmail.editText?.text.isNullOrEmpty()) {
-                binding.tilEmail.editText?.error = "Field cannot be empty"
+                binding.tilEmail.error = "Field cannot be empty"
             } else if (binding.tilPass.editText?.text.isNullOrEmpty()) {
-                binding.tilPass.editText?.error = "Field Cannot be Empty"
+                binding.tilPass.error = "Field Cannot be Empty"
             } else {
                 if (Patterns.EMAIL_ADDRESS.matcher(binding.tilEmail.editText?.text.toString())
                         .matches()
@@ -75,14 +67,18 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun loginStatus() {
         loginViewModel.signInDataLiveData.observe(requireActivity()) {
-            when(it) {
+            when (it) {
                 is ResponseState.Success -> {
                     binding.btnLogin.morphDoneAndRevert(
                         requireContext(), requireContext().getColor(R.color.accent_color),
                         drawableToBitmap(context?.getDrawable(R.drawable.ic_success)!!),
                         coroutineScope = lifecycleScope
                     ) {
-                        Toast.makeText(requireContext(), "Logged in Successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Logged in Successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
 
@@ -93,12 +89,13 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
                         drawableToBitmap(context?.getDrawable(R.drawable.ic_close)!!),
                         coroutineScope = lifecycleScope
                     ) {
-                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
 
                 is ResponseState.Loading -> {
-                    getInfoDarkToast(requireActivity(), "Loading", "")
+
                 }
             }
         }

@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.loginFragment || destination.id == R.id.registerAsFragment) {
+            if (destination.id == R.id.loginFragment || destination.id == R.id.registerAsFragment || destination.id == R.id.registerFragment) {
                 binding.bottomNav.visibility = View.GONE
             } else {
                 binding.bottomNav.visibility = View.VISIBLE

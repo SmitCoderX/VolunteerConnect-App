@@ -11,17 +11,18 @@
     <string name="close">close</string>
     <string name="sign_in_to_your_account">I am happy to see you again. You can \ncontinue where you left off by logging in</string>
     <string name="email">Email or Username</string>
+    <string name="email_hint">Email</string>
     <string name="password">Password</string>
     <string name="mobile">Mobile Number</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="continue_txt">Continue</string>
     <string name="don_t_have_an_account">Don\'t have an account? <b>Sign Up</b></string>
-    <string name="sign_up">Sign up</string>
+    <string name="sign_up">Sign up as Volunteer</string>
     <string name="sign_up_organization">Sign Up as Organization</string>
     <string name="register_as_note">Register as an individual user or organization. Experience seamless collaboration and growth with us!</string>
     <string name="signup_note">Hello, I guess you are new around here. You can start using the application after sign up.</string>
     <string name="username">Username</string>
-    <string name="password_criteria">Your Password must be 8 or more characters long &amp; contain a mix of upper &amp; lower case letters, numbers &amp; symbols.</string>
+    <string name="password_criteria">Your Password must be 6 or more characters long &amp; contain a mix of upper &amp; lower case letters, numbers &amp; symbols.</string>
     <string name="create_account">Create an Account</string>
     <string name="signing_up">Already have an account? <b>Sign In</b></string>
     <string name="profile_picture">Profile Picture</string>
@@ -32,6 +33,7 @@
     <string name="error_internet_turned_off">This app requires an active internet connection to be used.</string>
     <string name="error_unknown">Unknown Error</string>
     <string name="error_connection_failed">The connection failed.</string>
+    <string name="name">Name</string>
 
 
 </resources>

@@ -15,8 +15,14 @@ interface VolunteerConnectApi {
     }
 
    @Headers("Content-Type: Application/Json;charset=UTF-8")
-    @POST("auth/login")
+   @POST("auth/login")
     suspend fun loginUser(
         @Body loginData: LoginData
+    ): Response<Login?>
+
+    @Headers("Content-Type: Application/Json;charset=UTF-8")
+    @POST("auth/register")
+    suspend fun registerUser(
+        @Body registerBody: RegisterData
     ): Response<Login?>
 }

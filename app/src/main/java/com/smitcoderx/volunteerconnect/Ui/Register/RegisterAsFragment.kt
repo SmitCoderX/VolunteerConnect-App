@@ -5,9 +5,11 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.smitcoderx.volunteerconnect.R
+import com.smitcoderx.volunteerconnect.Utils.Constants.ORGANIZATION
+import com.smitcoderx.volunteerconnect.Utils.Constants.VOLUNTEER
 import com.smitcoderx.volunteerconnect.databinding.FragmentRegisterAsBinding
 
-class RegisterAsFragment: Fragment(R.layout.fragment_register_as) {
+class RegisterAsFragment : Fragment(R.layout.fragment_register_as) {
 
     private lateinit var binding: FragmentRegisterAsBinding
 
@@ -19,6 +21,20 @@ class RegisterAsFragment: Fragment(R.layout.fragment_register_as) {
             findNavController().navigate(RegisterAsFragmentDirections.actionRegisterAsFragmentToLoginFragment())
         }
 
+        binding.btnRegisterUser.setOnClickListener {
+            findNavController().navigate(
+                RegisterAsFragmentDirections.actionRegisterAsFragmentToRegisterFragment(
+                    VOLUNTEER
+                )
+            )
+        }
 
+        binding.btnRegisterOrganization.setOnClickListener {
+            findNavController().navigate(
+                RegisterAsFragmentDirections.actionRegisterAsFragmentToRegisterFragment(
+                    ORGANIZATION
+                )
+            )
+        }
     }
 }
