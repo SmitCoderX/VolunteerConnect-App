@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#FF000000</color>
     <color name="grey">#545454</color>
-    <color name="trans_grey">#33545454</color>
+    <color name="trans_grey">#55545454</color>
     <color name="trans_black">#66000000</color>
     <color name="toolbar_color">#ffffff</color>
     <color name="greyy">#f3f4f6</color>

@@ -81,6 +81,12 @@ dependencies {
     // Gson
     implementation ("com.google.code.gson:gson:2.10.1")
 
+    // Motion Toast
+    implementation ("com.github.Spikeysanju:MotionToast:1.4")
+
+    // Lottie Animations
+    implementation ("com.airbnb.android:lottie:6.2.0")
+
 }
 kapt {
     correctErrorTypes = true
