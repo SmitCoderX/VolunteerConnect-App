@@ -1,6 +1,5 @@
-package com.smitcoderx.volunteerconnect.Ui.Login
+package com.smitcoderx.volunteerconnect.Ui.ForgotPassword
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
@@ -10,67 +9,60 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.smitcoderx.volunteerconnect.API.LoginData
+import com.smitcoderx.volunteerconnect.Model.Login
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.drawableToBitmap
 import com.smitcoderx.volunteerconnect.Utils.morphDoneAndRevert
-import com.smitcoderx.volunteerconnect.databinding.FragmentLoginBinding
+import com.smitcoderx.volunteerconnect.databinding.FragmentForgotPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.log
 
 @AndroidEntryPoint
-class LoginFragment : Fragment(R.layout.fragment_login) {
+class ForgotPasswordFragment: Fragment(R.layout.fragment_forgot_password) {
 
-    private lateinit var binding: FragmentLoginBinding
-    private val loginViewModel by viewModels<LoginViewModel>()
-    private lateinit var loginData: LoginData
+    private lateinit var binding: FragmentForgotPasswordBinding
+    private val fpViewModel by viewModels<ForgotPasswordViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentLoginBinding.bind(view)
+        binding = FragmentForgotPasswordBinding.bind(view)
 
-        loginStatus()
-
-
-        binding.tvNoAcc.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
-        binding.tvForgotPass.setOnClickListener {
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
-        }
-
+        forgotPasswordStatus()
 
         binding.btnLogin.setOnClickListener {
-
-            if (binding.tilEmail.editText?.text.isNullOrEmpty()) {
-                binding.tilEmail.error = "Field cannot be empty"
-            } else if (binding.tilPass.editText?.text.isNullOrEmpty()) {
-                binding.tilPass.error = "Field Cannot be Empty"
-            } else {
-                if (Patterns.EMAIL_ADDRESS.matcher(binding.tilEmail.editText?.text.toString())
-                        .matches()
-                ) {
-                    loginData = LoginData(
-                        "",
-                        binding.tilEmail.editText?.text.toString(),
-                        binding.tilPass.editText?.text.toString()
-                    )
-
-                } else {
-                    loginData = LoginData(
-                        binding.tilEmail.editText?.text.toString(),
-                        "",
-                        binding.tilPass.editText?.text.toString()
-                    )
-                }
-                loginViewModel.loginUser(loginData)
+            if(validateEmail()) {
+                val loginData = LoginData(
+                    email = binding.tilEmail.editText?.text.toString().trim()
+                )
+                fpViewModel.forgetPassword(loginData)
             }
+        }
+
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun loginStatus() {
-        loginViewModel.signInDataLiveData.observe(requireActivity()) {
+    private fun validateEmail(): Boolean {
+        val isValid: Boolean
+        if (binding.tilEmail.editText?.text.isNullOrEmpty()) {
+            binding.tilEmail.error = "Field cannot be Empty"
+            isValid = false
+        } else {
+            if (!Patterns.EMAIL_ADDRESS.matcher(binding.tilEmail.editText?.text.toString()).matches()) {
+                binding.tilEmail.error = "Enter a Valid Email"
+                isValid = false
+            } else {
+                binding.tilEmail.isErrorEnabled = false
+                isValid = true
+            }
+        }
+        return isValid
+    }
+
+    private fun forgotPasswordStatus() {
+        fpViewModel.fpDataLiveData.observe(requireActivity()) {
             when (it) {
                 is ResponseState.Success -> {
                     binding.btnLogin.morphDoneAndRevert(
@@ -80,7 +72,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     ) {
                         Toast.makeText(
                             requireContext(),
-                            "Logged in Successfully",
+                            it.data?.message.toString(),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -103,6 +95,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 }
             }
         }
-
     }
+
 }

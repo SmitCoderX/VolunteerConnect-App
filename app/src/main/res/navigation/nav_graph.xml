@@ -9,7 +9,11 @@
         android:id="@+id/loginFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerAsFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Register.RegisterAsFragment"
@@ -33,4 +37,9 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.ForgotPassword.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" />
 </navigation>

@@ -25,4 +25,12 @@ interface VolunteerConnectApi {
     suspend fun registerUser(
         @Body registerBody: RegisterData
     ): Response<Login?>
+
+    @Headers("Content-Type: Application/Json;charset=UTF-8")
+    @POST("auth/forgotpassword")
+    suspend fun forgotPassword(
+        // Passing LoginData has i don't want to create a new data class for just passing an email address
+        @Body loginData: LoginData
+    ): Response<Login?>
+
 }

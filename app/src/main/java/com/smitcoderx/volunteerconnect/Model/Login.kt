@@ -8,5 +8,8 @@ data class Login(
     @SerializedName("token")
     val token: String? = "",
     @SerializedName("error")
-    val error: String? = ""
+    val error: String? = "",
+    @SerializedName("message")
+    val message: String? = ""
+
 )
