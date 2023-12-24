@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.smitcoderx.volunteerconnect.API.RegisterData
@@ -18,6 +20,7 @@ import com.smitcoderx.volunteerconnect.Utils.drawableToBitmap
 import com.smitcoderx.volunteerconnect.Utils.morphDoneAndRevert
 import com.smitcoderx.volunteerconnect.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -131,47 +134,51 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun registerStatus() {
-        registerViewModel.registerLiveData.observe(requireActivity()) {
-            when (it) {
-                is ResponseState.Success -> {
-                    binding.btnRegister.morphDoneAndRevert(
-                        requireContext(), requireContext().getColor(R.color.accent_color),
-                        drawableToBitmap(context?.getDrawable(R.drawable.ic_success)!!),
-                        coroutineScope = lifecycleScope
-                    ) {
-                        if(args.role == ORGANIZATION) {
-                            Toast.makeText(
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                registerViewModel.registerLiveData.observe(requireActivity()) {
+                    when (it) {
+                        is ResponseState.Success -> {
+                            binding.btnRegister.morphDoneAndRevert(
+                                requireContext(), requireContext().getColor(R.color.accent_color),
+                                drawableToBitmap(context?.getDrawable(R.drawable.ic_success)!!),
+                                coroutineScope = lifecycleScope
+                            ) {
+                                if(args.role == ORGANIZATION) {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Registered as Organization Successfully",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Registered as Volunteer Successfully",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        }
+
+                        is ResponseState.Error -> {
+                            binding.btnRegister.morphDoneAndRevert(
                                 requireContext(),
-                                "Registered as Organization Successfully",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            Toast.makeText(
-                                requireContext(),
-                                "Registered as Volunteer Successfully",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                                requireContext().getColor(R.color.accent_color),
+                                drawableToBitmap(context?.getDrawable(R.drawable.ic_close)!!),
+                                coroutineScope = lifecycleScope
+                            ) {
+                                Toast.makeText(requireContext(),
+                                    it.message.toString()
+                                        .replaceFirstChar { c -> if (c.isLowerCase()) c.titlecase(Locale.ROOT) else c.toString() },
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+
+                        is ResponseState.Loading -> {
+
                         }
                     }
-                }
-
-                is ResponseState.Error -> {
-                    binding.btnRegister.morphDoneAndRevert(
-                        requireContext(),
-                        requireContext().getColor(R.color.accent_color),
-                        drawableToBitmap(context?.getDrawable(R.drawable.ic_close)!!),
-                        coroutineScope = lifecycleScope
-                    ) {
-                        Toast.makeText(requireContext(),
-                            it.message.toString()
-                                .replaceFirstChar { c -> if (c.isLowerCase()) c.titlecase(Locale.ROOT) else c.toString() },
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-
-                is ResponseState.Loading -> {
-
                 }
             }
         }

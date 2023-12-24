@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.smitcoderx.volunteerconnect.API.LoginData
 import com.smitcoderx.volunteerconnect.R
@@ -16,6 +18,7 @@ import com.smitcoderx.volunteerconnect.Utils.drawableToBitmap
 import com.smitcoderx.volunteerconnect.Utils.morphDoneAndRevert
 import com.smitcoderx.volunteerconnect.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -47,6 +50,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             } else if (binding.tilPass.editText?.text.isNullOrEmpty()) {
                 binding.tilPass.error = "Field Cannot be Empty"
             } else {
+                binding.tilEmail.isErrorEnabled = false
+                binding.tilPass.isErrorEnabled = false
                 if (Patterns.EMAIL_ADDRESS.matcher(binding.tilEmail.editText?.text.toString())
                         .matches()
                 ) {
@@ -70,39 +75,42 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun loginStatus() {
-        loginViewModel.signInDataLiveData.observe(requireActivity()) {
-            when (it) {
-                is ResponseState.Success -> {
-                    binding.btnLogin.morphDoneAndRevert(
-                        requireContext(), requireContext().getColor(R.color.accent_color),
-                        drawableToBitmap(context?.getDrawable(R.drawable.ic_success)!!),
-                        coroutineScope = lifecycleScope
-                    ) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Logged in Successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                loginViewModel.signInDataLiveData.observe(requireActivity()) {
+                    when (it) {
+                        is ResponseState.Success -> {
+                            binding.btnLogin.morphDoneAndRevert(
+                                requireContext(), requireContext().getColor(R.color.accent_color),
+                                drawableToBitmap(context?.getDrawable(R.drawable.ic_success)!!),
+                                coroutineScope = lifecycleScope
+                            ) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Logged in Successfully",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+
+                        is ResponseState.Error -> {
+                            binding.btnLogin.morphDoneAndRevert(
+                                requireContext(),
+                                requireContext().getColor(R.color.accent_color),
+                                drawableToBitmap(context?.getDrawable(R.drawable.ic_close)!!),
+                                coroutineScope = lifecycleScope
+                            ) {
+                                Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+
+                        is ResponseState.Loading -> {
+
+                        }
                     }
-                }
-
-                is ResponseState.Error -> {
-                    binding.btnLogin.morphDoneAndRevert(
-                        requireContext(),
-                        requireContext().getColor(R.color.accent_color),
-                        drawableToBitmap(context?.getDrawable(R.drawable.ic_close)!!),
-                        coroutineScope = lifecycleScope
-                    ) {
-                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-
-                is ResponseState.Loading -> {
-
                 }
             }
         }
-
     }
 }
