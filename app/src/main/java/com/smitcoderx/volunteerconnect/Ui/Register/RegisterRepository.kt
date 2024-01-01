@@ -11,6 +11,7 @@ import com.smitcoderx.volunteerconnect.Model.Login
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
+import com.smitcoderx.volunteerconnect.Utils.errorResponse
 import com.smitcoderx.volunteerconnect.Utils.hasInternetConnection
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.HttpException
@@ -29,25 +30,17 @@ class RegisterRepository @Inject constructor(
         }
 
         val response = try {
-            Log.d(TAG, "register: $registerData")
             api.registerUser(registerData)
         } catch (e: HttpException) {
             return ResponseState.Error(context.getString(R.string.error_http))
         } catch (e: IOException) {
             return ResponseState.Error(context.getString(R.string.check_internet_connection))
-        } catch (e: Exception) {
-            Log.d(TAG, "registerErrorException: ${e.message}")
-            return ResponseState.Error(e.message.toString())
         }
 
         return if(response.isSuccessful && response.body()?.success == true) {
             ResponseState.Success(response.body()!!)
         } else {
-            val gson = Gson()
-            val type = object : TypeToken<ErrorResponse>() {}.type
-            val errorResponse: ErrorResponse? = gson.fromJson(response.errorBody()!!.charStream(), type)
-            Log.d(TAG, "registerResponse: $errorResponse")
-            ResponseState.Error(errorResponse?.error.toString())
+            ResponseState.Error(errorResponse(response)?.error.toString())
 
         }
     }

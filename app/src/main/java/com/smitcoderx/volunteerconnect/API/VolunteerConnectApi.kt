@@ -1,10 +1,14 @@
 package com.smitcoderx.volunteerconnect.API
 
+import com.smitcoderx.volunteerconnect.Model.CategoryResponse
 import com.smitcoderx.volunteerconnect.Model.Login
+import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -32,5 +36,9 @@ interface VolunteerConnectApi {
         // Passing LoginData has i don't want to create a new data class for just passing an email address
         @Body loginData: LoginData
     ): Response<Login?>
+
+    @GET("category")
+    suspend fun getCategoryList(): Response<CategoryResponse>
+
 
 }

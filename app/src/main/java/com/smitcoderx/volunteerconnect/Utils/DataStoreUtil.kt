@@ -19,7 +19,7 @@ class DataStoreUtil(context: Context) {
     }
 
     fun setToken(token: String) {
-        prefs.edit().putString(TOKEN, token).apply()
+        prefs.edit().putString("Bearer $TOKEN", token).apply()
     }
 
     fun getToken(): String? {

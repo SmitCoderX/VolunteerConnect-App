@@ -9,6 +9,7 @@ import com.smitcoderx.volunteerconnect.Model.ErrorResponse
 import com.smitcoderx.volunteerconnect.Model.Login
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
+import com.smitcoderx.volunteerconnect.Utils.errorResponse
 import com.smitcoderx.volunteerconnect.Utils.hasInternetConnection
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.HttpException
@@ -37,10 +38,7 @@ class ForgotPasswordRepository @Inject constructor(
         return if(response.isSuccessful && response.body()?.success == true) {
             ResponseState.Success(response.body()!!)
         } else  {
-            val gson = Gson()
-            val type = object : TypeToken<ErrorResponse?>() {}.type
-            val errorResponse: ErrorResponse? = gson.fromJson(response.errorBody()!!.charStream(), type)
-            ResponseState.Error(errorResponse?.error.toString())
+            ResponseState.Error(errorResponse(response)?.error.toString())
         }
 
     }

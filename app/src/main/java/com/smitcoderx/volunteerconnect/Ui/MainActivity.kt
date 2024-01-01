@@ -3,10 +3,13 @@ package com.smitcoderx.volunteerconnect.Ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.animation.AnimationUtils
 import com.smitcoderx.volunteerconnect.R
+import com.smitcoderx.volunteerconnect.Ui.Register.RegisterAsFragmentDirections
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
 import com.smitcoderx.volunteerconnect.databinding.ActivityMainBinding
@@ -27,7 +30,8 @@ class MainActivity : AppCompatActivity(), LoadingInterface {
         binding.bottomNav.setupWithNavController(navController)
         val prefs = DataStoreUtil(applicationContext)
         if(prefs.getLoggedIn()) {
-            navController.navigate(R.id.homeFragment)
+            navController.navigate(RegisterAsFragmentDirections.actionRegisterAsFragmentToHomeFragment())
+            navController.clearBackStack(R.id.registerAsFragment)
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -50,4 +54,5 @@ class MainActivity : AppCompatActivity(), LoadingInterface {
             loading.visibility = View.VISIBLE
         }
     }
+
 }

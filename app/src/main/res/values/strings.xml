@@ -39,6 +39,9 @@
     <string name="name">Name</string>
     <string name="submit">Submit</string>
     <string name="welcome_text">Good Morning, Check</string>
+    <string name="find_your_nearest">Find Your Nearest</string>
+    <string name="best_rated_organizations">Best Rated Organizations</string>
+    <string name="check_them_out">Check them out to</string>
 
 
 </resources>

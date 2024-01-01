@@ -27,6 +27,7 @@ class RegisterAsFragment : Fragment(R.layout.fragment_register_as) {
                     VOLUNTEER
                 )
             )
+            findNavController().clearBackStack(R.id.registerAsFragment)
         }
 
         binding.btnRegisterOrganization.setOnClickListener {
@@ -35,6 +36,7 @@ class RegisterAsFragment : Fragment(R.layout.fragment_register_as) {
                     ORGANIZATION
                 )
             )
+            findNavController().clearBackStack(R.id.registerAsFragment)
         }
     }
 }
