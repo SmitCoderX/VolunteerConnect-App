@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_120sdp"
+    android:layout_height="@dimen/_120sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:clickable="true"
+    android:focusable="true"
+    app:strokeWidth="@dimen/dimen_0"
+    android:layout_marginEnd="@dimen/_5sdp">
+
+    <LinearLayout
+        android:id="@+id/ll_card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/card_bg"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:paddingVertical="@dimen/_20sdp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:textAlignment="textStart"
+            android:gravity="start"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            tools:text="Find \nOrganizations" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

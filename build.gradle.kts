@@ -3,6 +3,7 @@ buildscript {
     repositories {
         google()
         maven ( url = "https://jitpack.io")
+        maven( url = "https://maven.mappls.com/repository/mappls/")
         mavenCentral()
     }
     dependencies {

@@ -1,6 +1,7 @@
 package com.smitcoderx.volunteerconnect.Ui.Login
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
@@ -13,12 +14,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.smitcoderx.volunteerconnect.API.LoginData
 import com.smitcoderx.volunteerconnect.R
+import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
+import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
-import com.smitcoderx.volunteerconnect.Utils.drawableToBitmap
-import com.smitcoderx.volunteerconnect.Utils.morphDoneAndRevert
 import com.smitcoderx.volunteerconnect.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.lang.ClassCastException
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -26,6 +28,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private lateinit var binding: FragmentLoginBinding
     private val loginViewModel by viewModels<LoginViewModel>()
     private lateinit var loginData: LoginData
+    private var listener: LoadingInterface ? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,7 +47,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
         binding.btnLogin.setOnClickListener {
-
             if (binding.tilEmail.editText?.text.isNullOrEmpty()) {
                 binding.tilEmail.error = "Field cannot be empty"
             } else if (binding.tilPass.editText?.text.isNullOrEmpty()) {
@@ -69,9 +71,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     )
                 }
                 loginViewModel.loginUser(loginData)
+                showLoading()
             }
         }
     }
+
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun loginStatus() {
@@ -80,37 +84,60 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 loginViewModel.signInDataLiveData.observe(requireActivity()) {
                     when (it) {
                         is ResponseState.Success -> {
-                            binding.btnLogin.morphDoneAndRevert(
-                                requireContext(), requireContext().getColor(R.color.accent_color),
-                                drawableToBitmap(context?.getDrawable(R.drawable.ic_success)!!),
-                                coroutineScope = lifecycleScope
-                            ) {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Logged in Successfully",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+                            hideLoading()
+                            addToken(it.data?.token.toString())
+                            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
                         }
 
                         is ResponseState.Error -> {
-                            binding.btnLogin.morphDoneAndRevert(
+                            hideLoading()
+                            Toast.makeText(
                                 requireContext(),
-                                requireContext().getColor(R.color.accent_color),
-                                drawableToBitmap(context?.getDrawable(R.drawable.ic_close)!!),
-                                coroutineScope = lifecycleScope
-                            ) {
-                                Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
-                                    .show()
-                            }
+                                it.message.toString(),
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
                         }
 
                         is ResponseState.Loading -> {
+
+                        }
+
+                        else -> {
 
                         }
                     }
                 }
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is LoadingInterface) {
+            listener = context
+        } else {
+            throw ClassCastException("$context must implement LoadingInterface")
+        }
+    }
+
+
+    private fun showLoading() {
+        listener?.showLoading()
+        binding.tilEmail.isEnabled = false
+        binding.tilPass.isEnabled = false
+    }
+
+    private fun hideLoading() {
+        listener?.hideLoading()
+        binding.tilEmail.isEnabled = true
+        binding.tilPass.isEnabled = true
+    }
+
+
+    private fun addToken(token: String) {
+        val dataStore = DataStoreUtil(requireContext())
+        dataStore.setLoggedIn(true)
+        dataStore.setToken(token)
     }
 }

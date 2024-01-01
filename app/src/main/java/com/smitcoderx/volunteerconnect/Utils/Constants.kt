@@ -10,4 +10,6 @@ object Constants {
     const val TAG = "VolunteerConnect"
     const val ORGANIZATION = "Organization"
     const val VOLUNTEER = "Volunteer"
+    const val LOGGEDIN = "LoggedIn"
+    const val TOKEN = "Token"
 }

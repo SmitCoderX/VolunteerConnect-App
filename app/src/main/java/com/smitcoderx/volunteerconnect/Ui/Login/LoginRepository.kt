@@ -1,7 +1,6 @@
 package com.smitcoderx.volunteerconnect.Ui.Login
 
 import android.content.Context
-import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.smitcoderx.volunteerconnect.API.LoginData
@@ -11,17 +10,11 @@ import com.smitcoderx.volunteerconnect.Model.Login
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.hasInternetConnection
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import org.json.JSONObject
 import retrofit2.HttpException
-import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.log
 
 @Singleton
 class LoginRepository @Inject constructor(
@@ -29,10 +22,9 @@ class LoginRepository @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     suspend fun login(loginData: LoginData): ResponseState<Login?> {
-        if(!context.hasInternetConnection()) {
+        if (!context.hasInternetConnection()) {
             return ResponseState.Error(context.getString(R.string.error_internet_turned_off))
         }
-
         val response = try {
             api.loginUser(loginData)
         } catch (e: HttpException) {
@@ -41,13 +33,13 @@ class LoginRepository @Inject constructor(
             return ResponseState.Error(context.getString(R.string.check_internet_connection))
         }
 
-
-        return if(response.isSuccessful && response.body()?.success == true) {
+        return if (response.isSuccessful && response.body()?.success == true) {
             ResponseState.Success(response.body()!!)
-        } else  {
+        } else {
             val gson = Gson()
             val type = object : TypeToken<ErrorResponse?>() {}.type
-            val errorResponse: ErrorResponse? = gson.fromJson(response.errorBody()!!.charStream(), type)
+            val errorResponse: ErrorResponse? =
+                gson.fromJson(response.errorBody()!!.charStream(), type)
             ResponseState.Error(errorResponse?.error.toString())
         }
 

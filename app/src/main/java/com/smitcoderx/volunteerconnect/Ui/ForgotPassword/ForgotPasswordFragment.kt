@@ -13,8 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.smitcoderx.volunteerconnect.API.LoginData
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
-import com.smitcoderx.volunteerconnect.Utils.drawableToBitmap
-import com.smitcoderx.volunteerconnect.Utils.morphDoneAndRevert
 import com.smitcoderx.volunteerconnect.databinding.FragmentForgotPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -37,6 +35,7 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
                     email = binding.tilEmail.editText?.text.toString().trim()
                 )
                 fpViewModel.forgetPassword(loginData)
+                showLoading()
             }
         }
 
@@ -70,33 +69,21 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
                 fpViewModel.fpDataLiveData.observe(requireActivity()) {
                     when (it) {
                         is ResponseState.Success -> {
-                            binding.btnLogin.morphDoneAndRevert(
-                                requireContext(), requireContext().getColor(R.color.accent_color),
-                                drawableToBitmap(context?.getDrawable(R.drawable.ic_success)!!),
-                                coroutineScope = lifecycleScope
-                            ) {
-                                Toast.makeText(
-                                    requireContext(),
-                                    it.data?.message.toString(),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+                            hideLoading()
+                            Toast.makeText(
+                                requireContext(),
+                                it.data?.message.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         is ResponseState.Error -> {
-                            binding.btnLogin.morphDoneAndRevert(
+                            hideLoading()
+                            Toast.makeText(
                                 requireContext(),
-                                requireContext().getColor(R.color.accent_color),
-                                drawableToBitmap(context?.getDrawable(R.drawable.ic_close)!!),
-                                coroutineScope = lifecycleScope
-                            ) {
-                                Toast.makeText(
-                                    requireContext(),
-                                    it.message.toString(),
-                                    Toast.LENGTH_SHORT
-                                )
-                                    .show()
-                            }
+                                it.message.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         is ResponseState.Loading -> {
@@ -105,6 +92,20 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
                     }
                 }
             }
+        }
+    }
+
+    private fun showLoading() {
+        binding.apply {
+            loading.visibility = View.VISIBLE
+            etEmailLogin.isEnabled = false
+        }
+    }
+
+    private fun hideLoading() {
+        binding.apply {
+            loading.visibility = View.GONE
+            etEmailLogin.isEnabled = true
         }
     }
 

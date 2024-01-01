@@ -10,4 +10,7 @@
     <color name="dark_purple">#673AB7</color>
     <color name="purple">#9C27B0</color>
     <color name="accent_color">#475bd8</color>
+    <color name="search_color">#FFFFFF</color>
+    <color name="dark_orange">#FF5722</color>
+    <color name="card_bg">#33545454</color>
 </resources>

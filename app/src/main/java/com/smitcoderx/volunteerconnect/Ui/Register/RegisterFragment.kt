@@ -16,8 +16,6 @@ import com.smitcoderx.volunteerconnect.API.RegisterData
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.Constants.ORGANIZATION
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
-import com.smitcoderx.volunteerconnect.Utils.drawableToBitmap
-import com.smitcoderx.volunteerconnect.Utils.morphDoneAndRevert
 import com.smitcoderx.volunteerconnect.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -55,6 +53,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 )
 
                 registerViewModel.register(registerData)
+                showLoading()
             }
         }
 
@@ -139,48 +138,50 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 registerViewModel.registerLiveData.observe(requireActivity()) {
                     when (it) {
                         is ResponseState.Success -> {
-                            binding.btnRegister.morphDoneAndRevert(
-                                requireContext(), requireContext().getColor(R.color.accent_color),
-                                drawableToBitmap(context?.getDrawable(R.drawable.ic_success)!!),
-                                coroutineScope = lifecycleScope
-                            ) {
-                                if(args.role == ORGANIZATION) {
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Registered as Organization Successfully",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Registered as Volunteer Successfully",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
+                            hideLoading()
+                            Toast.makeText(
+                                requireContext(),
+                                "Registered as Volunteer Successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         is ResponseState.Error -> {
-                            binding.btnRegister.morphDoneAndRevert(
-                                requireContext(),
-                                requireContext().getColor(R.color.accent_color),
-                                drawableToBitmap(context?.getDrawable(R.drawable.ic_close)!!),
-                                coroutineScope = lifecycleScope
-                            ) {
-                                Toast.makeText(requireContext(),
-                                    it.message.toString()
-                                        .replaceFirstChar { c -> if (c.isLowerCase()) c.titlecase(Locale.ROOT) else c.toString() },
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+                            hideLoading()
+                            Toast.makeText(requireContext(),
+                                it.message.toString()
+                                    .replaceFirstChar { c -> if (c.isLowerCase()) c.titlecase(Locale.ROOT) else c.toString() },
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         is ResponseState.Loading -> {
-
                         }
                     }
                 }
             }
+        }
+    }
+
+    private fun showLoading() {
+        binding.apply {
+            loading.visibility = View.VISIBLE
+            etUsernameLogin.isEnabled = false
+            etNameLogin.isEnabled = false
+            etEmailLogin.isEnabled = false
+            etPasswordLogin.isEnabled = false
+            etMobileNo.isEnabled = false
+        }
+    }
+
+    private fun hideLoading() {
+        binding.apply {
+            loading.visibility = View.GONE
+            etUsernameLogin.isEnabled = true
+            etNameLogin.isEnabled = true
+            etEmailLogin.isEnabled = true
+            etPasswordLogin.isEnabled = true
+            etMobileNo.isEnabled = true
         }
     }
 }
