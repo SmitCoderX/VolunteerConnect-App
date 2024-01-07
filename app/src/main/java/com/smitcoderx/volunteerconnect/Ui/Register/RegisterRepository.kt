@@ -1,22 +1,16 @@
 package com.smitcoderx.volunteerconnect.Ui.Register
 
 import android.content.Context
-import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.smitcoderx.volunteerconnect.API.RegisterData
+import com.smitcoderx.volunteerconnect.Model.Auth.RegisterData
 import com.smitcoderx.volunteerconnect.API.VolunteerConnectApi
-import com.smitcoderx.volunteerconnect.Model.ErrorResponse
-import com.smitcoderx.volunteerconnect.Model.Login
+import com.smitcoderx.volunteerconnect.Model.Auth.Login
 import com.smitcoderx.volunteerconnect.R
-import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.errorResponse
 import com.smitcoderx.volunteerconnect.Utils.hasInternetConnection
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.HttpException
 import java.io.IOException
-import java.lang.Exception
 import javax.inject.Inject
 
 class RegisterRepository @Inject constructor(

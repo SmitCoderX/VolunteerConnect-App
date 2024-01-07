@@ -42,6 +42,12 @@
     <string name="find_your_nearest">Find Your Nearest</string>
     <string name="best_rated_organizations">Best Rated Organizations</string>
     <string name="check_them_out">Check them out to</string>
+    <string name="find_by_categories">Find by Categories</string>
+    <string name="map">map</string>
+    <string name="search">Search</string>
+    <string name="saved">Saved</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="logout">Logout</string>
 
 
 </resources>

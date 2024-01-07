@@ -53,5 +53,21 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileBottomSheetFragment"
+            app:destination="@id/profileBottomSheetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Maps.MapsFragment"
+        android:label="MapsFragment" />
+    <dialog
+        android:id="@+id/profileBottomSheetFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Profile.ProfileBottomSheetFragment"
+        android:label="fragment_bottom_sheet_profile"
+        tools:layout="@layout/fragment_bottom_sheet_profile" />
 </navigation>

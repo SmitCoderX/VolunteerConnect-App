@@ -219,17 +219,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:indeterminate="true"
-        android:layout_marginTop="-8dp"
-        android:visibility="gone"
-        android:indeterminateTint="@color/accent_color"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

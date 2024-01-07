@@ -2,7 +2,8 @@ package com.smitcoderx.volunteerconnect.Ui.Home
 
 import android.content.Context
 import com.smitcoderx.volunteerconnect.API.VolunteerConnectApi
-import com.smitcoderx.volunteerconnect.Model.CategoryResponse
+import com.smitcoderx.volunteerconnect.Model.Category.CategoryResponse
+import com.smitcoderx.volunteerconnect.Model.User.UserDataModel
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.errorResponse
@@ -18,7 +19,28 @@ class HomeRepository @Inject constructor(
     private val api: VolunteerConnectApi,
     @ApplicationContext private val context: Context
 ) {
-    suspend fun getCategoryList(): ResponseState<CategoryResponse> {
+
+    suspend fun getCurrentLoggedinUser(token: String): ResponseState<UserDataModel?> {
+        if(!context.hasInternetConnection()) {
+            return ResponseState.Error(context.getString(R.string.error_internet_turned_off))
+        }
+
+        val response = try {
+            api.getLoggedInUser(token)
+        }catch (e: HttpException) {
+            return ResponseState.Error(context.getString(R.string.error_http))
+        } catch (e: IOException) {
+            return ResponseState.Error(context.getString(R.string.check_internet_connection))
+        }
+
+        return if (response.isSuccessful && response.body()?.success == true) {
+            ResponseState.Success(response.body()!!)
+        } else {
+            ResponseState.Error(errorResponse(response)?.error.toString())
+        }
+    }
+
+     suspend fun getCategoryList(): ResponseState<CategoryResponse?> {
         if (!context.hasInternetConnection()) {
             return ResponseState.Error(context.getString(R.string.error_internet_turned_off))
         }

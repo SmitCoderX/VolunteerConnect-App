@@ -18,8 +18,8 @@ class DataStoreUtil(context: Context) {
         return prefs.getBoolean(LOGGEDIN, false)
     }
 
-    fun setToken(token: String) {
-        prefs.edit().putString("Bearer $TOKEN", token).apply()
+    fun setToken(token: String?) {
+        prefs.edit().putString(TOKEN, "Bearer $token").apply()
     }
 
     fun getToken(): String? {

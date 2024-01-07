@@ -5,7 +5,7 @@
         android:height="@dimen/_40sdp"
         android:gravity="center">
         <shape android:shape="oval">
-            <solid android:color="@color/search_color" />
+            <solid android:color="@android:color/white" />
         </shape>
     </item>
 
@@ -13,6 +13,6 @@
         android:width="@dimen/_20sdp"
         android:height="@dimen/_20sdp"
         android:gravity="center"
-        android:drawable="@drawable/ic_notification">
+        android:drawable="@drawable/heart">
     </item>
 </layer-list>

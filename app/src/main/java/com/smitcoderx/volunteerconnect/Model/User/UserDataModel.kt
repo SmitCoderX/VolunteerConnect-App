@@ -1,11 +1,12 @@
-package com.smitcoderx.volunteerconnect.Model
+package com.smitcoderx.volunteerconnect.Model.User
+
 
 
 import com.google.gson.annotations.SerializedName
 
-data class CategoryResponse(
+data class UserDataModel(
     @SerializedName("data")
-    val `data`: List<CategoryData?>?,
+    val data: UserData?,
     @SerializedName("success")
     val success: Boolean?
 )

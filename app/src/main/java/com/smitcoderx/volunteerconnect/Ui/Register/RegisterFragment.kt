@@ -1,6 +1,7 @@
 package com.smitcoderx.volunteerconnect.Ui.Register
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
@@ -12,13 +13,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.smitcoderx.volunteerconnect.API.RegisterData
+import com.smitcoderx.volunteerconnect.Model.Auth.RegisterData
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.Constants.ORGANIZATION
+import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.lang.ClassCastException
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -27,6 +30,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     private lateinit var binding: FragmentRegisterBinding
     private val registerViewModel by viewModels<RegisterViewModel>()
     private val args by navArgs<RegisterFragmentArgs>()
+    private var listener: LoadingInterface ?= null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -163,9 +167,19 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is LoadingInterface) {
+            listener = context
+        } else {
+            throw ClassCastException("$context must implement LoadingInterface")
+        }
+    }
+
+
     private fun showLoading() {
         binding.apply {
-            loading.visibility = View.VISIBLE
+            listener?.showLoading()
             etUsernameLogin.isEnabled = false
             etNameLogin.isEnabled = false
             etEmailLogin.isEnabled = false
@@ -176,7 +190,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     private fun hideLoading() {
         binding.apply {
-            loading.visibility = View.GONE
+            listener?.hideLoading()
             etUsernameLogin.isEnabled = true
             etNameLogin.isEnabled = true
             etEmailLogin.isEnabled = true

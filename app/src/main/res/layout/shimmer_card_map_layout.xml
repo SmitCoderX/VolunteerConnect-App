@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<View android:layout_width="match_parent"
+    android:layout_height="@dimen/_200sdp"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginHorizontal="@dimen/_10sdp"
+    android:background="@drawable/shimmer_rounded_bg"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+</View>

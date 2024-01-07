@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_120sdp"
+    android:layout_height="@dimen/_120sdp"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:background="@drawable/shimmer_rounded_bg"
+    android:layout_marginEnd="@dimen/_5sdp">
+
+
+</View>

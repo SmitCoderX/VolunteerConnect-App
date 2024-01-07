@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), LoadingInterface {
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.loginFragment || destination.id == R.id.registerAsFragment || destination.id == R.id.registerFragment || destination.id == R.id.forgotPasswordFragment) {
+            if (destination.id == R.id.loginFragment || destination.id == R.id.registerAsFragment || destination.id == R.id.registerFragment || destination.id == R.id.forgotPasswordFragment || destination.id == R.id.mapsFragment) {
                 binding.bottomNav.visibility = View.GONE
             } else {
                 binding.bottomNav.visibility = View.VISIBLE

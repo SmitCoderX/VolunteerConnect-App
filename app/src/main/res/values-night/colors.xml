@@ -12,5 +12,5 @@
     <color name="accent_color">#475bd8</color>
     <color name="search_color">#2D2B2B</color>
     <color name="card_bg">#33545454</color>
-
+    <color name="shimmer_effect">#dddddd</color>
 </resources>

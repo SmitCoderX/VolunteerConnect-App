@@ -1,4 +1,4 @@
-package com.smitcoderx.volunteerconnect.API
+package com.smitcoderx.volunteerconnect.Model.Auth
 
 data class LoginData(
     var username: String? = "",

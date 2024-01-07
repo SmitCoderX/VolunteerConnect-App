@@ -2,7 +2,7 @@ package com.smitcoderx.volunteerconnect.Utils
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.smitcoderx.volunteerconnect.Model.ErrorResponse
+import com.smitcoderx.volunteerconnect.Model.Auth.ErrorResponse
 import retrofit2.Response
 
 fun <T> errorResponse(response: Response<T>): ErrorResponse? {

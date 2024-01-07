@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map_view"
     android:name="com.mappls.sdk.maps.SupportMapFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Ui.Maps.MapsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,6 +23,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:weightSum="1">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/back_layer_list" />
+
+
             <LinearLayout
                 android:id="@+id/search_view"
                 android:layout_width="0dp"
@@ -35,24 +49,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="@dimen/_23sdp"
-                    android:layout_height="@dimen/_23sdp"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:src="@mipmap/ic_launcher_round"
-                    app:civ_border_color="@color/trans_black"
-                    app:civ_border_width="@dimen/_2sdp" />
-
-                <View
-                    android:layout_width="@dimen/_2sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:background="@drawable/edittext_cursor"
-                    android:backgroundTint="@color/trans_grey" />
-
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_main_hint"
                     android:layout_width="match_parent"
@@ -63,22 +59,10 @@
                     android:focusable="true"
                     android:fontFamily="@font/poppins"
                     android:gravity="center_vertical"
-                    android:text="Search"
+                    android:text="@string/search"
                     android:textColor="@color/black" />
 
             </LinearLayout>
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_notification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|end"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/notification_layer_list" />
-
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </fragment>

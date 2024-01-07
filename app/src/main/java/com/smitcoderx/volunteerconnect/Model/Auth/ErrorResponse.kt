@@ -1,4 +1,4 @@
-package com.smitcoderx.volunteerconnect.Model
+package com.smitcoderx.volunteerconnect.Model.Auth
 
 
 import com.google.gson.annotations.SerializedName

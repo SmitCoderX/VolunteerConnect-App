@@ -13,4 +13,5 @@
     <color name="search_color">#FFFFFF</color>
     <color name="dark_orange">#FF5722</color>
     <color name="card_bg">#33545454</color>
+    <color name="shimmer_effect">#dddddd</color>
 </resources>

@@ -1,12 +1,9 @@
 package com.smitcoderx.volunteerconnect.Ui.ForgotPassword
 
 import android.content.Context
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.smitcoderx.volunteerconnect.API.LoginData
+import com.smitcoderx.volunteerconnect.Model.Auth.LoginData
 import com.smitcoderx.volunteerconnect.API.VolunteerConnectApi
-import com.smitcoderx.volunteerconnect.Model.ErrorResponse
-import com.smitcoderx.volunteerconnect.Model.Login
+import com.smitcoderx.volunteerconnect.Model.Auth.Login
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.errorResponse

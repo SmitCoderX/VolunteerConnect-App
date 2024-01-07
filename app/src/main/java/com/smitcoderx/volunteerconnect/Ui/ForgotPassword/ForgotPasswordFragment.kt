@@ -1,5 +1,6 @@
 package com.smitcoderx.volunteerconnect.Ui.ForgotPassword
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
@@ -10,18 +11,21 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.smitcoderx.volunteerconnect.API.LoginData
+import com.smitcoderx.volunteerconnect.Model.Auth.LoginData
 import com.smitcoderx.volunteerconnect.R
+import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.databinding.FragmentForgotPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.lang.ClassCastException
 
 @AndroidEntryPoint
 class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
 
     private lateinit var binding: FragmentForgotPasswordBinding
     private val fpViewModel by viewModels<ForgotPasswordViewModel>()
+    private var listener: LoadingInterface? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -95,16 +99,26 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is LoadingInterface) {
+            listener = context
+        } else {
+            throw ClassCastException("$context must implement LoadingInterface")
+        }
+    }
+
+
     private fun showLoading() {
         binding.apply {
-            loading.visibility = View.VISIBLE
+            listener?.showLoading()
             etEmailLogin.isEnabled = false
         }
     }
 
     private fun hideLoading() {
         binding.apply {
-            loading.visibility = View.GONE
+            listener?.hideLoading()
             etEmailLogin.isEnabled = true
         }
     }

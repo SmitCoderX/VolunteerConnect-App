@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/text_category"
+        layout="@layout/shimmer_text_layout" />
+
+    <LinearLayout
+        android:id="@+id/ll_cat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_category"
+        android:orientation="horizontal">
+
+        <include layout="@layout/shimmer_card_layout" />
+
+        <include layout="@layout/shimmer_card_layout" />
+
+        <include layout="@layout/shimmer_card_layout" />
+
+        <include layout="@layout/shimmer_card_layout" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_cat"
+        android:orientation="vertical">
+
+        <include layout="@layout/shimmer_text_layout" />
+
+        <include layout="@layout/shimmer_card_map_layout" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_best"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_map"
+        android:orientation="vertical">
+
+        <include layout="@layout/shimmer_text_layout" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <include layout="@layout/shimmer_card_layout" />
+
+            <include layout="@layout/shimmer_card_layout" />
+
+            <include layout="@layout/shimmer_card_layout" />
+
+            <include layout="@layout/shimmer_card_layout" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_best"
+        android:orientation="vertical">
+
+        <include layout="@layout/shimmer_text_layout" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <include layout="@layout/shimmer_card_layout" />
+
+            <include layout="@layout/shimmer_card_layout" />
+
+            <include layout="@layout/shimmer_card_layout" />
+
+            <include layout="@layout/shimmer_card_layout" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

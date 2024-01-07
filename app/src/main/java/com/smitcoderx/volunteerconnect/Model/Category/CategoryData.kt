@@ -1,4 +1,4 @@
-package com.smitcoderx.volunteerconnect.Model
+package com.smitcoderx.volunteerconnect.Model.Category
 
 
 import com.google.gson.annotations.SerializedName

@@ -91,8 +91,21 @@ dependencies {
     // MapMyIndia
     implementation ("com.mappls.sdk:mappls-android-sdk:8.1.0")
 
-    // DataStore
+    // Preference
     implementation ("androidx.preference:preference-ktx:1.2.1")
+
+    // SwipeRefresh Layout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    //Shimmer Effect
+    implementation ("com.facebook.shimmer:shimmer:0.1.0@aar")
+
+    // Glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    // Location Service
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
 
 
 }

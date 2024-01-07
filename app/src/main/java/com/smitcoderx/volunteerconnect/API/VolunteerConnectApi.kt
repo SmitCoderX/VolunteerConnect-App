@@ -1,10 +1,10 @@
 package com.smitcoderx.volunteerconnect.API
 
-import com.smitcoderx.volunteerconnect.Model.CategoryResponse
-import com.smitcoderx.volunteerconnect.Model.Login
-import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
-import com.smitcoderx.volunteerconnect.Utils.ResponseState
-import retrofit2.Call
+import com.smitcoderx.volunteerconnect.Model.Auth.Login
+import com.smitcoderx.volunteerconnect.Model.Auth.LoginData
+import com.smitcoderx.volunteerconnect.Model.Auth.RegisterData
+import com.smitcoderx.volunteerconnect.Model.Category.CategoryResponse
+import com.smitcoderx.volunteerconnect.Model.User.UserDataModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,8 +18,8 @@ interface VolunteerConnectApi {
         const val BASE_URL = "https://volunteer-connect-eta.vercel.app/api/v1/"
     }
 
-   @Headers("Content-Type: Application/Json;charset=UTF-8")
-   @POST("auth/login")
+    @Headers("Content-Type: Application/Json;charset=UTF-8")
+    @POST("auth/login")
     suspend fun loginUser(
         @Body loginData: LoginData
     ): Response<Login?>
@@ -36,6 +36,11 @@ interface VolunteerConnectApi {
         // Passing LoginData has i don't want to create a new data class for just passing an email address
         @Body loginData: LoginData
     ): Response<Login?>
+
+    @GET("auth/me")
+    suspend fun getLoggedInUser(
+        @Header("Authorization") token: String
+    ): Response<UserDataModel>
 
     @GET("category")
     suspend fun getCategoryList(): Response<CategoryResponse>

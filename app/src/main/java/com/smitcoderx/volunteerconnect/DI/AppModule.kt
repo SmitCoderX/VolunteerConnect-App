@@ -6,7 +6,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.security.SecureRandom
@@ -24,6 +26,11 @@ import javax.net.ssl.X509TrustManager
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+//    val okHttpClient = OkHttpClient.Builder().addInterceptor(object : Interceptor {
+//        override fun intercept(chain: Interceptor.Chain): Response {
+////            val request = chain.request().newBuilder().addHeader("Authorization", )
+//        }
+//    })
 
     @Provides
     @Singleton
