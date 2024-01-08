@@ -1,8 +1,11 @@
 package com.smitcoderx.volunteerconnect.Model.User
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class UserData(
     @SerializedName("createdAt")
     val createdAt: String?,
@@ -26,4 +29,4 @@ data class UserData(
     val username: String?,
     @SerializedName("__v")
     val v: Int?
-)
+) : Parcelable

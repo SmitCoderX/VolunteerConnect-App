@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.bumptech.glide.Glide
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.ExperimentalBadgeUtils
+import com.smitcoderx.volunteerconnect.Model.User.UserDataModel
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
@@ -38,6 +39,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener {
     private val typeAdapter = TypesAdapter()
     private var listener: LoadingInterface? = null
     private lateinit var prefs: DataStoreUtil
+    private var userData: UserDataModel? = null
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,7 +81,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener {
         }
 
         binding.ivProfile.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToProfileBottomSheetFragment()
+            val action = HomeFragmentDirections.actionHomeFragmentToProfileBottomSheetFragment(userData?.data!!)
             findNavController().navigate(action)
         }
 
@@ -90,6 +92,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener {
         homeViewModel.userLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseState.Success -> {
+                    userData = it.data
                     binding.shimmerEffect.stopShimmerAnimation()
                     binding.tvWelcome.text = generateGreeting(it.data?.data?.username.toString())
                     Glide.with(requireContext()).load(it.data?.data?.photos).into(binding.ivProfile)
