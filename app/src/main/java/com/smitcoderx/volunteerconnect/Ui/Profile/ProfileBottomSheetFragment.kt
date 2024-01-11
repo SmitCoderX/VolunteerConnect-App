@@ -38,5 +38,9 @@ class ProfileBottomSheetFragment: BottomSheetDialogFragment(R.layout.fragment_bo
             findNavController().navigate(ProfileBottomSheetFragmentDirections.actionProfileBottomSheetFragmentToLoginFragment())
             findNavController().clearBackStack(R.id.loginFragment)
         }
+
+        binding.cardProfile.setOnClickListener {
+            findNavController().navigate(ProfileBottomSheetFragmentDirections.actionProfileBottomSheetFragmentToProfileFragment())
+        }
     }
 }

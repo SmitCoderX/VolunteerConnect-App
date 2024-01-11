@@ -4,6 +4,7 @@ import com.smitcoderx.volunteerconnect.Model.Auth.Login
 import com.smitcoderx.volunteerconnect.Model.Auth.LoginData
 import com.smitcoderx.volunteerconnect.Model.Auth.RegisterData
 import com.smitcoderx.volunteerconnect.Model.Category.CategoryResponse
+import com.smitcoderx.volunteerconnect.Model.User.UpateData
 import com.smitcoderx.volunteerconnect.Model.User.UserDataModel
 import retrofit2.Response
 import retrofit2.http.Body
@@ -11,6 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface VolunteerConnectApi {
 
@@ -42,8 +44,15 @@ interface VolunteerConnectApi {
         @Header("Authorization") token: String
     ): Response<UserDataModel>
 
+    @PUT("auth/updatedetails")
+    suspend fun updateUser(
+        @Header("Authorization") token: String,
+        @Body updateData: UpateData
+    ): Response<UserDataModel>
+
     @GET("category")
     suspend fun getCategoryList(): Response<CategoryResponse>
+
 
 
 }

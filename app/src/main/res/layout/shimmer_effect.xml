@@ -3,32 +3,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/text_category"
-        layout="@layout/shimmer_text_layout" />
-
     <LinearLayout
-        android:id="@+id/ll_cat"
+        android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_category"
         android:orientation="horizontal">
 
-        <include layout="@layout/shimmer_card_layout" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <include layout="@layout/shimmer_card_layout" />
+            <include
+                layout="@layout/shimmer_text_layout" />
 
-        <include layout="@layout/shimmer_card_layout" />
+            <include
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="-10dp"
+                layout="@layout/shimmer_text_layout" />
 
-        <include layout="@layout/shimmer_card_layout" />
+        </LinearLayout>
+
+        <include layout="@layout/shimmer_card_layout"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_15sdp"/>
+
+        <include layout="@layout/shimmer_card_layout"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/card_cat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_top"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/text_category"
+            layout="@layout/shimmer_text_layout" />
+
+        <LinearLayout
+            android:id="@+id/ll_cat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <include layout="@layout/shimmer_card_layout" />
+            <include layout="@layout/shimmer_card_layout" />
+            <include layout="@layout/shimmer_card_layout" />
+            <include layout="@layout/shimmer_card_layout" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
 
     <LinearLayout
         android:id="@+id/ll_map"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_cat"
+        android:layout_below="@id/card_cat"
         android:orientation="vertical">
 
         <include layout="@layout/shimmer_text_layout" />

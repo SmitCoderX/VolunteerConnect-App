@@ -88,8 +88,5 @@
         android:name="com.smitcoderx.volunteerconnect.Ui.Profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
-        <argument
-            android:name="id"
-            app:argType="string" />
     </fragment>
 </navigation>

@@ -18,6 +18,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerEffect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include layout="@layout/shimmer_effect"/>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_welcome"
                 android:layout_width="wrap_content"
@@ -25,11 +38,11 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="@string/welcome_text"
+                tools:text="@string/welcome_text"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15ssp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/shimmerEffect"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_date"
@@ -52,7 +65,7 @@
                 app:cardCornerRadius="@dimen/_60sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_date"
                 app:layout_constraintEnd_toStartOf="@id/iv_profile"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/shimmerEffect"
                 app:strokeWidth="@dimen/dimen_0">
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -72,25 +85,14 @@
                 android:background="?selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@mipmap/ic_launcher_round"
+                tools:src="@mipmap/ic_launcher_round"
                 app:civ_border_color="@color/trans_grey"
                 app:civ_border_width="@dimen/_2sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_date"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/shimmerEffect"/>
 
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmerEffect"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_date">
 
-                <include layout="@layout/shimmer_effect"/>
-
-            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_title"
@@ -102,7 +104,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16ssp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/shimmerEffect" />
+                app:layout_constraintTop_toBottomOf="@id/iv_profile" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_types"
