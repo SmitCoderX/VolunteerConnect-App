@@ -34,7 +34,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding = FragmentProfileBinding.bind(view)
 
         prefs = DataStoreUtil(requireContext())
-//        profileViewModel.getProfileData(prefs.getToken().toString())
 
         setDetails()
         updateStatus()

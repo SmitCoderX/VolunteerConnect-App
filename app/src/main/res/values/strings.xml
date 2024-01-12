@@ -49,6 +49,7 @@
     <string name="dashboard">Dashboard</string>
     <string name="logout">Logout</string>
     <string name="update">Update Profile</string>
+    <string name="retry">Retry</string>
 
 
 </resources>

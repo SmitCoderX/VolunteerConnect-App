@@ -203,6 +203,63 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_orgs"
                 tools:listitem="@layout/layout_types_item" />
+
+            <LinearLayout
+                android:id="@+id/ll_error"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150sdp"
+                    app:lottie_rawRes="@raw/something_wrong"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_error_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    tools:text="@string/register_as_note"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_retry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_5sdp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:strokeColor="@color/accent_color"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    app:strokeWidth="@dimen/_1sdp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/retry"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="@dimen/_15ssp"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"
+                        android:paddingVertical="@dimen/_5sdp"
+                        android:paddingHorizontal="@dimen/_10sdp"/>
+
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
