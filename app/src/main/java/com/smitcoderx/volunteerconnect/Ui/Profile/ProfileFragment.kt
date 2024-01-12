@@ -11,13 +11,11 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.smitcoderx.volunteerconnect.Model.User.UpateData
 import com.smitcoderx.volunteerconnect.R
-import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.databinding.FragmentProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -75,7 +73,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         profileViewModel.getProfileDataLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseState.Success -> {
-                    Timber.tag(TAG).i("data: ${it.data}")
                     binding.shimmerEffect.stopShimmerAnimation()
                     binding.innerCon.visibility = View.VISIBLE
                     binding.apply {
@@ -94,7 +91,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     binding.shimmerEffect.visibility = View.GONE
                     Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
                         .show()
-                    Timber.tag(TAG).i("dataError: ${it.message}")
 
                 }
 

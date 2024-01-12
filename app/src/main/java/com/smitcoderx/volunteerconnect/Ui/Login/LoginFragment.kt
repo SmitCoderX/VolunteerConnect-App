@@ -89,7 +89,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                             hideLoading()
                             Log.d(TAG, "loginStatus: ${it.data?.token}")
                             addToken(it.data?.token)
-                            findNavController().navigate(R.id.homeFragment)
+                            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                            findNavController().clearBackStack(R.id.loginFragment)
                         }
 
                         is ResponseState.Error -> {

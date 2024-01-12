@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map_view"
-    android:name="com.mappls.sdk.maps.SupportMapFragment"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    map:cameraTilt="30"
+    map:uiRotateGestures="true"
+    map:uiZoomControls="true"
     tools:context=".Ui.Maps.MapsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,10 +22,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:weightSum="1"
             app:layout_constraintEnd_toEndOf="parent"
-            android:weightSum="1">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_back"
