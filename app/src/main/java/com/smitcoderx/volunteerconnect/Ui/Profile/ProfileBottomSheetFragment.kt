@@ -33,11 +33,8 @@ class ProfileBottomSheetFragment: BottomSheetDialogFragment(R.layout.fragment_bo
 
 
         binding.btnLogout.setOnClickListener {
-            prefs.setLoggedIn(false)
-            prefs.setToken("")
+            prefs.logoutUser()
             findNavController().navigate(ProfileBottomSheetFragmentDirections.actionProfileBottomSheetFragmentToLoginFragment())
-            findNavController().clearBackStack(R.id.profileBottomSheetFragment)
-            findNavController().clearBackStack(R.id.homeFragment)
         }
 
         binding.cardProfile.setOnClickListener {

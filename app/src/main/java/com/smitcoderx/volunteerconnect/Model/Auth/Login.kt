@@ -10,6 +10,8 @@ data class Login(
     @SerializedName("error")
     val error: String? = "",
     @SerializedName("message")
-    val message: String? = ""
+    val message: String? = "",
+    @SerializedName("role")
+    val role: String? = "",
 
 )

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.smitcoderx.volunteerconnect.Utils.Constants.LOGGEDIN
+import com.smitcoderx.volunteerconnect.Utils.Constants.ROLE
 import com.smitcoderx.volunteerconnect.Utils.Constants.TOKEN
 
 class DataStoreUtil(context: Context) {
@@ -16,6 +17,14 @@ class DataStoreUtil(context: Context) {
 
     fun getLoggedIn(): Boolean {
         return prefs.getBoolean(LOGGEDIN, false)
+    }
+
+    fun setRole(role: String?) {
+        prefs.edit().putString(ROLE, role).apply()
+    }
+
+    fun getRole(): String? {
+        return prefs.getString(ROLE, "")
     }
 
     fun setToken(token: String?) {

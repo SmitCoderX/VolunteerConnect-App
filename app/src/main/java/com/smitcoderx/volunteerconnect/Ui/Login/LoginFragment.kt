@@ -15,6 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.smitcoderx.volunteerconnect.Model.Auth.LoginData
 import com.smitcoderx.volunteerconnect.R
+import com.smitcoderx.volunteerconnect.Utils.Constants.ORGANIZATION
 import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
@@ -88,9 +89,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         is ResponseState.Success -> {
                             hideLoading()
                             Log.d(TAG, "loginStatus: ${it.data?.token}")
-                            addToken(it.data?.token)
-                            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
-                            findNavController().clearBackStack(R.id.loginFragment)
+                            addToken(it.data?.token, it.data?.role.toString())
+                            if(it.data?.role.equals("organization")) {
+                                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeOrgFragment())
+                            } else {
+                                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                            }
                         }
 
                         is ResponseState.Error -> {
@@ -139,9 +143,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
 
-    private fun addToken(token: String?) {
+    private fun addToken(token: String?, role: String) {
         dataStore.setLoggedIn(true)
         dataStore.setToken(token)
+        dataStore.setRole(role)
     }
 
 }

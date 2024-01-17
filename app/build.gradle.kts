@@ -124,6 +124,9 @@ dependencies {
     // Location Service
     implementation ("com.google.android.gms:play-services-location:21.0.1")
 
+    // Ticker Animation
+    implementation ("com.robinhood.ticker:ticker:2.0.4")
+
 
 
 }

@@ -30,7 +30,11 @@ class MainActivity : AppCompatActivity(), LoadingInterface {
         binding.bottomNav.setupWithNavController(navController)
         val prefs = DataStoreUtil(applicationContext)
         if(prefs.getLoggedIn()) {
-            navController.navigate(RegisterAsFragmentDirections.actionRegisterAsFragmentToHomeFragment())
+            if(prefs.getRole().equals("organization")) {
+                navController.navigate(RegisterAsFragmentDirections.actionRegisterAsFragmentToHomeOrgFragment())
+            } else {
+                navController.navigate(RegisterAsFragmentDirections.actionRegisterAsFragmentToHomeFragment())
+            }
             navController.clearBackStack(R.id.registerAsFragment)
         }
 

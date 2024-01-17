@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_10sdp"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:clickable="true"
+    android:focusable="true"
+    android:id="@+id/card"
+    app:strokeWidth="@dimen/dimen_0"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_5sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:textAlignment="textStart"
+            android:textColor="@color/trans_black"
+            android:textSize="@dimen/_15ssp"
+            tools:text="Some Text " />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_ans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:textAlignment="textStart"
+            android:textSize="@dimen/_20ssp"
+            android:textColor="@color/black"
+            tools:text="Some Text " />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

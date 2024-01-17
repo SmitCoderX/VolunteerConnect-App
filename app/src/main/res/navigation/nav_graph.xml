@@ -18,6 +18,9 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/registerAsFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_loginFragment_to_homeOrgFragment"
+            app:destination="@id/homeOrgFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerAsFragment"
@@ -34,6 +37,9 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/registerAsFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_registerAsFragment_to_homeOrgFragment"
+            app:destination="@id/homeOrgFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -90,5 +96,14 @@
         android:name="com.smitcoderx.volunteerconnect.Ui.Profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
+    </fragment>
+    <fragment
+        android:id="@+id/homeOrgFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.HomeOrg.HomeOrgFragment"
+        android:label="fragment_home_org"
+        tools:layout="@layout/fragment_home_org" >
+        <action
+            android:id="@+id/action_homeOrgFragment_to_profileBottomSheetFragment"
+            app:destination="@id/profileBottomSheetFragment" />
     </fragment>
 </navigation>
