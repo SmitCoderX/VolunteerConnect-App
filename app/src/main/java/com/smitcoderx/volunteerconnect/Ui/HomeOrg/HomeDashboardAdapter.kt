@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.Glide
 import com.smitcoderx.volunteerconnect.databinding.LayoutDashBinding
 import java.util.Random
 
@@ -24,6 +25,10 @@ class HomeDashboardAdapter(private val triggerCount: TriggerCount) :
             fun bind(data: HomeOrgModel) {
                 binding.card.background = generateRandomColor()
                 binding.tvTitle.text = data.title
+                Glide.with(binding.root)
+                    .load(data.drawable)
+                    .into(binding.ivIcon)
+
                 val valueAnimator = (if (data.id == 5) 0 else data.value?.toInt())?.let {
                     ValueAnimator.ofInt(
                         it

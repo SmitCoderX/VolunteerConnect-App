@@ -51,6 +51,24 @@
     <string name="update">Update Profile</string>
     <string name="retry">Retry</string>
     <string name="add">Add</string>
+    <string name="add_event">Add Event</string>
+    <string name="add_post">Add Post</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="remove_image">Remove Image</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="address">Address</string>
+    <string name="next">Next</string>
+    <string name="volunteer_count">Volunteer Count</string>
+    <string name="skills">Skills</string>
+    <string name="event_type">Event Type</string>
+    <string name="private_text">Private</string>
+    <string name="public_text">Public</string>
+    <string name="free">Free</string>
+    <string name="paid">Paid</string>
+    <string name="event_fee">Event Fee</string>
+    <string name="payment">Payment <font size = "30">(per person)</font></string>
+    <string name="proofs_need">Proofs Need</string>
 
 
 </resources>

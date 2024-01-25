@@ -16,4 +16,9 @@
         <item name="android:singleLine">true</item>
         <item name="color">@android:color/darker_gray</item>
     </style>
+
+    <style name="TextLabel" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="fontFamily">@font/poppins</item>
+    </style>
 </resources>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Ui.Profile.ProfileBottomSheetFragment"
+    android:background="@drawable/bg_bottom_sheet_rounded"
+    android:padding="@dimen/_5sdp">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_5sdp"
+        android:background="@drawable/bg_rounded_tab_look"
+        android:backgroundTint="@color/trans_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_add_post"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:clickable="true"
+        android:focusable="true"
+        app:strokeWidth="@dimen/dimen_0"
+        app:cardBackgroundColor="@color/trans_grey"
+        android:background="?selectableItemBackgroundBorderless"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/card_add_event"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/post_layer_list"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_post"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins"/>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_add_event"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/trans_grey"
+        app:strokeWidth="@dimen/dimen_0"
+        android:background="?selectableItemBackgroundBorderless"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/card_add_post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/event_layer_list" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/add_event" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

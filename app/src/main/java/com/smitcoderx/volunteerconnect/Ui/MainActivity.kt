@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), LoadingInterface {
         val prefs = DataStoreUtil(applicationContext)
         if(prefs.getLoggedIn()) {
             if(prefs.getRole().equals("organization")) {
-                navController.navigate(RegisterAsFragmentDirections.actionRegisterAsFragmentToHomeOrgFragment())
+                navController.navigate(R.id.homeOrgFragment)
             } else {
                 navController.navigate(RegisterAsFragmentDirections.actionRegisterAsFragmentToHomeFragment())
             }

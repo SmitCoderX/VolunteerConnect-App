@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    tools:context=".Ui.Events.EventFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_10sdp"
+        android:animateLayoutChanges="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="@id/tv_welcome_fp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_welcome_fp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_welcome_fp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="@string/add_event"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20ssp"
+            app:fontFamily="@font/poppins_medium"
+            app:layout_constraintStart_toEndOf="@id/iv_back"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_img"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_welcome_fp"
+            app:strokeWidth="0dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_eventImg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:scaleType="fitXY"
+                tools:src="@mipmap/ic_launcher" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_add_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:layout_constraintEnd_toStartOf="@id/card_delete_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_img">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:src="@drawable/camera"
+                    android:tint="@color/black" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_add_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/upload_image"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_delete_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:visibility="gone"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/card_add_image"
+            app:layout_constraintTop_toBottomOf="@id/card_img">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:src="@drawable/bin"
+                    android:tint="@color/black" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/remove_image"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_title"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_add_image">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="@string/title"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_desc"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="top|start"
+                android:hint="@string/description"
+                android:inputType="textCapSentences|textMultiLine"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_address"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_desc">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="top|start"
+                android:hint="@string/address"
+                android:inputType="textCapSentences|textMultiLine"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_mobile"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_address">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="top|start"
+                android:hint="@string/mobile"
+                android:inputType="number"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_email"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_mobile">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="@string/email_hint"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_50sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/next"
+            android:textColor="@color/toolbar_color"
+            android:textAllCaps="false"
+            android:drawableTint="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/bg_rounded_tab_look"
+            android:backgroundTint="@color/accent_color"
+            android:fontFamily="@font/poppins"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintTop_toBottomOf="@id/til_email"
+            app:cornerRadius="@dimen/_5sdp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

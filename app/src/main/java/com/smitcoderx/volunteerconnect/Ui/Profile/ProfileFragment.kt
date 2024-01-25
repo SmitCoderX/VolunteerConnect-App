@@ -2,6 +2,7 @@ package com.smitcoderx.volunteerconnect.Ui.Profile
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -9,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.material.textfield.TextInputLayout
 import com.smitcoderx.volunteerconnect.Model.User.UpateData
 import com.smitcoderx.volunteerconnect.R
+import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
@@ -37,7 +40,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         updateStatus()
 
         binding.tilEmail.setEndIconOnClickListener {
-            binding.tilEmail.isEnabled = true
+
+           binding.tilEmail.isEnabled = true
         }
 
         binding.tilName.setEndIconOnClickListener {
@@ -205,5 +209,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
         }
         return isValid
+    }
+
+    companion object {
+        fun TextInputLayout.changeable(): Boolean {
+            return isEnabled
+        }
     }
 }

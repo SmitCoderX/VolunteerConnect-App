@@ -6,7 +6,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -70,16 +69,16 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
         val dashAdapter = HomeDashboardAdapter(this)
 
         val data = listOf(
-            HomeOrgModel(1, "Number of Events Live", "5"),
-            HomeOrgModel(2, "Followers", "105"),
-            HomeOrgModel(3, "No of Events(last Month)", "10"),
-            HomeOrgModel(4, "Completed Events", "50"),
-            HomeOrgModel(5, "From Date", "10 Jan 2024"),
-            HomeOrgModel(6, "Total Volunteer Requests", "50"),
-            HomeOrgModel(7, "Number of Volunteers", "500"),
-            HomeOrgModel(8, "Posts", "25"),
-            HomeOrgModel(9, "Forums", "5"),
-            HomeOrgModel(10, "Certifications", "10"),
+            HomeOrgModel(1, "Number of Events Live", "5", R.drawable.give),
+            HomeOrgModel(2, "Followers", "105", R.drawable.tealeaf),
+            HomeOrgModel(3, "No of Events(last Month)", "10", R.drawable.hand),
+            HomeOrgModel(4, "Completed Events", "50", R.drawable.milestone),
+            HomeOrgModel(5, "From Date", "10 Jan 2024", R.drawable.hourglass),
+            HomeOrgModel(6, "Total Volunteer Requests", "50", R.drawable.reachout),
+            HomeOrgModel(7, "Number of Volunteers", "500", R.drawable.collaboration),
+            HomeOrgModel(8, "Posts", "25", R.drawable.post),
+            HomeOrgModel(9, "Forums", "5", R.drawable.workshop),
+            HomeOrgModel(10, "Certifications", "10", R.drawable.certificate),
         )
 
         dashAdapter.differ.submitList(data)
@@ -103,6 +102,12 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
 
             homeViewModel.getLoggedInData(prefs.getToken().toString())
             homeViewModel.getCategoryList()
+        }
+
+        binding.fabAdd.setOnClickListener {
+            val action =
+                HomeOrgFragmentDirections.actionHomeOrgFragmentToAddBottomSheetFragment(userData?.data!!)
+            findNavController().navigate(action)
         }
 
     }
@@ -246,7 +251,7 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
     }
 
     override fun OnItemClick(item: HomeOrgModel) {
-        when(item.id) {
+        when (item.id) {
             1 -> {
 
             }

@@ -9,7 +9,7 @@
         android:id="@+id/loginFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
@@ -17,18 +17,20 @@
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/registerAsFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_homeOrgFragment"
-            app:destination="@id/homeOrgFragment" />
+            app:destination="@id/homeOrgFragment"
+            app:popUpTo="@id/registerAsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registerAsFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Register.RegisterAsFragment"
-        android:label="RegisterAsFragment" >
+        android:label="RegisterAsFragment">
         <action
             android:id="@+id/action_registerAsFragment_to_loginFragment"
-            app:destination="@id/loginFragment"/>
+            app:destination="@id/loginFragment" />
         <action
             android:id="@+id/action_registerAsFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
@@ -45,7 +47,7 @@
         android:id="@+id/registerFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <argument
             android:name="role"
             app:argType="string" />
@@ -61,14 +63,13 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Home.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_mapsFragment"
             app:destination="@id/mapsFragment" />
         <action
             android:id="@+id/action_homeFragment_to_profileBottomSheetFragment"
-            app:destination="@id/profileBottomSheetFragment"
-            />
+            app:destination="@id/profileBottomSheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
@@ -78,7 +79,7 @@
         android:id="@+id/profileBottomSheetFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Profile.ProfileBottomSheetFragment"
         android:label="fragment_bottom_sheet_profile"
-        tools:layout="@layout/fragment_bottom_sheet_profile" >
+        tools:layout="@layout/fragment_bottom_sheet_profile">
         <argument
             android:name="UserData"
             app:argType="com.smitcoderx.volunteerconnect.Model.User.UserData" />
@@ -88,22 +89,52 @@
         <action
             android:id="@+id/action_profileBottomSheetFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/homeFragment"/>
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </dialog>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/homeOrgFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.HomeOrg.HomeOrgFragment"
         android:label="fragment_home_org"
-        tools:layout="@layout/fragment_home_org" >
+        tools:layout="@layout/fragment_home_org">
         <action
             android:id="@+id/action_homeOrgFragment_to_profileBottomSheetFragment"
             app:destination="@id/profileBottomSheetFragment" />
+        <action
+            android:id="@+id/action_homeOrgFragment_to_addBottomSheetFragment"
+            app:destination="@id/addBottomSheetFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/addBottomSheetFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.HomeOrg.BottomSheets.AddBottomSheetFragment"
+        android:label="AddBottomSheetFragment" >
+        <argument
+            android:name="UserData"
+            app:argType="com.smitcoderx.volunteerconnect.Model.User.UserData" />
+        <action
+            android:id="@+id/action_addBottomSheetFragment_to_eventFragment"
+            app:destination="@id/eventFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Events.EventFragment"
+        android:label="fragment_event"
+        tools:layout="@layout/fragment_event" >
+        <action
+            android:id="@+id/action_eventFragment_to_eventVolunteerFragment"
+            app:destination="@id/eventVolunteerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventVolunteerFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Events.EventVolunteerFragment"
+        android:label="EventVolunteerFragment" >
+        <argument
+            android:name="EventData"
+            app:argType="com.smitcoderx.volunteerconnect.Ui.Events.EventDataModel" />
     </fragment>
 </navigation>

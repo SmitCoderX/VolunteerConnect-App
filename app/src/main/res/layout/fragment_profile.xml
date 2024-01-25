@@ -4,34 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Ui.Profile.ProfileFragment"
-    android:padding="@dimen/_10sdp">
+    android:padding="@dimen/_10sdp"
+    tools:context=".Ui.Profile.ProfileFragment">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_back"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="@dimen/_3sdp"
-        app:layout_constraintTop_toTopOf="@id/tv_welcome_fp"
-        android:src="@drawable/ic_back"
+        android:background="?selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
-        android:background="?selectableItemBackgroundBorderless"
-        app:layout_constraintBottom_toBottomOf="@id/tv_welcome_fp" />
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@id/tv_welcome_fp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_welcome_fp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_welcome_fp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_10sdp"
+        android:gravity="center"
         android:text="@string/action_profile"
         android:textColor="@color/black"
-        android:gravity="center"
         android:textSize="@dimen/_20ssp"
-        app:layout_constraintStart_toEndOf="@id/iv_back"
         app:fontFamily="@font/poppins_medium"
+        app:layout_constraintStart_toEndOf="@id/iv_back"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
@@ -39,11 +39,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome_fp">
 
-        <include layout="@layout/shimmer_effect_profile"/>
+        <include layout="@layout/shimmer_effect_profile" />
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -52,164 +53,172 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_15sdp"
-        app:layout_constraintTop_toBottomOf="@id/shimmerEffect"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_profile"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
-        android:layout_margin="@dimen/_10sdp"
+        android:visibility="visible"
+        android:animateLayoutChanges="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/ic_launcher_round" />
+        app:layout_constraintTop_toBottomOf="@id/shimmerEffect">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_image"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:src="@drawable/edit_layer_list"
-        android:layout_marginEnd="5dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?selectableItemBackgroundBorderless"
-        app:layout_constraintEnd_toEndOf="@id/iv_profile"
-        app:layout_constraintBottom_toBottomOf="@id/iv_profile"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_margin="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/ic_launcher_round" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_username"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_15sdp"
-        app:hintEnabled="false"
-        android:enabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_profile">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_image"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginEnd="5dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/edit_layer_list"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile"
+            app:layout_constraintEnd_toEndOf="@id/iv_profile" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_username_login"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_username"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_bottom_bg"
-            android:drawableStart="@drawable/ic_user"
-            android:textCursorDrawable="@drawable/edittext_cursor"
-            android:drawablePadding="@dimen/_20sdp"
-            android:drawableTint="@android:color/darker_gray"
-            android:fontFamily="@font/poppins_medium"
-            android:hint="@string/username"
+            android:layout_marginTop="@dimen/_15sdp"
             android:enabled="false"
-            android:inputType="text"
-            android:maxLines="1" />
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_profile">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_username_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:drawableStart="@drawable/ic_user"
+                android:drawablePadding="@dimen/_20sdp"
+                android:drawableTint="@android:color/darker_gray"
+                android:enabled="false"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="@string/username"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_15sdp"
-        app:hintEnabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:endIconDrawable="@drawable/ic_edit"
-        app:endIconMode="custom"
-        app:layout_constraintStart_toStartOf="@id/til_username"
-        app:layout_constraintTop_toBottomOf="@id/til_username">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_name_login"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_name"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_bottom_bg"
-            android:drawableStart="@drawable/ic_user"
-            android:drawablePadding="@dimen/_20sdp"
-            android:textCursorDrawable="@drawable/edittext_cursor"
-            android:drawableTint="@android:color/darker_gray"
-            android:fontFamily="@font/poppins_medium"
-            android:hint="@string/name"
-            android:enabled="false"
-            android:inputType="textCapWords"
-            android:maxLines="1" />
+            android:layout_marginTop="@dimen/_15sdp"
+            app:endIconDrawable="@drawable/ic_edit"
+            app:endIconMode="custom"
+            app:hintEnabled="false"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/til_username"
+            app:layout_constraintTop_toBottomOf="@id/til_username">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:drawableStart="@drawable/ic_user"
+                android:drawablePadding="@dimen/_20sdp"
+                android:drawableTint="@android:color/darker_gray"
+                android:enabled="false"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="@string/name"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_15sdp"
-        app:hintEnabled="false"
-        app:endIconDrawable="@drawable/ic_edit"
-        app:endIconMode="custom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/til_name"
-        app:layout_constraintTop_toBottomOf="@id/til_name">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_email_login"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_email"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_bottom_bg"
-            android:drawableStart="@drawable/ic_mail"
-            android:drawablePadding="@dimen/_20sdp"
-            android:textCursorDrawable="@drawable/edittext_cursor"
-            android:drawableTint="@android:color/darker_gray"
-            android:fontFamily="@font/poppins_medium"
-            android:hint="@string/email_hint"
-            android:enabled="false"
-            android:inputType="textEmailAddress"
-            android:maxLines="1" />
+            android:layout_marginTop="@dimen/_15sdp"
+            app:endIconDrawable="@drawable/ic_edit"
+            app:endIconMode="custom"
+            app:hintEnabled="false"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/til_name"
+            app:layout_constraintTop_toBottomOf="@id/til_name">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:drawableStart="@drawable/ic_mail"
+                android:drawablePadding="@dimen/_20sdp"
+                android:drawableTint="@android:color/darker_gray"
+                android:enabled="false"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="@string/email_hint"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_mobile"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_15sdp"
-        app:hintEnabled="false"
-        app:endIconDrawable="@drawable/ic_edit"
-        app:endIconMode="custom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/til_email"
-        app:layout_constraintTop_toBottomOf="@id/til_email">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_mobileNo"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_mobile"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_bottom_bg"
-            android:drawableStart="@drawable/ic_phone"
-            android:drawablePadding="@dimen/_20sdp"
-            android:maxLength="10"
-            android:drawableTint="@android:color/darker_gray"
-            android:fontFamily="@font/poppins_medium"
-            android:hint="@string/mobile"
-            android:enabled="false"
-            android:textCursorDrawable="@drawable/edittext_cursor"
-            android:inputType="phone"
-            android:maxLines="1" />
+            android:layout_marginTop="@dimen/_15sdp"
+            app:endIconDrawable="@drawable/ic_edit"
+            app:endIconMode="custom"
+            app:hintEnabled="false"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/til_email"
+            app:layout_constraintTop_toBottomOf="@id/til_email">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_mobileNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:drawableStart="@drawable/ic_phone"
+                android:drawablePadding="@dimen/_20sdp"
+                android:drawableTint="@android:color/darker_gray"
+                android:enabled="false"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="@string/mobile"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_register"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:background="@drawable/bg_rounded_tab_look"
-        android:backgroundTint="@color/accent_color"
-        android:fontFamily="@font/poppins"
-        android:text="@string/update"
-        android:textAllCaps="false"
-        android:textColor="@color/toolbar_color"
-        android:textSize="@dimen/_13ssp"
-        app:layout_constraintEnd_toEndOf="@id/til_mobile"
-        app:layout_constraintStart_toStartOf="@id/til_mobile"
-        app:layout_constraintTop_toBottomOf="@id/til_mobile" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_register"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/bg_rounded_tab_look"
+            android:backgroundTint="@color/accent_color"
+            android:fontFamily="@font/poppins"
+            android:text="@string/update"
+            android:textAllCaps="false"
+            android:textColor="@color/toolbar_color"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintEnd_toEndOf="@id/til_mobile"
+            app:layout_constraintStart_toStartOf="@id/til_mobile"
+            app:layout_constraintTop_toBottomOf="@id/til_mobile" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
