@@ -1,19 +1,31 @@
 package com.smitcoderx.volunteerconnect.Ui.Events
 
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.TimePicker
 import androidx.core.content.ContextCompat
+import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.databinding.FragmentEventVolunteerBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+
 
 class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer) {
 
     private lateinit var binding: FragmentEventVolunteerBinding
     private val args by navArgs<EventVolunteerFragmentArgs>()
+    private val calendar = Calendar.getInstance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,6 +34,10 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer) {
 
         handleSkills()
         handleRadioGroups()
+
+        binding.tilStartTime.editText?.setOnClickListener {
+            datePickerDialog()
+        }
     }
 
     private fun addChipToGroup(skill: String) {
@@ -70,5 +86,61 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer) {
             }
         }
     }
+
+    private fun datePickerDialog() {
+        val builder: MaterialDatePicker.Builder<Pair<Long, Long>> =
+            MaterialDatePicker.Builder.dateRangePicker()
+        builder.setTitleText("Select Event Dates")
+        val currentTime = calendar.timeInMillis
+        val constraintsBuilder = CalendarConstraints.Builder()
+        constraintsBuilder.setStart(currentTime)
+        constraintsBuilder.setValidator(DateValidatorPointForward.now())
+        builder.setCalendarConstraints(constraintsBuilder.build())
+        val datePicker = builder.build()
+        datePicker.addOnPositiveButtonClickListener {
+            val endDate = it.second
+            // Formating the selected dates as strings
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val startDateString: String = sdf.format(Date(currentTime))
+            val endDateString: String = sdf.format(Date(endDate))
+
+            binding.tilStartTime.editText?.setText(startDateString)
+            binding.tilEndTime.editText?.setText(endDateString)
+
+            showTimePickerDialog()
+        }
+
+        datePicker.show(childFragmentManager, "DATE_PICKER")
+    }
+
+    private fun showTimePickerDialog() {
+        val hour = calendar[Calendar.HOUR_OF_DAY]
+        val minute = calendar[Calendar.MINUTE]
+        val timeStartPickerDialog = TimePickerDialog(
+            context,
+            { _: TimePicker?, hourOfDay: Int, minuteOfDay: Int ->
+                binding.tilStartTime.editText?.text?.append(", $hourOfDay:$minuteOfDay")
+            },
+            hour,
+            minute,
+            true // 24-hour format
+        )
+
+        val timeEndPickerDialog = TimePickerDialog(
+            context,
+            { _: TimePicker?, hourOfDay: Int, minuteOfDay: Int ->
+                binding.tilEndTime.editText?.text?.append(", $hourOfDay:$minuteOfDay")
+            },
+            hour,
+            minute,
+            true // 24-hour format
+        )
+
+        timeStartPickerDialog.setTitle("Event Start Time")
+        timeEndPickerDialog.setTitle("Event End Time")
+        timeEndPickerDialog.show()
+        timeStartPickerDialog.show()
+    }
+
 
 }

@@ -224,6 +224,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            app:prefixText="₹"
             app:hintTextAppearance="@style/TextLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -244,9 +245,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_email"
+            android:id="@+id/til_startTime"
             style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             app:hintTextAppearance="@style/TextLabel"
@@ -255,14 +256,61 @@
             app:layout_constraintTop_toBottomOf="@id/til_payment">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_email_login"
+                android:id="@+id/et_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_bottom_bg"
                 android:fontFamily="@font/poppins_medium"
-                android:hint="@string/email_hint"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:hint="@string/start_time_and_date"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_endTime"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_startTime">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:hint="@string/end_time_and_date"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_goodies"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_endTime">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_goodies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="@string/goodies"
+                android:inputType="textCapSentences|textMultiLine"
                 android:textCursorDrawable="@drawable/edittext_cursor" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -285,7 +333,7 @@
             app:cornerRadius="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_email" />
+            app:layout_constraintTop_toBottomOf="@id/til_goodies" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
