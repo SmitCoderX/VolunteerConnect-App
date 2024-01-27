@@ -14,18 +14,24 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.smitcoderx.volunteerconnect.R
+import com.smitcoderx.volunteerconnect.Ui.Events.Sheets.ForumDialogFragment
+import com.smitcoderx.volunteerconnect.Utils.Constants.FORUM_NAME
 import com.smitcoderx.volunteerconnect.databinding.FragmentEventVolunteerBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 
-class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer) {
+@AndroidEntryPoint
+class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
+    ForumDialogFragment.OnSheetWork {
 
     private lateinit var binding: FragmentEventVolunteerBinding
     private val args by navArgs<EventVolunteerFragmentArgs>()
     private val calendar = Calendar.getInstance()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,6 +44,19 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer) {
         binding.tilStartTime.editText?.setOnClickListener {
             datePickerDialog()
         }
+
+        binding.checkboxForum.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val addItemDialog = ForumDialogFragment(this)
+                val bundle = Bundle()
+                bundle.putString(FORUM_NAME, "Forum-${eventDataModel.title}")
+                addItemDialog.arguments = bundle
+                addItemDialog.show(childFragmentManager, addItemDialog.tag)
+            } else {
+                binding.checkboxForum.text = requireContext().getText(R.string.forum_label)
+            }
+        }
+
     }
 
     private fun addChipToGroup(skill: String) {
@@ -142,5 +161,11 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer) {
         timeStartPickerDialog.show()
     }
 
-
+    override fun onSheetClose(name: String) {
+        if (name.isEmpty()) {
+            binding.checkboxForum.isChecked = false
+        } else {
+            binding.checkboxForum.text = "Forum Will be Created by Name: $name"
+        }
+    }
 }

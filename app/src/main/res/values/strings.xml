@@ -70,8 +70,17 @@
     <string name="payment">Payment <font size = "30">(per person)</font></string>
     <string name="proofs_need">Proofs Need</string>
     <string name="goodies">Goodies</string>
+    <string name="timing">Event Timings</string>
     <string name="start_time_and_date">Start Time and Date</string>
     <string name="end_time_and_date">End Time and Date</string>
+    <string name="resource_center">Upload Resource Center</string>
+    <string name="resource_center_title">Resource Center</string>
+    <string name="add_questions">Add Questions</string>
+    <string name="forum">Forum</string>
+    <string name="forum_label">Create Forum with the Event</string>
+    <string name="forum_name">Forum Name</string>
+    <string name="forum_name_label">By default Forum Name is given. If you wish to change you can rename here.</string>
+    <string name="set_name">Set Name</string>
 
 
 </resources>
