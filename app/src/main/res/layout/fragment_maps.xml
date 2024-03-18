@@ -9,8 +9,7 @@
     android:layout_height="match_parent"
     map:cameraTilt="30"
     map:uiRotateGestures="true"
-    map:uiZoomControls="true"
-    tools:context=".Ui.Maps.MapsFragment">
+    map:uiZoomControls="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

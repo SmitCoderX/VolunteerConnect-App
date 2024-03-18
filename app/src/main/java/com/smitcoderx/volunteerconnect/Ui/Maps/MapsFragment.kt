@@ -2,6 +2,7 @@ package com.smitcoderx.volunteerconnect.Ui.Maps
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.IntentSender.SendIntentException
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -11,8 +12,15 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.PendingResult
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.LocationSettingsResult
+import com.google.android.gms.location.LocationSettingsStatusCodes
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -23,6 +31,7 @@ import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.databinding.FragmentMapsBinding
 
+
 class MapsFragment : Fragment(R.layout.fragment_maps), OnMapReadyCallback {
 
     private lateinit var binding: FragmentMapsBinding
@@ -30,6 +39,8 @@ class MapsFragment : Fragment(R.layout.fragment_maps), OnMapReadyCallback {
     private var locationPermissionGranted = false
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var map: GoogleMap? = null
+    private var googleApiClient: GoogleApiClient? = null
+    val REQUEST_LOCATION = 199
     private var lastKnownLocation: Location? = null
     private val defaultLocation = LatLng(-33.8523341, 151.2106085)
 
@@ -43,7 +54,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps), OnMapReadyCallback {
 
         supportFragment = childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
 
-        supportFragment.getMapAsync (this)
+        supportFragment.getMapAsync(this)
 
 
         binding.ivBack.setOnClickListener {
@@ -94,6 +105,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps), OnMapReadyCallback {
                     grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
                     locationPermissionGranted = true
+                } else {
                 }
             }
 
@@ -112,6 +124,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps), OnMapReadyCallback {
                 map?.isMyLocationEnabled = true
                 map?.uiSettings?.isMyLocationButtonEnabled = true
             } else {
+                enableLoc()
                 map?.isMyLocationEnabled = false
                 map?.uiSettings?.isMyLocationButtonEnabled = false
                 lastKnownLocation = null
@@ -148,6 +161,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps), OnMapReadyCallback {
                     } else {
                         Log.d(TAG, "Current location is null. Using defaults.")
                         Log.e(TAG, "Exception: %s", task.exception)
+//                        enableLocationSettings()
                         map?.moveCamera(
                             CameraUpdateFactory
                                 .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
@@ -183,5 +197,53 @@ class MapsFragment : Fragment(R.layout.fragment_maps), OnMapReadyCallback {
             outState.putParcelable(KEY_LOCATION, lastKnownLocation)
         }
         super.onSaveInstanceState(outState)
+    }
+
+    private fun enableLoc() {
+        if (googleApiClient == null) {
+            googleApiClient = GoogleApiClient.Builder(requireContext())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
+                    override fun onConnected(bundle: Bundle?) {
+
+                    }
+                    override fun onConnectionSuspended(i: Int) {
+                        googleApiClient?.connect()
+                    }
+                })
+                .addOnConnectionFailedListener { connectionResult ->
+                    Log.d(
+                        "Location error",
+                        "Location error " + connectionResult.errorCode
+                    )
+                }.build()
+            googleApiClient!!.connect()
+            val locationRequest = LocationRequest.create()
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+            locationRequest.setInterval((30 * 1000).toLong())
+            locationRequest.setFastestInterval((5 * 1000).toLong())
+            val builder = LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest)
+            builder.setAlwaysShow(true)
+            val result: PendingResult<LocationSettingsResult> =
+                LocationServices.SettingsApi.checkLocationSettings(
+                    googleApiClient!!,
+                    builder.build()
+                )
+            result.setResultCallback { result ->
+                val status: Status = result.status
+                when (status.getStatusCode()) {
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+                        // Show the dialog by calling startResolutionForResult(),
+                        // and check the result in onActivityResult().
+                        status.startResolutionForResult(requireActivity(), REQUEST_LOCATION)
+
+                        //                                finish();
+                    } catch (e: SendIntentException) {
+                        // Ignore the error.
+                    }
+                }
+            }
+        }
     }
 }

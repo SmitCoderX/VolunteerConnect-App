@@ -210,10 +210,4 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
         return isValid
     }
-
-    companion object {
-        fun TextInputLayout.changeable(): Boolean {
-            return isEnabled
-        }
-    }
 }

@@ -33,12 +33,12 @@ class EventFragment : Fragment(R.layout.fragment_event) {
         }
 
         binding.btnNext.setOnClickListener {
-            val eventData = EventDataModel(
-                binding.tilTitle.editText?.text.toString().trim(),
-                binding.tilDesc.editText?.text.toString().trim(),
-                binding.tilAddress.editText?.text.toString().trim(),
-                binding.tilMobile.editText?.text.toString().trim(),
-                binding.tilEmail.editText?.text.toString().trim(),
+            val eventData = Data(
+                name = binding.tilTitle.editText?.text.toString().trim(),
+                desc = binding.tilDesc.editText?.text.toString().trim(),
+                address = binding.tilAddress.editText?.text.toString().trim(),
+                phone = binding.tilMobile.editText?.text.toString().trim(),
+                email = binding.tilEmail.editText?.text.toString().trim(),
             )
             val action =
                 EventFragmentDirections.actionEventFragmentToEventVolunteerFragment(eventData)

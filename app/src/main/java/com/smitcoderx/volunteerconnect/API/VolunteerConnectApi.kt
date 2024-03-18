@@ -6,6 +6,8 @@ import com.smitcoderx.volunteerconnect.Model.Auth.RegisterData
 import com.smitcoderx.volunteerconnect.Model.Category.CategoryResponse
 import com.smitcoderx.volunteerconnect.Model.User.UpateData
 import com.smitcoderx.volunteerconnect.Model.User.UserDataModel
+import com.smitcoderx.volunteerconnect.Ui.Events.Data
+import com.smitcoderx.volunteerconnect.Ui.Events.EventDataModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -53,6 +55,12 @@ interface VolunteerConnectApi {
     @GET("category")
     suspend fun getCategoryList(): Response<CategoryResponse>
 
+    @Headers("Content-Type: Application/Json;charset=UTF-8")
+    @POST("events")
+    suspend fun createEvent(
+        @Header("Authorization") token: String,
+        @Body eventData: Data
+    ): Response<EventDataModel>
 
 
 }

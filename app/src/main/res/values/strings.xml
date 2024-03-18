@@ -81,6 +81,7 @@
     <string name="forum_name">Forum Name</string>
     <string name="forum_name_label">By default Forum Name is given. If you wish to change you can rename here.</string>
     <string name="set_name">Set Name</string>
+    <string name="category">Category</string>
 
 
 </resources>
