@@ -6,8 +6,8 @@ import com.smitcoderx.volunteerconnect.Model.Auth.RegisterData
 import com.smitcoderx.volunteerconnect.Model.Category.CategoryResponse
 import com.smitcoderx.volunteerconnect.Model.User.UpateData
 import com.smitcoderx.volunteerconnect.Model.User.UserDataModel
-import com.smitcoderx.volunteerconnect.Ui.Events.Data
-import com.smitcoderx.volunteerconnect.Ui.Events.EventDataModel
+import com.smitcoderx.volunteerconnect.Ui.Events.Models.Data
+import com.smitcoderx.volunteerconnect.Ui.Events.Models.EventDataModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

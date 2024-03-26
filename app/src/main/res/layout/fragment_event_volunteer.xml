@@ -107,10 +107,23 @@
                 android:fontFamily="@font/poppins_medium"
                 android:hint="@string/category"
                 android:inputType="textCapWords"
+                android:imeOptions="actionDone"
                 android:maxLines="1"
                 android:textCursorDrawable="@drawable/edittext_cursor" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:chipSpacingHorizontal="@dimen/_5sdp"
+            app:chipSpacingVertical="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_category">
+
+        </com.google.android.material.chip.ChipGroup>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_skills_head"
@@ -123,7 +136,7 @@
             android:textSize="@dimen/_18ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_category" />
+            app:layout_constraintTop_toBottomOf="@id/chip_category" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_skills"
@@ -195,6 +208,18 @@
                 android:textSize="@dimen/_12ssp" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/r_fees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/paid"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/r_private"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -209,6 +234,32 @@
         </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_fee"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:prefixText="₹"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radio_event_type">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_fee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="top|start"
+                android:hint="@string/fee_hint"
+                android:inputType="number"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_private"
             style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
             android:layout_width="0dp"
@@ -217,7 +268,7 @@
             app:hintTextAppearance="@style/TextLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/radio_event_type">
+            app:layout_constraintTop_toBottomOf="@id/til_fee">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_private"

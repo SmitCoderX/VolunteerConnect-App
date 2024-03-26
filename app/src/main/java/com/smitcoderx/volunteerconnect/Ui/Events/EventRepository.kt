@@ -1,8 +1,12 @@
 package com.smitcoderx.volunteerconnect.Ui.Events
 
 import android.content.Context
+import android.util.Log
 import com.smitcoderx.volunteerconnect.API.VolunteerConnectApi
 import com.smitcoderx.volunteerconnect.R
+import com.smitcoderx.volunteerconnect.Ui.Events.Models.Data
+import com.smitcoderx.volunteerconnect.Ui.Events.Models.EventDataModel
+import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.errorResponse
 import com.smitcoderx.volunteerconnect.Utils.hasInternetConnection
@@ -33,6 +37,7 @@ class EventRepository @Inject constructor(
         return if (response.isSuccessful && response.body()?.success == true) {
             ResponseState.Success(response.body())
         } else {
+            Log.d(TAG, "createEventError: ${response.errorBody()}")
             ResponseState.Error(errorResponse(response)?.error.toString())
         }
     }

@@ -135,6 +135,6 @@
         android:label="EventVolunteerFragment" >
         <argument
             android:name="EventData"
-            app:argType="com.smitcoderx.volunteerconnect.Ui.Events.Data" />
+            app:argType="com.smitcoderx.volunteerconnect.Ui.Events.Models.Data" />
     </fragment>
 </navigation>

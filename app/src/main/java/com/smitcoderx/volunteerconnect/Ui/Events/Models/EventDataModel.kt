@@ -1,4 +1,4 @@
-package com.smitcoderx.volunteerconnect.Ui.Events
+package com.smitcoderx.volunteerconnect.Ui.Events.Models
 
 
 import android.os.Parcelable

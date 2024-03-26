@@ -63,11 +63,13 @@
     <string name="skills">Skills</string>
     <string name="event_type">Event Type</string>
     <string name="private_text">Private</string>
+    <string name="fee_text">Fee</string>
     <string name="public_text">Public</string>
     <string name="free">Free</string>
     <string name="paid">Paid</string>
-    <string name="event_fee">Event Fee</string>
+    <string name="event_fee">Event Fees</string>
     <string name="payment">Payment <font size = "30">(per person)</font></string>
+    <string name="fee_hint">Fee <font size = "30">(per person)</font></string>
     <string name="proofs_need">Proofs Need</string>
     <string name="goodies">Goodies</string>
     <string name="timing">Event Timings</string>
