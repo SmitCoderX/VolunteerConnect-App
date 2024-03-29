@@ -19,6 +19,7 @@ import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
+import com.smitcoderx.volunteerconnect.Utils.hasInternetConnection
 import com.smitcoderx.volunteerconnect.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -47,7 +48,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
         binding = FragmentHomeBinding.bind(view)
 
         prefs = DataStoreUtil(requireContext())
-        homeViewModel.getLoggedInData(prefs.getToken().toString())
+        homeViewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
+        homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
+        homeViewModel.getCategoryList()
 
         binding.ivNotification.clipToOutline = false
         val badgeDrawable = BadgeDrawable.create(requireContext())
@@ -91,7 +94,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
             binding.shimmerEffect.visibility = View.VISIBLE
             binding.shimmerEffect.startShimmerAnimation()
 
-            homeViewModel.getLoggedInData(prefs.getToken().toString())
+            homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
             homeViewModel.getCategoryList()
 //            handleCurrentUser()
 //            handleCategoryData()
@@ -220,7 +223,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
         binding.shimmerEffect.startShimmerAnimation()
         lifecycleScope.launch {
             delay(1500)
-            homeViewModel.getLoggedInData(prefs.getToken().toString())
+            homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
             homeViewModel.getCategoryList()
             listener?.hideLoading()
             binding.swipeLayout.isRefreshing = false
@@ -233,8 +236,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
 
     override fun onResume() {
         super.onResume()
-        homeViewModel.getLoggedInData(prefs.getToken().toString())
-        homeViewModel.getCategoryList()
+//        homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
+//        homeViewModel.getCategoryList()
         binding.shimmerEffect.startShimmerAnimation()
     }
 

@@ -20,44 +20,7 @@ class HomeRepository @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
 
-    suspend fun getCurrentLoggedinUser(token: String): ResponseState<UserDataModel?> {
-        if(!context.hasInternetConnection()) {
-            return ResponseState.Error(context.getString(R.string.error_internet_turned_off))
-        }
-
-        val response = try {
-            api.getLoggedInUser(token)
-        }catch (e: HttpException) {
-            return ResponseState.Error(context.getString(R.string.error_http))
-        } catch (e: IOException) {
-            return ResponseState.Error(context.getString(R.string.check_internet_connection))
-        }
-
-        return if (response.isSuccessful && response.body()?.success == true) {
-            ResponseState.Success(response.body()!!)
-        } else {
-            ResponseState.Error(errorResponse(response)?.error.toString())
-        }
-    }
-
-     suspend fun getCategoryList(): ResponseState<CategoryResponse?> {
-        if (!context.hasInternetConnection()) {
-            return ResponseState.Error(context.getString(R.string.error_internet_turned_off))
-        }
-
-        val response = try {
-            api.getCategoryList()
-        } catch (e: HttpException) {
-            return ResponseState.Error(context.getString(R.string.error_http))
-        } catch (e: IOException) {
-            return ResponseState.Error(context.getString(R.string.check_internet_connection))
-        }
-
-        return if (response.isSuccessful && response.body()?.success == true) {
-            ResponseState.Success(response.body()!!)
-        } else {
-            ResponseState.Error(errorResponse(response)?.error.toString())
-        }
-    }
+    suspend fun getCurrentUser(token: String) = api.getLoggedInUser(token)
+    suspend fun getCategoryList() = api.getCategoryList()
 
 }

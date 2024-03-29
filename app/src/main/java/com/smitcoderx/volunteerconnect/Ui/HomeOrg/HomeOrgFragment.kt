@@ -44,7 +44,7 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
         binding = FragmentHomeOrgBinding.bind(view)
 
         prefs = DataStoreUtil(requireContext())
-        homeViewModel.getLoggedInData(prefs.getToken().toString())
+        homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
 
         binding.ivNotification.clipToOutline = false
         val badgeDrawable = BadgeDrawable.create(requireContext())
@@ -100,7 +100,7 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
             binding.shimmerEffect.visibility = View.VISIBLE
             binding.shimmerEffect.startShimmerAnimation()
 
-            homeViewModel.getLoggedInData(prefs.getToken().toString())
+            homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
             homeViewModel.getCategoryList()
         }
 
@@ -200,7 +200,7 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
         binding.shimmerEffect.startShimmerAnimation()
         lifecycleScope.launch {
             delay(1500)
-            homeViewModel.getLoggedInData(prefs.getToken().toString())
+            homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
             listener?.hideLoading()
             binding.swipeLayout.isRefreshing = false
             binding.shimmerEffect.stopShimmerAnimation()

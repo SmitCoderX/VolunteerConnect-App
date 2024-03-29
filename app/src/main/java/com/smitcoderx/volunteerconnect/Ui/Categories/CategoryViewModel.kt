@@ -24,7 +24,7 @@ class CategoryViewModel @Inject constructor(
 
 
     fun getEventListCategoryWise(category: String) = viewModelScope.launch {
-        if (isNetworkConnectedLiveData.value == true) {
+        if (isNetworkConnectedLiveData.value == false) {
             _eventCategoryWiseLiveData.value =
                 ResponseState.Error("This app requires an active internet connection to be used.")
         }
@@ -45,7 +45,7 @@ class CategoryViewModel @Inject constructor(
                 ResponseState.Error("Something went wrong. Please try again later.")
         } catch (e: IOException) {
             _eventCategoryWiseLiveData.value =
-                ResponseState.Error("Couldn\\'t reach server. Check your internet connection.")
+                ResponseState.Error("Couldn\'t reach server. Check your internet connection.")
         }
     }
 }
