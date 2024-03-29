@@ -11,7 +11,7 @@ import com.smitcoderx.volunteerconnect.Model.Category.CategoryData
 import com.smitcoderx.volunteerconnect.databinding.LayoutTypesItemBinding
 
 
-class TypesAdapter : RecyclerView.Adapter<TypesAdapter.TypesViewHolder>() {
+class TypesAdapter(private val listener: OnEvents) : RecyclerView.Adapter<TypesAdapter.TypesViewHolder>() {
 
     inner class TypesViewHolder(val binding: LayoutTypesItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -33,6 +33,15 @@ class TypesAdapter : RecyclerView.Adapter<TypesAdapter.TypesViewHolder>() {
                 Color.parseColor(item.color),
                 PorterDuff.Mode.SRC_ATOP
             )
+
+            holder.binding.root.setOnClickListener {
+                val adapterPosition = holder.bindingAdapterPosition
+                if(adapterPosition != RecyclerView.NO_POSITION) {
+                    if(item != null) {
+                        listener.onEventClick(item)
+                    }
+                }
+            }
         }
     }
 
@@ -52,5 +61,9 @@ class TypesAdapter : RecyclerView.Adapter<TypesAdapter.TypesViewHolder>() {
 
     val differ = AsyncListDiffer(this, differCallback)
 
+
+    interface OnEvents{
+        fun onEventClick(category: CategoryData)
+    }
 
 }

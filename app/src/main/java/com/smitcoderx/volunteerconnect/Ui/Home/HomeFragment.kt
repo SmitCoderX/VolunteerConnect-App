@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.bumptech.glide.Glide
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.ExperimentalBadgeUtils
+import com.smitcoderx.volunteerconnect.Model.Category.CategoryData
 import com.smitcoderx.volunteerconnect.Model.User.UserDataModel
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
@@ -32,11 +32,11 @@ import java.util.Locale
 
 @ExperimentalBadgeUtils
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener {
+class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesAdapter.OnEvents {
 
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel by viewModels<HomeViewModel>()
-    private val typeAdapter = TypesAdapter()
+    private val typeAdapter = TypesAdapter(this)
     private var listener: LoadingInterface? = null
     private lateinit var prefs: DataStoreUtil
     private var userData: UserDataModel? = null
@@ -81,7 +81,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener {
         }
 
         binding.ivProfile.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToProfileBottomSheetFragment(userData?.data!!)
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToProfileBottomSheetFragment(userData?.data!!)
             findNavController().navigate(action)
         }
 
@@ -213,6 +214,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener {
 
     override fun onRefresh() {
         binding.llError.visibility = View.GONE
+        binding.homeView.visibility = View.GONE
         listener?.showLoading()
         binding.shimmerEffect.visibility = View.VISIBLE
         binding.shimmerEffect.startShimmerAnimation()
@@ -224,6 +226,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener {
             binding.swipeLayout.isRefreshing = false
             binding.shimmerEffect.stopShimmerAnimation()
             binding.shimmerEffect.visibility = View.GONE
+            binding.homeView.visibility = View.VISIBLE
         }
 
     }
@@ -274,6 +277,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener {
             rvReview.visibility = View.VISIBLE
             llError.visibility = View.GONE
         }
+    }
+
+    override fun onEventClick(category: CategoryData) {
+        val action = HomeFragmentDirections.actionHomeFragmentToCategoryFragment(category)
+        findNavController().navigate(action)
     }
 
 

@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), LoadingInterface {
             if(prefs.getRole().equals("organization")) {
                 navController.navigate(R.id.homeOrgFragment)
             } else {
-                navController.navigate(RegisterAsFragmentDirections.actionRegisterAsFragmentToHomeFragment())
+                navController.navigate(R.id.homeFragment)
             }
             navController.clearBackStack(R.id.registerAsFragment)
         }

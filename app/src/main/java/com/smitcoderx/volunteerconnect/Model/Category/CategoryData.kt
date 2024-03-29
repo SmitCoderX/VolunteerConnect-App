@@ -1,8 +1,11 @@
 package com.smitcoderx.volunteerconnect.Model.Category
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class CategoryData(
     @SerializedName("category")
     val category: String?,
@@ -14,4 +17,4 @@ data class CategoryData(
     val id: String?,
     @SerializedName("__v")
     val v: Int?
-)
+): Parcelable

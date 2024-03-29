@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.smitcoderx.volunteerconnect.R
-import com.smitcoderx.volunteerconnect.Ui.Events.Models.Data
+import com.smitcoderx.volunteerconnect.Model.Events.Data
 import com.smitcoderx.volunteerconnect.databinding.FragmentEventBinding
 
 class EventFragment : Fragment(R.layout.fragment_event) {

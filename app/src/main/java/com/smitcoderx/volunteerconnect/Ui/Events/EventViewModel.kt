@@ -3,8 +3,8 @@ package com.smitcoderx.volunteerconnect.Ui.Events
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smitcoderx.volunteerconnect.Ui.Events.Models.Data
-import com.smitcoderx.volunteerconnect.Ui.Events.Models.EventDataModel
+import com.smitcoderx.volunteerconnect.Model.Events.Data
+import com.smitcoderx.volunteerconnect.Model.Events.EventDataModel
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

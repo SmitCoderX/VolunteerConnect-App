@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -24,7 +23,7 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.smitcoderx.volunteerconnect.R
-import com.smitcoderx.volunteerconnect.Ui.Events.Models.Data
+import com.smitcoderx.volunteerconnect.Model.Events.Data
 import com.smitcoderx.volunteerconnect.Ui.Events.Sheets.ForumDialogFragment
 import com.smitcoderx.volunteerconnect.Ui.Home.HomeViewModel
 import com.smitcoderx.volunteerconnect.Utils.Constants.FORUM_NAME

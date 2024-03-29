@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.Log
 import com.smitcoderx.volunteerconnect.API.VolunteerConnectApi
 import com.smitcoderx.volunteerconnect.R
-import com.smitcoderx.volunteerconnect.Ui.Events.Models.Data
-import com.smitcoderx.volunteerconnect.Ui.Events.Models.EventDataModel
+import com.smitcoderx.volunteerconnect.Model.Events.Data
+import com.smitcoderx.volunteerconnect.Model.Events.EventDataModel
 import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.errorResponse
