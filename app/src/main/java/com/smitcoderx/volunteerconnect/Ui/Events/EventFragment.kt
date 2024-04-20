@@ -46,6 +46,9 @@ class EventFragment : Fragment(R.layout.fragment_event) {
             findNavController().navigate(action)
         }
 
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
     }
 

@@ -19,6 +19,7 @@ class LoginRepository @Inject constructor(
     private val api: VolunteerConnectApi,
     @ApplicationContext private val context: Context
 ) {
+
     suspend fun login(loginData: LoginData): ResponseState<Login?> {
         if (!context.hasInternetConnection()) {
             return ResponseState.Error(context.getString(R.string.error_internet_turned_off))

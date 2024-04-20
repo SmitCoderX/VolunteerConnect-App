@@ -22,24 +22,7 @@ class EventRepository @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
 
-    suspend fun createEvent(token: String, data: Data): ResponseState<EventDataModel?> {
-        if (!context.hasInternetConnection()) {
-            return ResponseState.Error(context.getString(R.string.error_internet_turned_off))
-        }
-        val response = try {
-            api.createEvent(token, data)
-        } catch (e: HttpException) {
-            return ResponseState.Error(context.getString(R.string.error_http))
-        } catch (e: IOException) {
-            return ResponseState.Error(context.getString(R.string.check_internet_connection))
-        }
+    suspend fun createEvent(token: String, data: Data) = api.createEvent(token, data)
 
-        return if (response.isSuccessful && response.body()?.success == true) {
-            ResponseState.Success(response.body())
-        } else {
-            Log.d(TAG, "createEventError: ${response.errorBody()}")
-            ResponseState.Error(errorResponse(response)?.error.toString())
-        }
-    }
 
 }

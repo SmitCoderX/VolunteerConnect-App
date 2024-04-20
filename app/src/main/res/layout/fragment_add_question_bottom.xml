@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="@drawable/bg_bottom_sheet_rounded"
+    android:padding="@dimen/_5sdp"
+    tools:context=".Ui.Events.Sheets.AddQuestionsBottomFragment">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_5sdp"
+        android:background="@drawable/bg_rounded_tab_look"
+        android:backgroundTint="@color/trans_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_questions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:background="@drawable/bg_rounded_tab_look"
+        android:backgroundTint="@color/accent_color"
+        android:clickable="true"
+        android:drawableTint="@color/white"
+        android:focusable="true"
+        android:fontFamily="@font/poppins"
+        android:text="@string/add_ques"
+        android:textAllCaps="false"
+        android:textColor="@color/toolbar_color"
+        android:textSize="@dimen/_13ssp"
+        app:cornerRadius="@dimen/_5sdp"
+        app:layout_constraintEnd_toStartOf="@id/btn_delete"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scroll_view" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_delete"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/bg_rounded_tab_look"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:clickable="true"
+        android:drawableTint="@color/white"
+        android:focusable="true"
+        android:fontFamily="@font/poppins"
+        android:text="@string/delete_ques"
+        android:textAllCaps="false"
+        android:textColor="@color/toolbar_color"
+        android:textSize="@dimen/_13ssp"
+        app:cornerRadius="@dimen/_5sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_add"
+        app:layout_constraintTop_toBottomOf="@id/scroll_view" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_noQues"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/poppins"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:text="@string/no_questions"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_8ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_add" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

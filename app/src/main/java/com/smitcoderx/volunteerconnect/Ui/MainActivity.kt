@@ -1,15 +1,11 @@
 package com.smitcoderx.volunteerconnect.Ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
-import androidx.navigation.findNavController
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.animation.AnimationUtils
 import com.smitcoderx.volunteerconnect.R
-import com.smitcoderx.volunteerconnect.Ui.Register.RegisterAsFragmentDirections
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
 import com.smitcoderx.volunteerconnect.databinding.ActivityMainBinding
@@ -25,12 +21,13 @@ class MainActivity : AppCompatActivity(), LoadingInterface {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHost = supportFragmentManager.findFragmentById(R.id.container_view) as NavHostFragment
+        val navHost =
+            supportFragmentManager.findFragmentById(R.id.container_view) as NavHostFragment
         val navController = navHost.navController
         binding.bottomNav.setupWithNavController(navController)
         val prefs = DataStoreUtil(applicationContext)
-        if(prefs.getLoggedIn()) {
-            if(prefs.getRole().equals("organization")) {
+        if (prefs.getLoggedIn()) {
+            if (prefs.getRole().equals("organization")) {
                 navController.navigate(R.id.homeOrgFragment)
             } else {
                 navController.navigate(R.id.homeFragment)

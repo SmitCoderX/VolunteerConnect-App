@@ -17,13 +17,14 @@ import androidx.core.util.Pair
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Model.Events.Data
+import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Ui.Events.Sheets.ForumDialogFragment
 import com.smitcoderx.volunteerconnect.Ui.Home.HomeViewModel
 import com.smitcoderx.volunteerconnect.Utils.Constants.FORUM_NAME
@@ -31,6 +32,7 @@ import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
+import com.smitcoderx.volunteerconnect.Utils.hasInternetConnection
 import com.smitcoderx.volunteerconnect.databinding.FragmentEventVolunteerBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -56,9 +58,11 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentEventVolunteerBinding.bind(view)
+
         val eventDataModel = args.eventData
         prefs = DataStoreUtil(requireContext())
-
+        eventViewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
+        homeViewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
         homeViewModel.getCategoryList()
         handleCategoryData()
         handleChipGroups()
@@ -69,7 +73,7 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
             datePickerDialog()
         }
 
-        binding.checkboxForum.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.checkboxForum.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 val addItemDialog = ForumDialogFragment(this)
                 val bundle = Bundle()
@@ -79,6 +83,10 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
             } else {
                 binding.checkboxForum.text = requireContext().getText(R.string.forum_label)
             }
+        }
+
+        binding.addQuestions.setOnClickListener {
+            findNavController().navigate(EventVolunteerFragmentDirections.actionEventVolunteerFragmentToAddQuestionsBottomFragment())
         }
 
         binding.btnNext.setOnClickListener {
@@ -115,6 +123,11 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
             eventViewModel.createEvent(prefs.getToken().toString(), data)
             showLoading()
         }
+
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
     }
 
     private fun handleCategoryData() {
@@ -131,12 +144,8 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
                     }
                 }
 
-                is ResponseState.Error -> {
-
-                }
-
-                is ResponseState.Loading -> {
-
+                else -> {
+                    Log.d(TAG, "handleCategoryData: ")
                 }
             }
         }
@@ -148,7 +157,7 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
                 is ResponseState.Success -> {
                     hideLoading()
                     Toast.makeText(requireContext(), "Event Created", Toast.LENGTH_SHORT).show()
-
+                    findNavController().popBackStack(R.id.homeOrgFragment, false)
                 }
 
                 is ResponseState.Error -> {
@@ -159,11 +168,7 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
                 }
 
                 is ResponseState.Loading -> {
-
-                }
-
-                else -> {
-
+                    showLoading()
                 }
             }
         }
@@ -214,7 +219,7 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
     }
 
     private fun handleChipGroups() {
-        binding.tilSkills.editText?.setOnEditorActionListener { v, actionId, event ->
+        binding.tilSkills.editText?.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 binding.tilSkills.editText?.imeOptions = EditorInfo.IME_ACTION_DONE
                 if (v.text.isNotEmpty()) {
@@ -225,7 +230,7 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
             true
         }
 
-        binding.tilCategory.editText?.setOnEditorActionListener { v, actionId, event ->
+        binding.tilCategory.editText?.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 binding.tilCategory.editText?.imeOptions = EditorInfo.IME_ACTION_DONE
                 if (v.text.isNotEmpty()) {
@@ -238,14 +243,16 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
     }
 
     private fun handleRadioGroups() {
-        binding.radioEventType.setOnCheckedChangeListener { group, checkedId ->
+        binding.radioEventType.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 binding.rPrivate.id -> {
                     binding.tilPrivate.visibility = View.VISIBLE
                 }
+
                 binding.rFees.id -> {
                     binding.tilFee.visibility = View.VISIBLE
                 }
+
                 else -> {
                     binding.tilPrivate.visibility = View.GONE
                     binding.tilFee.visibility = View.GONE
@@ -253,7 +260,7 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
             }
         }
 
-        binding.radioEventPaid.setOnCheckedChangeListener { group, checkedId ->
+        binding.radioEventPaid.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == binding.rPaid.id) {
                 binding.tilPayment.visibility = View.VISIBLE
             } else {

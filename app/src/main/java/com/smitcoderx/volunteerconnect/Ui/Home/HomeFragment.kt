@@ -91,13 +91,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
 
         binding.cardRetry.setOnClickListener {
             binding.llError.visibility = View.GONE
-            binding.shimmerEffect.visibility = View.VISIBLE
+            showLoading()
+            listener?.showLoading()
             binding.shimmerEffect.startShimmerAnimation()
-
             homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
             homeViewModel.getCategoryList()
-//            handleCurrentUser()
-//            handleCategoryData()
         }
 
     }
@@ -107,28 +105,30 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
         homeViewModel.userLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseState.Success -> {
+                    binding.llError.visibility = View.GONE
+                    hideLoading()
+                    listener?.hideLoading()
                     userData = it.data
                     binding.shimmerEffect.stopShimmerAnimation()
                     binding.tvWelcome.text = generateGreeting(it.data?.data?.username.toString())
                     Glide.with(requireContext()).load(it.data?.data?.photos).into(binding.ivProfile)
-                    binding.shimmerEffect.visibility = View.GONE
-                    hideError()
+
                 }
 
                 is ResponseState.Error -> {
                     lifecycleScope.launch {
                         delay(1000)
                         binding.shimmerEffect.stopShimmerAnimation()
+                        showLoading()
+                        listener?.hideLoading()
                         binding.shimmerEffect.visibility = View.GONE
-//                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
-//                            .show()
+                        binding.llError.visibility = View.VISIBLE
                         binding.tvErrorMsg.text = it.message.toString()
-                        showError()
                     }
                 }
 
                 is ResponseState.Loading -> {
-
+                    showLoading()
                 }
             }
         }
@@ -140,26 +140,24 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
                 is ResponseState.Success -> {
                     binding.shimmerEffect.stopShimmerAnimation()
                     typeAdapter.differ.submitList(it.data?.data)
-                    binding.shimmerEffect.visibility = View.GONE
-                    hideError()
+                    hideLoading()
                 }
 
                 is ResponseState.Error -> {
                     lifecycleScope.launch {
                         delay(1000)
                         binding.shimmerEffect.stopShimmerAnimation()
+                        showLoading()
+                        listener?.hideLoading()
                         binding.shimmerEffect.visibility = View.GONE
-//                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
-//                            .show()
+                        binding.llError.visibility = View.VISIBLE
                         binding.tvErrorMsg.text = it.message.toString()
-                        showError()
+
                     }
 
                 }
 
-                is ResponseState.Loading -> {
-
-                }
+                is ResponseState.Loading -> showLoading()
             }
         }
     }
@@ -217,27 +215,25 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
 
     override fun onRefresh() {
         binding.llError.visibility = View.GONE
-        binding.homeView.visibility = View.GONE
         listener?.showLoading()
-        binding.shimmerEffect.visibility = View.VISIBLE
+        showLoading()
         binding.shimmerEffect.startShimmerAnimation()
         lifecycleScope.launch {
             delay(1500)
             homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
             homeViewModel.getCategoryList()
             listener?.hideLoading()
+            hideLoading()
             binding.swipeLayout.isRefreshing = false
             binding.shimmerEffect.stopShimmerAnimation()
-            binding.shimmerEffect.visibility = View.GONE
-            binding.homeView.visibility = View.VISIBLE
         }
 
     }
 
     override fun onResume() {
         super.onResume()
-//        homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
-//        homeViewModel.getCategoryList()
+        handleCurrentUser()
+        handleCategoryData()
         binding.shimmerEffect.startShimmerAnimation()
     }
 
@@ -246,7 +242,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
         binding.shimmerEffect.stopShimmerAnimation()
     }
 
-    private fun showError() {
+    private fun showLoading() {
         binding.apply {
             tvWelcome.visibility = View.GONE
             tvDate.visibility = View.GONE
@@ -260,11 +256,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
             rvOrgs.visibility = View.GONE
             tvReviews.visibility = View.GONE
             rvReview.visibility = View.GONE
-            llError.visibility = View.VISIBLE
+            shimmerEffect.visibility = View.VISIBLE
         }
     }
 
-    private fun hideError() {
+    private fun hideLoading() {
         binding.apply {
             tvWelcome.visibility = View.VISIBLE
             tvDate.visibility = View.VISIBLE
@@ -278,7 +274,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
             rvOrgs.visibility = View.VISIBLE
             tvReviews.visibility = View.VISIBLE
             rvReview.visibility = View.VISIBLE
-            llError.visibility = View.GONE
+            shimmerEffect.visibility = View.GONE
         }
     }
 

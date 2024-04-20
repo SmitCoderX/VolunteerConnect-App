@@ -139,6 +139,9 @@
         <argument
             android:name="EventData"
             app:argType="com.smitcoderx.volunteerconnect.Model.Events.Data" />
+        <action
+            android:id="@+id/action_eventVolunteerFragment_to_addQuestionsBottomFragment"
+            app:destination="@id/addQuestionsBottomFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryFragment"
@@ -149,4 +152,9 @@
             android:name="CategoryData"
             app:argType="com.smitcoderx.volunteerconnect.Model.Category.CategoryData" />
     </fragment>
+    <dialog
+        android:id="@+id/addQuestionsBottomFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Events.Sheets.AddQuestionsBottomFragment"
+        android:label="fragment_add_question_bottom"
+        tools:layout="@layout/fragment_add_question_bottom" />
 </navigation>

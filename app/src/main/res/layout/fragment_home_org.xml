@@ -67,6 +67,7 @@
                     android:background="?selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:focusable="true"
+                    android:visibility="gone"
                     app:cardCornerRadius="@dimen/_60sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_date"
                     app:layout_constraintEnd_toStartOf="@id/iv_profile"
@@ -181,11 +182,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
-        android:textSize="@dimen/_15ssp"
+        android:contentDescription="@string/add"
         android:src="@drawable/ic_add"
+        android:textSize="@dimen/_15ssp"
+        android:visibility="gone"
         app:layout_anchor="@id/swipeLayout"
         app:layout_anchorGravity="bottom|end"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-        android:contentDescription="@string/add" />
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

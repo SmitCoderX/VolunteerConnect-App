@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -38,6 +39,8 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
     private var listener: LoadingInterface? = null
     private lateinit var prefs: DataStoreUtil
     private var userData: UserDataModel? = null
+    private lateinit var dashAdapter: HomeDashboardAdapter
+    private lateinit var data: List<HomeOrgModel>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,7 +60,8 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
             f.isAccessible = true
             val imageView = f.get(binding.swipeLayout) as ImageView
             imageView.setImageDrawable(null)
-            imageView.background = requireContext().getDrawable(android.R.color.transparent)
+            imageView.background =
+                ContextCompat.getDrawable(requireContext(), android.R.color.transparent)
         } catch (e: NoSuchFieldException) {
             e.printStackTrace()
         } catch (e: IllegalAccessException) {
@@ -66,9 +70,9 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
 
         handleCurrentUser()
 
-        val dashAdapter = HomeDashboardAdapter(this)
+        dashAdapter = HomeDashboardAdapter(this)
 
-        val data = listOf(
+        data = listOf(
             HomeOrgModel(1, "Number of Events Live", "5", R.drawable.give),
             HomeOrgModel(2, "Followers", "105", R.drawable.tealeaf),
             HomeOrgModel(3, "No of Events(last Month)", "10", R.drawable.hand),
@@ -81,12 +85,11 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
             HomeOrgModel(10, "Certifications", "10", R.drawable.certificate),
         )
 
-        dashAdapter.differ.submitList(data)
-
         binding.rvDash.apply {
             isNestedScrollingEnabled = false
             adapter = dashAdapter
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            layoutManager =
+                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
 
         binding.ivProfile.setOnClickListener {
@@ -97,11 +100,10 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
 
         binding.cardRetry.setOnClickListener {
             binding.llError.visibility = View.GONE
-            binding.shimmerEffect.visibility = View.VISIBLE
+            showLoading()
+            listener?.showLoading()
             binding.shimmerEffect.startShimmerAnimation()
-
             homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
-            homeViewModel.getCategoryList()
         }
 
         binding.fabAdd.setOnClickListener {
@@ -116,28 +118,31 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
         homeViewModel.userLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseState.Success -> {
+                    binding.llError.visibility = View.GONE
+                    hideLoading()
+                    listener?.hideLoading()
                     userData = it.data
                     binding.shimmerEffect.stopShimmerAnimation()
                     binding.tvWelcome.text = generateGreeting(it.data?.data?.username.toString())
                     Glide.with(requireContext()).load(it.data?.data?.photos).into(binding.ivProfile)
-                    binding.shimmerEffect.visibility = View.GONE
-                    hideError()
+                    dashAdapter.differ.submitList(data)
+
                 }
 
                 is ResponseState.Error -> {
                     lifecycleScope.launch {
                         delay(1000)
                         binding.shimmerEffect.stopShimmerAnimation()
+                        showLoading()
+                        listener?.hideLoading()
                         binding.shimmerEffect.visibility = View.GONE
-//                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
-//                            .show()
+                        binding.llError.visibility = View.VISIBLE
                         binding.tvErrorMsg.text = it.message.toString()
-                        showError()
                     }
                 }
 
                 is ResponseState.Loading -> {
-
+                    showLoading()
                 }
             }
         }
@@ -196,17 +201,41 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
     override fun onRefresh() {
         binding.llError.visibility = View.GONE
         listener?.showLoading()
-        binding.shimmerEffect.visibility = View.VISIBLE
         binding.shimmerEffect.startShimmerAnimation()
+        showLoading()
         lifecycleScope.launch {
             delay(1500)
             homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
             listener?.hideLoading()
-            binding.swipeLayout.isRefreshing = false
             binding.shimmerEffect.stopShimmerAnimation()
-            binding.shimmerEffect.visibility = View.GONE
+            hideLoading()
+            binding.swipeLayout.isRefreshing = false
         }
 
+    }
+
+    private fun showLoading() {
+        binding.apply {
+            tvWelcome.visibility = View.GONE
+            tvDate.visibility = View.GONE
+            ivNotification.visibility = View.GONE
+            ivProfile.visibility = View.GONE
+            rvDash.visibility = View.GONE
+            fabAdd.visibility = View.GONE
+            shimmerEffect.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideLoading() {
+        binding.apply {
+            tvWelcome.visibility = View.VISIBLE
+            tvDate.visibility = View.VISIBLE
+            ivNotification.visibility = View.VISIBLE
+            ivProfile.visibility = View.VISIBLE
+            rvDash.visibility = View.VISIBLE
+            fabAdd.visibility = View.VISIBLE
+            shimmerEffect.visibility = View.GONE
+        }
     }
 
     override fun onResume() {
@@ -217,31 +246,10 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
 
     override fun onPause() {
         super.onPause()
-        binding.shimmerEffect.visibility = View.VISIBLE
+        binding.shimmerEffect.visibility = View.GONE
         binding.shimmerEffect.stopShimmerAnimation()
     }
 
-    private fun showError() {
-        binding.apply {
-            tvWelcome.visibility = View.GONE
-            tvDate.visibility = View.GONE
-            ivNotification.visibility = View.GONE
-            ivProfile.visibility = View.GONE
-            rvDash.visibility = View.GONE
-            llError.visibility = View.VISIBLE
-        }
-    }
-
-    private fun hideError() {
-        binding.apply {
-            tvWelcome.visibility = View.VISIBLE
-            tvDate.visibility = View.VISIBLE
-            ivNotification.visibility = View.VISIBLE
-            ivProfile.visibility = View.VISIBLE
-            rvDash.visibility = View.VISIBLE
-            llError.visibility = View.GONE
-        }
-    }
 
     override fun startCount(valueAnimator: ValueAnimator?) {
         lifecycleScope.launch {

@@ -51,6 +51,7 @@
     <string name="update">Update Profile</string>
     <string name="retry">Retry</string>
     <string name="add">Add</string>
+    <string name="add_ques">Add Question</string>
     <string name="add_event">Add Event</string>
     <string name="add_post">Add Post</string>
     <string name="upload_image">Upload Image</string>
@@ -84,6 +85,9 @@
     <string name="forum_name_label">By default Forum Name is given. If you wish to change you can rename here.</string>
     <string name="set_name">Set Name</string>
     <string name="category">Category</string>
+    <string name="delete">Delete</string>
+    <string name="delete_ques">Delete Question</string>
+    <string name="no_questions">No Questions! Click on Add Questions to Add.</string>
 
 
 </resources>

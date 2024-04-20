@@ -5,6 +5,7 @@
     <color name="grey">#545454</color>
     <color name="trans_grey">#33545454</color>
     <color name="trans_black">#66000000</color>
+    <color name="trans_white">#99FFFFFF</color>
     <color name="toolbar_color">#ffffff</color>
     <color name="greyy">#f3f4f6</color>
     <color name="dark_purple">#673AB7</color>
