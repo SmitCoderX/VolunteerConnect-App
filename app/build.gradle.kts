@@ -42,7 +42,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -74,60 +77,58 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
 
     // SDP + SSP
-    implementation ("com.intuit.sdp:sdp-android:1.1.0")
-    implementation ("com.intuit.ssp:ssp-android:1.1.0")
+    implementation("com.intuit.sdp:sdp-android:1.1.0")
+    implementation("com.intuit.ssp:ssp-android:1.1.0")
 
     // Dagger Hilt
-    implementation ("com.google.dagger:hilt-android:2.46")
-    kapt ("com.google.dagger:hilt-compiler:2.46")
+    implementation("com.google.dagger:hilt-android:2.46")
+    kapt("com.google.dagger:hilt-compiler:2.46")
 
     //Circular ImageView
-    implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
     // Recycler View
-    implementation ("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 
     // Retrofit + GSON + OkHttpClientBOM + Interceptor
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
 
     // MultiDex
-    implementation ("androidx.multidex:multidex:2.0.1")
+    implementation("androidx.multidex:multidex:2.0.1")
 
     // Gson
-    implementation ("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     // Motion Toast
-    implementation ("com.github.Spikeysanju:MotionToast:1.4")
+    implementation("com.github.Spikeysanju:MotionToast:1.4")
 
     // Lottie Animations
-    implementation ("com.airbnb.android:lottie:6.2.0")
+    implementation("com.airbnb.android:lottie:6.2.0")
 
     // Google Maps
-    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
 
     // Preference
-    implementation ("androidx.preference:preference-ktx:1.2.1")
+    implementation("androidx.preference:preference-ktx:1.2.1")
 
     // SwipeRefresh Layout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     //Shimmer Effect
-    implementation ("com.facebook.shimmer:shimmer:0.1.0@aar")
+    implementation("com.facebook.shimmer:shimmer:0.1.0@aar")
 
     // Glide
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
     // Location Service
-    implementation ("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
     // Ticker Animation
-    implementation ("com.robinhood.ticker:ticker:2.0.4")
-
-
+    implementation("com.robinhood.ticker:ticker:2.0.4")
 
 }
 kapt {

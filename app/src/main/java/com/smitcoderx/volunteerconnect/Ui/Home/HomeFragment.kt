@@ -157,7 +157,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
 
                 }
 
-                is ResponseState.Loading -> showLoading()
+                is ResponseState.Loading -> {
+                    binding.shimmerEffect.startShimmerAnimation()
+                    showLoading()
+                }
             }
         }
     }
@@ -234,7 +237,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
         super.onResume()
         handleCurrentUser()
         handleCategoryData()
-        binding.shimmerEffect.startShimmerAnimation()
     }
 
     override fun onPause() {
