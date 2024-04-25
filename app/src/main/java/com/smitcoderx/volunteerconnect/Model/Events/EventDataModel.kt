@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class EventDataModel(
     @SerializedName("data")
-    var `data`: Data? = null,
+    var data: DataFetch? = null,
     @SerializedName("success")
     var success: Boolean? = null
 ): Parcelable

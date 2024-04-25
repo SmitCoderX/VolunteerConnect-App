@@ -1,10 +1,8 @@
-package com.smitcoderx.volunteerconnect.Ui.Events
+package com.smitcoderx.volunteerconnect.Ui.EventsCreation
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smitcoderx.volunteerconnect.Model.Category.CategoryResponse
 import com.smitcoderx.volunteerconnect.Model.Events.Data
 import com.smitcoderx.volunteerconnect.Model.Events.EventDataModel
 import com.smitcoderx.volunteerconnect.Utils.ResponseState

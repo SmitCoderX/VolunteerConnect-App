@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.smitcoderx.volunteerconnect.Model.Events.Data
+import com.smitcoderx.volunteerconnect.Model.Events.DataFetch
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
@@ -129,11 +130,11 @@ class CategoryFragment : Fragment(R.layout.fragment_category), CategoryEventAdap
         }
     }
 
-    override fun onEventHandleClick(eventData: Data) {
-        Log.d(TAG, "onEventHandleClick: ")
+    override fun onEventHandleClick(eventData: DataFetch) {
+        findNavController().navigate(CategoryFragmentDirections.actionCategoryFragmentToSingleEventFragment(eventData))
     }
 
-    override fun onEventFavClick(eventData: Data) {
+    override fun onEventFavClick(eventData: DataFetch) {
         Log.d(TAG, "onEventFavClick: ")
     }
 

@@ -70,11 +70,13 @@
     <string name="paid">Paid</string>
     <string name="event_fee">Event Fees</string>
     <string name="payment">Payment <font size = "30">(per person)</font></string>
+    <string name="payment_only">Payment</string>
     <string name="fee_hint">Fee <font size = "30">(per person)</font></string>
     <string name="proofs_need">Proofs Need</string>
     <string name="goodies">Goodies</string>
     <string name="timing">Event Timings</string>
     <string name="start_time_and_date">Start Time and Date</string>
+    <string name="start_end_time_and_date">Start &amp; End Time and Date</string>
     <string name="end_time_and_date">End Time and Date</string>
     <string name="resource_center">Upload Resource Center</string>
     <string name="resource_center_title">Resource Center</string>
@@ -88,6 +90,12 @@
     <string name="delete">Delete</string>
     <string name="delete_ques">Delete Question</string>
     <string name="no_questions">No Questions! Click on Add Questions to Add.</string>
+    <string name="location">Location</string>
+    <string name="about_event">About Event</string>
+    <string name="apply">Apply</string>
+    <string name="event_points">Event Points</string>
+    <string name="enter_image_url">Enter Image URL</string>
+    <string name="gallery">Gallery</string>
 
 
 </resources>

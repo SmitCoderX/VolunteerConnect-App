@@ -68,6 +68,7 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("androidx.activity:activity:1.8.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -129,6 +130,13 @@ dependencies {
 
     // Ticker Animation
     implementation("com.robinhood.ticker:ticker:2.0.4")
+
+    // PageIndicator
+    implementation ("com.github.zhpanvip:viewpagerindicator:1.2.3")
+
+    // RazorPay
+    implementation ("com.razorpay:checkout:1.6.33")
+
 
 }
 kapt {

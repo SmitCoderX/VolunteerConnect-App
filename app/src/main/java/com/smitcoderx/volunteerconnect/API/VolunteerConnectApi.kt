@@ -83,7 +83,7 @@ interface VolunteerConnectApi {
 
     @GET("events/{id}")
     suspend fun getEventsById(
-        @Path("id") id: String
+        @Path(value = "id") id: String
     ): Response<EventDataModel>
 
     @Headers("Content-Type: Application/Json;charset=UTF-8")

@@ -10,7 +10,7 @@ data class EventDataArrayModel(
     @SerializedName("count")
     var count: Int? = 0,
     @SerializedName("data")
-    var dataList: List<Data>? = listOf(),
+    var dataList: List<DataFetch>? = listOf(),
     @SerializedName("pagination")
     var pagination: Pagination? = Pagination(),
     @SerializedName("success")

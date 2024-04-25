@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
-    tools:context=".Ui.Events.EventVolunteerFragment">
+    tools:context=".Ui.EventsCreation.EventVolunteerFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -103,12 +103,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_bottom_bg"
-                android:padding="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="@string/category"
-                android:inputType="textCapWords"
                 android:imeOptions="actionDone"
+                android:inputType="textCapWords"
                 android:maxLines="1"
+                android:padding="@dimen/_10sdp"
                 android:textCursorDrawable="@drawable/edittext_cursor" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -239,11 +239,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:prefixText="₹"
             app:hintTextAppearance="@style/TextLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/radio_event_type">
+            app:layout_constraintTop_toBottomOf="@id/radio_event_type"
+            app:prefixText="₹">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_fee"
@@ -336,11 +336,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:prefixText="₹"
             app:hintTextAppearance="@style/TextLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/radio_event_paid">
+            app:layout_constraintTop_toBottomOf="@id/radio_event_paid"
+            app:prefixText="₹">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_payment"
@@ -360,14 +360,14 @@
             android:id="@+id/tv_timing_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/timing"
+            android:textColor="@color/black"
             android:textSize="@dimen/_18ssp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_payment"
-            android:textColor="@color/black" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_payment" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_startTime"
@@ -384,9 +384,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_bottom_bg"
-                android:fontFamily="@font/poppins_medium"
-                android:focusable="false"
                 android:cursorVisible="false"
+                android:focusable="false"
+                android:fontFamily="@font/poppins_medium"
                 android:hint="@string/start_time_and_date"
                 android:textCursorDrawable="@drawable/edittext_cursor" />
 
@@ -408,9 +408,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_bottom_bg"
-                android:fontFamily="@font/poppins_medium"
-                android:focusable="false"
                 android:cursorVisible="false"
+                android:focusable="false"
+                android:fontFamily="@font/poppins_medium"
                 android:hint="@string/end_time_and_date"
                 android:textCursorDrawable="@drawable/edittext_cursor" />
 
@@ -420,14 +420,14 @@
             android:id="@+id/tv_goodies_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/goodies"
+            android:textColor="@color/black"
             android:textSize="@dimen/_18ssp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_endTime"
-            android:textColor="@color/black" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_endTime" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_goodies"
@@ -452,65 +452,166 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_gallery_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/gallery"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_goodies" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_gallery_1"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_gallery_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_gallery_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="top|start"
+                android:hint="@string/enter_image_url"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_gallery_2"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_gallery_1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_gallery_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="top|start"
+                android:hint="@string/enter_image_url"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_gallery_3"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_gallery_2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_gallery_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="top|start"
+                android:hint="@string/enter_image_url"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_gallery_4"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_gallery_3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_gallery_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="top|start"
+                android:hint="@string/enter_image_url"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_resource_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/resource_center_title"
+            android:textColor="@color/black"
             android:textSize="@dimen/_18ssp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_goodies"
-            android:textColor="@color/black" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_gallery_4" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_resource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/resource_center"
-            android:includeFontPadding="false"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_resource_title"
-            android:textSize="@dimen/_12ssp"
             android:fontFamily="@font/poppins"
-            android:textColor="@color/black"/>
+            android:includeFontPadding="false"
+            android:text="@string/resource_center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_resource_title" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_upload"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal"
             android:visibility="gone"
-            android:layout_marginTop="@dimen/_10sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkbox_resource"/>
+            app:layout_constraintTop_toBottomOf="@id/checkbox_resource" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_add_questions_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/add_questions"
+            android:textColor="@color/black"
             android:textSize="@dimen/_18ssp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_upload"
-            android:textColor="@color/black" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_upload" />
 
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/add_questions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/_10sdp"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintStart_toStartOf="parent"
+            app:cardCornerRadius="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_add_questions_title">
 
             <LinearLayout
@@ -544,28 +645,28 @@
             android:id="@+id/tv_forum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/forum"
+            android:textColor="@color/black"
             android:textSize="@dimen/_18ssp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_questions"
-            android:textColor="@color/black" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_questions" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_forum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/forum_label"
-            app:layout_constraintStart_toStartOf="parent"
-            android:includeFontPadding="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_forum"
-            android:textSize="@dimen/_12ssp"
             android:animateLayoutChanges="true"
             android:fontFamily="@font/poppins"
-            android:textColor="@color/black"/>
+            android:includeFontPadding="false"
+            android:text="@string/forum_label"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_forum" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_next"

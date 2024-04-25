@@ -1,7 +1,6 @@
-package com.smitcoderx.volunteerconnect.Ui.Events.Sheets
+package com.smitcoderx.volunteerconnect.Ui.EventsCreation.Sheets
 
 import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle

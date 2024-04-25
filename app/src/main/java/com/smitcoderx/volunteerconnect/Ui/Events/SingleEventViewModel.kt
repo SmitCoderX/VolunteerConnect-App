@@ -1,50 +1,48 @@
-package com.smitcoderx.volunteerconnect.Ui.Categories
+package com.smitcoderx.volunteerconnect.Ui.Events
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.smitcoderx.volunteerconnect.Model.Events.Data
 import com.smitcoderx.volunteerconnect.Model.Events.DataFetch
+import com.smitcoderx.volunteerconnect.Model.Events.EventDataArrayModel
+import com.smitcoderx.volunteerconnect.Model.Events.EventDataModel
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.errorResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okio.IOException
 import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryViewModel @Inject constructor(
-    private val categoryRepository: CategoryRepository
+class SingleEventViewModel @Inject constructor(
+    private val repository: SingleEventRepository
 ) : ViewModel() {
 
     val isNetworkConnectedLiveData = MutableLiveData<Boolean>()
-    private val _eventCategoryWiseLiveData = MutableLiveData<ResponseState<List<DataFetch?>?>>()
-    val eventCategoryWiseLiveData = _eventCategoryWiseLiveData
+    private val _eventLiveData = MutableLiveData<ResponseState<DataFetch?>>()
+    val eventLiveData = _eventLiveData
 
-
-    fun getEventListCategoryWise(category: String) = viewModelScope.launch {
+    fun getEventData(id: String) = viewModelScope.launch {
         if (isNetworkConnectedLiveData.value == false) {
-            _eventCategoryWiseLiveData.value =
+            _eventLiveData.value =
                 ResponseState.Error("This app requires an active internet connection to be used.")
         }
-        _eventCategoryWiseLiveData.value = ResponseState.Loading()
+        _eventLiveData.value = ResponseState.Loading()
         try {
-            val response = categoryRepository.getEventsList()
+            val response = repository.getEventDetails(id)
             if (response.isSuccessful && response.body()?.success == true) {
-                _eventCategoryWiseLiveData.value =
-                    ResponseState.Success(response.body()!!.dataList?.filter {
-                        it.category?.contains(category) == true
-                    })
+                _eventLiveData.value = ResponseState.Success(response.body()?.data)
             } else {
-                _eventCategoryWiseLiveData.value =
+                _eventLiveData.value =
                     ResponseState.Error(errorResponse(response)?.error.toString())
             }
         } catch (e: HttpException) {
-            _eventCategoryWiseLiveData.value =
+            _eventLiveData.value =
                 ResponseState.Error("Something went wrong. Please try again later.")
         } catch (e: IOException) {
-            _eventCategoryWiseLiveData.value =
+            _eventLiveData.value =
                 ResponseState.Error("Couldn\'t reach server. Check your internet connection.")
         }
     }

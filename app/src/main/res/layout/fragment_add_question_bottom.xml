@@ -7,7 +7,7 @@
     android:animateLayoutChanges="true"
     android:background="@drawable/bg_bottom_sheet_rounded"
     android:padding="@dimen/_5sdp"
-    tools:context=".Ui.Events.Sheets.AddQuestionsBottomFragment">
+    tools:context=".Ui.EventsCreation.Sheets.AddQuestionsBottomFragment">
 
     <View
         android:id="@+id/view"

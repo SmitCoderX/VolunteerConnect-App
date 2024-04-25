@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
-    tools:context=".Ui.Events.EventFragment">
+    tools:context=".Ui.EventsCreation.EventFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_10sdp"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        android:padding="@dimen/_10sdp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_back"
@@ -52,101 +52,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_welcome_fp" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_img"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_200sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_upload"
-            app:strokeWidth="0dp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_eventImg"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_200sdp"
-                android:scaleType="fitXY"
-                tools:src="@mipmap/ic_launcher" />
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_add_image"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_upload_eventPic"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
-            app:layout_constraintEnd_toStartOf="@id/card_delete_image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_img">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/_10sdp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:src="@drawable/camera"
-                    android:tint="@color/black" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_add_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/upload_image"
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_delete_image"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:visibility="gone"
-            app:cardCornerRadius="@dimen/_10sdp"
+            app:hintTextAppearance="@style/TextLabel"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/card_add_image"
-            app:layout_constraintTop_toBottomOf="@id/card_img">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_upload">
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_upload_eventPic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/_10sdp">
+                android:background="@drawable/rounded_bottom_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="top|start"
+                android:hint="@string/enter_image_url"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:src="@drawable/bin"
-                    android:tint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/remove_image"
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_title"
@@ -159,7 +86,7 @@
             android:textSize="@dimen/_18ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_add_image" />
+            app:layout_constraintTop_toBottomOf="@id/til_upload_eventPic" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_title"
@@ -303,7 +230,7 @@
             android:textSize="@dimen/_18ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_mobile"/>
+            app:layout_constraintTop_toBottomOf="@id/til_mobile" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_email"
@@ -332,21 +259,21 @@
             android:id="@+id/btn_next"
             android:layout_width="0dp"
             android:layout_height="@dimen/_50sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/next"
-            android:textColor="@color/toolbar_color"
-            android:textAllCaps="false"
-            android:drawableTint="@color/white"
-            android:clickable="true"
-            android:focusable="true"
+            android:layout_marginTop="@dimen/_15sdp"
             android:background="@drawable/bg_rounded_tab_look"
             android:backgroundTint="@color/accent_color"
+            android:clickable="true"
+            android:drawableTint="@color/white"
+            android:focusable="true"
             android:fontFamily="@font/poppins"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:text="@string/next"
+            android:textAllCaps="false"
+            android:textColor="@color/toolbar_color"
             android:textSize="@dimen/_13ssp"
-            app:layout_constraintTop_toBottomOf="@id/til_email"
-            app:cornerRadius="@dimen/_5sdp"/>
+            app:cornerRadius="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_email" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

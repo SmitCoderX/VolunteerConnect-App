@@ -1,0 +1,18 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:width="@dimen/_40sdp"
+        android:height="@dimen/_40sdp"
+        android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="@color/shimmer_effect" />
+        </shape>
+    </item>
+
+    <item
+        android:width="@dimen/_15sdp"
+        android:height="@dimen/_15sdp"
+        android:gravity="center"
+        android:drawable="@drawable/ic_back">
+    </item>
+</layer-list>

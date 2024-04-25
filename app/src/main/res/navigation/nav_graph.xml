@@ -125,7 +125,7 @@
     </dialog>
     <fragment
         android:id="@+id/eventFragment"
-        android:name="com.smitcoderx.volunteerconnect.Ui.Events.EventFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.EventsCreation.EventFragment"
         android:label="fragment_event"
         tools:layout="@layout/fragment_event" >
         <action
@@ -134,7 +134,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventVolunteerFragment"
-        android:name="com.smitcoderx.volunteerconnect.Ui.Events.EventVolunteerFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.EventsCreation.EventVolunteerFragment"
         android:label="EventVolunteerFragment" >
         <argument
             android:name="EventData"
@@ -151,10 +151,22 @@
         <argument
             android:name="CategoryData"
             app:argType="com.smitcoderx.volunteerconnect.Model.Category.CategoryData" />
+        <action
+            android:id="@+id/action_categoryFragment_to_singleEventFragment"
+            app:destination="@id/singleEventFragment" />
     </fragment>
     <dialog
         android:id="@+id/addQuestionsBottomFragment"
-        android:name="com.smitcoderx.volunteerconnect.Ui.Events.Sheets.AddQuestionsBottomFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.EventsCreation.Sheets.AddQuestionsBottomFragment"
         android:label="fragment_add_question_bottom"
         tools:layout="@layout/fragment_add_question_bottom" />
+    <fragment
+        android:id="@+id/singleEventFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Events.SingleEventFragment"
+        android:label="SingleEventFragment" >
+        <argument
+            android:name="EventData"
+            app:argType="com.smitcoderx.volunteerconnect.Model.Events.DataFetch"
+            app:nullable="true" />
+    </fragment>
 </navigation>

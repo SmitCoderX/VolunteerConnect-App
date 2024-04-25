@@ -1,4 +1,4 @@
-package com.smitcoderx.volunteerconnect.Ui.Events
+package com.smitcoderx.volunteerconnect.Ui.EventsCreation
 
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
@@ -25,7 +25,7 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.smitcoderx.volunteerconnect.Model.Events.Data
 import com.smitcoderx.volunteerconnect.R
-import com.smitcoderx.volunteerconnect.Ui.Events.Sheets.ForumDialogFragment
+import com.smitcoderx.volunteerconnect.Ui.EventsCreation.Sheets.ForumDialogFragment
 import com.smitcoderx.volunteerconnect.Ui.Home.HomeViewModel
 import com.smitcoderx.volunteerconnect.Utils.Constants.FORUM_NAME
 import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
@@ -91,6 +91,7 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
 
         binding.btnNext.setOnClickListener {
             val data = Data(
+                eventPicture = eventDataModel.eventPicture,
                 address = eventDataModel.address,
                 category = binding.chipCategory.children.map { (it as Chip).text.toString() }
                     .toList(),
@@ -112,13 +113,19 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
                 payment = if (binding.etPayment.text?.toString()
                         ?.isEmpty() == true
                 ) 0 else Integer.parseInt(binding.etPayment.text.toString()),
-                isGoodiesProvided = binding.etGoodies.text?.isEmpty(),
+                isGoodiesProvided = binding.etGoodies.text?.isNotEmpty(),
                 isResource = binding.checkboxResource.isChecked,
                 goodies = binding.etGoodies.text.toString(),
                 eventStartDataAndTime = Date(binding.etStart.text.toString()).toString(),
                 eventEndingDateAndTime = Date(binding.etEnd.text.toString()).toString(),
                 isForumCreated = binding.checkboxForum.isChecked,
-                forumName = forumName
+                forumName = forumName,
+                gallery = listOf(
+                    binding.tilGallery1.editText?.text.toString(),
+                    binding.tilGallery2.editText?.text.toString(),
+                    binding.tilGallery3.editText?.text.toString(),
+                    binding.tilGallery4.editText?.text.toString(),
+                )
             )
             eventViewModel.createEvent(prefs.getToken().toString(), data)
             showLoading()

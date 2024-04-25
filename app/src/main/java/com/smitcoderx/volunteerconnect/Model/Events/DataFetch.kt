@@ -6,14 +6,13 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Data(
+data class DataFetch(
     @SerializedName("address")
     var address: String? = "",
     @SerializedName("category")
     var category: List<String?>? = listOf(),
     @SerializedName("coordinates")
     var coordinates: List<Double?>? = listOf(),
-    @Transient
     @SerializedName("createdAt")
     var createdAt: String? = "",
     @SerializedName("desc")
@@ -24,12 +23,10 @@ data class Data(
     var eventEndingDateAndTime: String? = "",
     @SerializedName("eventPicture")
     var eventPicture: String? = "",
-    @Transient
     @SerializedName("eventPoint")
     var eventPoint: Int? = null,
     @SerializedName("eventStartDataAndTime")
     var eventStartDataAndTime: String? = "",
-    @Transient
     @SerializedName("forumId")
     var forumId: String? = "",
     @SerializedName("forumName")
@@ -38,7 +35,6 @@ data class Data(
     var gallery: List<String> = listOf(),
     @SerializedName("goodies")
     var goodies: String? = "",
-    @Transient
     @SerializedName("_id")
     var id: String? = "",
     @SerializedName("isForumCreated")
@@ -65,10 +61,8 @@ data class Data(
     var skills: List<String?>? = listOf(),
     @SerializedName("slug")
     var slug: String? = "",
-    @Transient
     @SerializedName("user")
     var user: String? = "",
-    @Transient
     @SerializedName("__v")
     var v: Int? = 0,
     @SerializedName("visibility")
@@ -77,4 +71,4 @@ data class Data(
     var volunteerCount: Int? = 0,
     @SerializedName("volunteers")
     var volunteers: List<String?>? = listOf()
-): Parcelable
+) : Parcelable
