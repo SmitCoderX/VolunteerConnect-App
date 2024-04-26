@@ -96,6 +96,10 @@
     <string name="event_points">Event Points</string>
     <string name="enter_image_url">Enter Image URL</string>
     <string name="gallery">Gallery</string>
+    <string name="done">Done</string>
+    <string name="questions">Questions</string>
+    <string name="write_answer">Write Answer</string>
+    <string name="mandatory_fields">* fields are required to be filled</string>
 
 
 </resources>

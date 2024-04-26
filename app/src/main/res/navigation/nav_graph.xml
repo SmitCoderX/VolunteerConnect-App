@@ -168,5 +168,35 @@
             android:name="EventData"
             app:argType="com.smitcoderx.volunteerconnect.Model.Events.DataFetch"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_singleEventFragment_to_questionFragment"
+            app:destination="@id/questionFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Events.QuestionFragment"
+        android:label="fragment_question"
+        tools:layout="@layout/fragment_question" >
+        <action
+            android:id="@+id/action_questionFragment_to_paymentActivity"
+            app:destination="@id/paymentActivity" />
+        <argument
+            android:name="eventData"
+            app:argType="com.smitcoderx.volunteerconnect.Model.Events.DataFetch"
+            app:nullable="true" />
+    </fragment>
+    <activity
+        android:id="@+id/paymentActivity"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Events.PaymentActivity"
+        android:label="activity_payment"
+        tools:layout="@layout/activity_payment" >
+        <argument
+            android:name="eventData"
+            app:argType="com.smitcoderx.volunteerconnect.Model.Events.DataFetch"
+            app:nullable="true" />
+        <argument
+            android:name="requestData"
+            app:argType="com.smitcoderx.volunteerconnect.Model.Requests.RequestsData"
+            app:nullable="true" />
+    </activity>
 </navigation>

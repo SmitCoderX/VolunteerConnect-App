@@ -627,7 +627,7 @@
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_apply"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_gravity="center"

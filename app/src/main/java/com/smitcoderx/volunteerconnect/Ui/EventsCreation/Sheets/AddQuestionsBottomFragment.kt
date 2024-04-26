@@ -2,14 +2,10 @@ package com.smitcoderx.volunteerconnect.Ui.EventsCreation.Sheets
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat
-import androidx.core.view.setPadding
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.textfield.TextInputEditText
 import com.smitcoderx.volunteerconnect.R
-import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.databinding.FragmentAddQuestionBottomBinding
 
 
@@ -17,46 +13,40 @@ class AddQuestionsBottomFragment :
     BottomSheetDialogFragment(R.layout.fragment_add_question_bottom) {
 
     private lateinit var binding: FragmentAddQuestionBottomBinding
-    private val editTextList = mutableListOf<Any>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAddQuestionBottomBinding.bind(view)
 
-
-
-        binding.btnAdd.setOnClickListener {
-            addQuestion()
+        binding.btnClose.setOnClickListener {
+            findNavController().popBackStack()
         }
 
-        binding.btnDelete.setOnClickListener {
-            deleteQuestion()
+        binding.btnDone.setOnClickListener {
+            if (validate()) {
+                findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                    "questions",
+                    questionList()
+                )
+                findNavController().popBackStack()
+            }
         }
     }
 
-    private fun addQuestion() {
-        val layout = binding.llQuestions
-        val question = TextInputEditText(requireContext())
-        question.setPadding(50)
-        question.setBackgroundDrawable(
-            ContextCompat.getDrawable(
-                requireContext(), R.drawable.rounded_bottom_bg
-            )
+    private fun questionList(): List<String> {
+        return listOf(
+            binding.tilQuestion1.editText?.text.toString(),
+            binding.tilQuestion2.editText?.text.toString(),
+            binding.tilQuestion3.editText?.text.toString(),
+            binding.tilQuestion4.editText?.text.toString()
         )
-        question.tag = layout.childCount
-        editTextList.add(question.tag)
-        Log.d(TAG, "addQuestion: $editTextList")
-        question.setHint(R.string.add_ques)
-        layout.addView(question, layout.childCount)
-
     }
 
-    private fun deleteQuestion() {
-        val layout = binding.llQuestions
-        if (layout.getChildAt(0) != null) {
-            layout.removeViewAt(0)
-            editTextList.removeAt(0)
-            Log.d(TAG, "deleteQuestion: $editTextList")
-        }
+    private fun validate(): Boolean {
+        return binding.tilQuestion1.editText?.text.toString()
+            .isNotEmpty() && binding.tilQuestion2.editText?.text.toString()
+            .isNotEmpty() && binding.tilQuestion3.editText?.text.toString()
+            .isNotEmpty() && binding.tilQuestion4.editText?.text.toString().isNotEmpty()
     }
+
 }

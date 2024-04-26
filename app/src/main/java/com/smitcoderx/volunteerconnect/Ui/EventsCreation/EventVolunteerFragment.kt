@@ -53,8 +53,10 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
     private val homeViewModel by viewModels<HomeViewModel>()
     private var listener: LoadingInterface? = null
     private var forumName: String = ""
+    private var questionsList = mutableListOf<String>()
 
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentEventVolunteerBinding.bind(view)
@@ -89,6 +91,16 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
             findNavController().navigate(EventVolunteerFragmentDirections.actionEventVolunteerFragmentToAddQuestionsBottomFragment())
         }
 
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<List<String>>("questions")
+            ?.observe(viewLifecycleOwner) {
+                if (it.isNullOrEmpty()) {
+                    binding.tvAddQuestions.text = getString(R.string.add_ques)
+                } else {
+                    binding.tvAddQuestions.text = "${it.size} Questions"
+                    questionsList.addAll(it)
+                }
+            }
+
         binding.btnNext.setOnClickListener {
             val data = Data(
                 eventPicture = eventDataModel.eventPicture,
@@ -103,8 +115,7 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
                 volunteerCount = binding.etVolunteerCount.text.toString().toInt(),
                 skills = binding.chipSkills.children.map { (it as Chip).text.toString() }.toList(),
                 visibility = binding.radioEventType.getCheckedRadioText(binding.radioEventType.checkedRadioButtonId),
-                isPaid = binding.radioEventType.getCheckedRadioText(binding.radioEventType.checkedRadioButtonId)
-                    .equals("Paid", ignoreCase = true),
+                isPaid = binding.tilFee.editText?.text.toString().isNotEmpty(),
                 price = if (binding.etFee.text?.toString()
                         ?.isEmpty() == true
                 ) 0 else Integer.parseInt(binding.etFee.text.toString()),
@@ -125,7 +136,9 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
                     binding.tilGallery2.editText?.text.toString(),
                     binding.tilGallery3.editText?.text.toString(),
                     binding.tilGallery4.editText?.text.toString(),
-                )
+                ),
+                question = questionsList
+
             )
             eventViewModel.createEvent(prefs.getToken().toString(), data)
             showLoading()

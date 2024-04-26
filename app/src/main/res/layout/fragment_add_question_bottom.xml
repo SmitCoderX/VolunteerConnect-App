@@ -19,28 +19,99 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingTop="@dimen/_10sdp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_question_1"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:hintTextAppearance="@style/TextLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ll_questions"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_question_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_bottom_bg"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="top|start"
+            android:hint="@string/add_ques"
+            android:textCursorDrawable="@drawable/edittext_cursor" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.core.widget.NestedScrollView>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_question_2"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/TextLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_question_1">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_question_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_bottom_bg"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="top|start"
+            android:hint="@string/add_ques"
+            android:textCursorDrawable="@drawable/edittext_cursor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_question_3"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/TextLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_question_2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_question_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_bottom_bg"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="top|start"
+            android:hint="@string/add_ques"
+            android:textCursorDrawable="@drawable/edittext_cursor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_question_4"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/TextLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_question_3">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_question_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_bottom_bg"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="top|start"
+            android:hint="@string/add_ques"
+            android:textCursorDrawable="@drawable/edittext_cursor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_add"
+        android:id="@+id/btn_done"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_5sdp"
         android:background="@drawable/bg_rounded_tab_look"
@@ -49,19 +120,19 @@
         android:drawableTint="@color/white"
         android:focusable="true"
         android:fontFamily="@font/poppins"
-        android:text="@string/add_ques"
+        android:text="@string/done"
         android:textAllCaps="false"
         android:textColor="@color/toolbar_color"
         android:textSize="@dimen/_13ssp"
         app:cornerRadius="@dimen/_5sdp"
-        app:layout_constraintEnd_toStartOf="@id/btn_delete"
+        app:layout_constraintEnd_toStartOf="@id/btn_close"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scroll_view" />
+        app:layout_constraintTop_toBottomOf="@id/til_question_4" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_delete"
+        android:id="@+id/btn_close"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:background="@drawable/bg_rounded_tab_look"
@@ -70,29 +141,14 @@
         android:drawableTint="@color/white"
         android:focusable="true"
         android:fontFamily="@font/poppins"
-        android:text="@string/delete_ques"
+        android:text="@string/close"
         android:textAllCaps="false"
         android:textColor="@color/toolbar_color"
         android:textSize="@dimen/_13ssp"
         app:cornerRadius="@dimen/_5sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_add"
-        app:layout_constraintTop_toBottomOf="@id/scroll_view" />
+        app:layout_constraintStart_toEndOf="@+id/btn_done"
+        app:layout_constraintTop_toBottomOf="@id/til_question_4" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_noQues"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:fontFamily="@font/poppins"
-        android:paddingHorizontal="@dimen/_10sdp"
-        android:text="@string/no_questions"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_8ssp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

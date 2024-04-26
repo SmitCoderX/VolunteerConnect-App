@@ -1,7 +1,6 @@
 package com.smitcoderx.volunteerconnect.Ui.Events
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -142,11 +141,16 @@ class SingleEventFragment : Fragment(R.layout.fragment_single_event) {
                         "Event Will Start From ${it.data?.eventStartDataAndTime} and will End At ${it.data?.eventEndingDateAndTime}"
                     binding.indicator.setPageSize(binding.viewPager.adapter!!.itemCount)
 
-                    binding.btnLogin.setOnClickListener { v ->
-                        if (it.data?.isPaid == true) {
-                            val intent = Intent(requireContext(), PaymentActivity::class.java)
-                            intent.putExtra("data", it.data)
-                            startActivity(intent)
+                    binding.btnApply.setOnClickListener { v ->
+                        if (!it.data?.question.isNullOrEmpty()) {
+                            findNavController().navigate(
+                                SingleEventFragmentDirections.actionSingleEventFragmentToQuestionFragment(
+                                    it.data
+                                )
+                            )
+                        } else {
+                            Toast.makeText(requireContext(), "No Questions", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 }
