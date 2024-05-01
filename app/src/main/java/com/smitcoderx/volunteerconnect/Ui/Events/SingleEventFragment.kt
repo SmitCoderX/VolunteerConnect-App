@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
+import com.smitcoderx.volunteerconnect.Model.Requests.RequestsData
 import com.smitcoderx.volunteerconnect.R
+import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.hasInternetConnection
 import com.smitcoderx.volunteerconnect.databinding.FragmentSingleEventBinding
@@ -24,16 +26,17 @@ class SingleEventFragment : Fragment(R.layout.fragment_single_event) {
     private val singleViewModel by viewModels<SingleEventViewModel>()
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private var isLiked = false
+    private lateinit var prefs: DataStoreUtil
     private val args by navArgs<SingleEventFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSingleEventBinding.bind(view)
 
+        prefs = DataStoreUtil(requireContext())
         val data = args.eventData
         singleViewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
         singleViewModel.getEventData(data?.id.toString())
-
         viewPagerAdapter = ViewPagerAdapter()
 
 
@@ -83,6 +86,7 @@ class SingleEventFragment : Fragment(R.layout.fragment_single_event) {
         }
 
         handleEventData()
+        handleRequestStatus()
 
         binding.cardRetry.setOnClickListener {
             singleViewModel.getEventData(data?.id.toString())
@@ -149,8 +153,17 @@ class SingleEventFragment : Fragment(R.layout.fragment_single_event) {
                                 )
                             )
                         } else {
-                            Toast.makeText(requireContext(), "No Questions", Toast.LENGTH_SHORT)
-                                .show()
+                            val data = RequestsData(
+                                answers = listOf(),
+                                recipient = it.data?.user,
+                                status = 1,
+                                eventId = it.data?.id,
+                                eventName = it.data?.name,
+                            )
+                            singleViewModel.sendRequest(
+                                prefs.getToken().toString(),
+                                data
+                            )
                         }
                     }
                 }
@@ -184,6 +197,27 @@ class SingleEventFragment : Fragment(R.layout.fragment_single_event) {
             progressLoading.visibility = View.GONE
             coLayout.visibility = View.VISIBLE
             llApply.visibility = View.VISIBLE
+        }
+    }
+
+    private fun handleRequestStatus() {
+        singleViewModel.sendRequestLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseState.Success -> {
+                    hideLoading()
+                    Toast.makeText(requireContext(), "Request Success", Toast.LENGTH_SHORT).show()
+                }
+
+                is ResponseState.Loading -> {
+                    showLoading()
+                }
+
+                is ResponseState.Error -> {
+                    hideLoading()
+                    Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
         }
     }
 }

@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">VolunteerConnect</string>
     <string name="app_name_head">Volunteer \nConnect</string>
-    <string name="action_community">Community</string>
+    <string name="action_events">Particpated Events</string>
+    <string name="action_all_events">All Events</string>
     <string name="action_home">Home</string>
     <string name="action_profile">Profile</string>
-    <string name="action_jobs">Jobs</string>
-    <string name="action_connections">Connections</string>
+    <string name="action_jobs">Events</string>
+    <string name="action_requests">Requests</string>
     <string name="login">Login</string>
     <string name="welcome_back">Welcome back 👋</string>
     <string name="close">close</string>
@@ -100,6 +101,9 @@
     <string name="questions">Questions</string>
     <string name="write_answer">Write Answer</string>
     <string name="mandatory_fields">* fields are required to be filled</string>
+    <string name="accept_request">Accept Request</string>
+    <string name="reject_request">Reject Request</string>
+    <string name="answers">Answers</string>
 
 
 </resources>

@@ -32,6 +32,8 @@ data class Data(
     @Transient
     @SerializedName("forumId")
     var forumId: String? = "",
+    @SerializedName("documentType")
+    var documentType: String? = "",
     @SerializedName("forumName")
     var forumName: String? = "",
     @SerializedName("gallery")
@@ -77,4 +79,4 @@ data class Data(
     var volunteerCount: Int? = 0,
     @SerializedName("volunteers")
     var volunteers: List<String?>? = listOf()
-): Parcelable
+) : Parcelable

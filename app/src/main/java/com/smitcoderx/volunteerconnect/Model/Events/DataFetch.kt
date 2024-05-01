@@ -49,6 +49,8 @@ data class DataFetch(
     var isResource: Boolean? = false,
     @SerializedName("name")
     var name: String? = "",
+    @SerializedName("documentType")
+    var documentType: String? = "",
     @SerializedName("payment")
     var payment: Int? = 0,
     @SerializedName("phone")

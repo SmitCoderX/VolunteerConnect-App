@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity(), LoadingInterface {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val navHost =
             supportFragmentManager.findFragmentById(R.id.container_view) as NavHostFragment
         val navController = navHost.navController
@@ -30,13 +29,13 @@ class MainActivity : AppCompatActivity(), LoadingInterface {
             if (prefs.getRole().equals("organization")) {
                 navController.navigate(R.id.homeOrgFragment)
             } else {
-                navController.navigate(R.id.homeFragment)
+                navController.navigate(R.id.action_home)
             }
             navController.clearBackStack(R.id.registerAsFragment)
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.homeFragment || destination.id == R.id.homeOrgFragment || destination.id == R.id.profileBottomSheetFragment || destination.id == R.id.addBottomSheetFragment) {
+            if (destination.id == R.id.action_home || destination.id == R.id.homeOrgFragment || destination.id == R.id.profileBottomSheetFragment || destination.id == R.id.addBottomSheetFragment || destination.id == R.id.action_jobs || destination.id == R.id.action_connections || destination.id == R.id.action_community) {
                 binding.bottomNav.visibility = View.VISIBLE
             } else {
                 binding.bottomNav.visibility = View.GONE

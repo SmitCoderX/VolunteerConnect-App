@@ -115,6 +115,7 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
                 volunteerCount = binding.etVolunteerCount.text.toString().toInt(),
                 skills = binding.chipSkills.children.map { (it as Chip).text.toString() }.toList(),
                 visibility = binding.radioEventType.getCheckedRadioText(binding.radioEventType.checkedRadioButtonId),
+                documentType = binding.tilPrivate.editText?.text.toString(),
                 isPaid = binding.tilFee.editText?.text.toString().isNotEmpty(),
                 price = if (binding.etFee.text?.toString()
                         ?.isEmpty() == true
@@ -138,7 +139,6 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
                     binding.tilGallery4.editText?.text.toString(),
                 ),
                 question = questionsList
-
             )
             eventViewModel.createEvent(prefs.getToken().toString(), data)
             showLoading()

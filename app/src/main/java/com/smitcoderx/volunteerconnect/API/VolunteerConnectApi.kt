@@ -9,6 +9,7 @@ import com.smitcoderx.volunteerconnect.Model.Events.EventDataArrayModel
 import com.smitcoderx.volunteerconnect.Model.Events.EventDataModel
 import com.smitcoderx.volunteerconnect.Model.Forum.Forum
 import com.smitcoderx.volunteerconnect.Model.Forum.ForumData
+import com.smitcoderx.volunteerconnect.Model.Requests.RequestList
 import com.smitcoderx.volunteerconnect.Model.Requests.Requests
 import com.smitcoderx.volunteerconnect.Model.Requests.RequestsData
 import com.smitcoderx.volunteerconnect.Model.User.UpateData
@@ -122,11 +123,25 @@ interface VolunteerConnectApi {
     ): Response<Requests>
 
     @Headers("Content-Type: Application/Json;charset=UTF-8")
-    @PUT("volunteer/sendrequest")
+    @PUT("volunteer/{id}")
     suspend fun handleVolunteerRequest(
         @Header("Authorization") token: String,
+        @Path("id") id: String,
         @Body requestsBody: RequestsData
     ): Response<Requests>
+
+    @GET("volunteer/recipientRequests/{id}")
+    suspend fun getRequestsByRecipient(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): Response<RequestList>
+
+    @GET("volunteer/requesterRequests/{id}")
+    suspend fun getRequestsByRequester(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): Response<RequestList>
+
 
     /**
      * Forum Routes

@@ -8,7 +8,15 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class RequestsData(
     @SerializedName("answers")
-    var answers: Map<String, String>? = null,
+    var answers: List<Map<String, String>?> = listOf(),
+    @SerializedName("appliedBy")
+    var appliedBy: String? = null,
+    @SerializedName("appliedByProfile")
+    var appliedByProfile: String? = null,
+    @SerializedName("eventId")
+    var eventId: String? = null,
+    @SerializedName("eventName")
+    var eventName: String? = null,
     @SerializedName("_id")
     var id: String? = null,
     @SerializedName("recipient")

@@ -115,7 +115,7 @@
     <dialog
         android:id="@+id/addBottomSheetFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.HomeOrg.BottomSheets.AddBottomSheetFragment"
-        android:label="AddBottomSheetFragment" >
+        android:label="AddBottomSheetFragment">
         <argument
             android:name="UserData"
             app:argType="com.smitcoderx.volunteerconnect.Model.User.UserData" />
@@ -127,7 +127,7 @@
         android:id="@+id/eventFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.EventsCreation.EventFragment"
         android:label="fragment_event"
-        tools:layout="@layout/fragment_event" >
+        tools:layout="@layout/fragment_event">
         <action
             android:id="@+id/action_eventFragment_to_eventVolunteerFragment"
             app:destination="@id/eventVolunteerFragment" />
@@ -135,7 +135,7 @@
     <fragment
         android:id="@+id/eventVolunteerFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.EventsCreation.EventVolunteerFragment"
-        android:label="EventVolunteerFragment" >
+        android:label="EventVolunteerFragment">
         <argument
             android:name="EventData"
             app:argType="com.smitcoderx.volunteerconnect.Model.Events.Data" />
@@ -147,7 +147,7 @@
         android:id="@+id/categoryFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Categories.CategoryFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" >
+        tools:layout="@layout/fragment_category">
         <argument
             android:name="CategoryData"
             app:argType="com.smitcoderx.volunteerconnect.Model.Category.CategoryData" />
@@ -163,7 +163,7 @@
     <fragment
         android:id="@+id/singleEventFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Events.SingleEventFragment"
-        android:label="SingleEventFragment" >
+        android:label="SingleEventFragment">
         <argument
             android:name="EventData"
             app:argType="com.smitcoderx.volunteerconnect.Model.Events.DataFetch"
@@ -176,7 +176,7 @@
         android:id="@+id/questionFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Events.QuestionFragment"
         android:label="fragment_question"
-        tools:layout="@layout/fragment_question" >
+        tools:layout="@layout/fragment_question">
         <action
             android:id="@+id/action_questionFragment_to_paymentActivity"
             app:destination="@id/paymentActivity" />
@@ -189,7 +189,7 @@
         android:id="@+id/paymentActivity"
         android:name="com.smitcoderx.volunteerconnect.Ui.Events.PaymentActivity"
         android:label="activity_payment"
-        tools:layout="@layout/activity_payment" >
+        tools:layout="@layout/activity_payment">
         <argument
             android:name="eventData"
             app:argType="com.smitcoderx.volunteerconnect.Model.Events.DataFetch"
@@ -199,4 +199,19 @@
             app:argType="com.smitcoderx.volunteerconnect.Model.Requests.RequestsData"
             app:nullable="true" />
     </activity>
+    <fragment
+        android:id="@+id/action_jobs"
+        android:name="com.smitcoderx.volunteerconnect.Ui.EventJobs.EventsListFragment"
+        android:label="fragment_event_list"
+        tools:layout="@layout/fragment_event_list" />
+    <fragment
+        android:id="@+id/action_connections"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Requests.ForumRequestFragment"
+        android:label="fragment_forum_request"
+        tools:layout="@layout/fragment_forum_request" />
+    <fragment
+        android:id="@+id/action_community"
+        android:name="com.smitcoderx.volunteerconnect.Ui.ParticipatedEvents.ParticipatedEventsFragment"
+        android:label="fragment_participated_events"
+        tools:layout="@layout/fragment_participated_events" />
 </navigation>
