@@ -18,9 +18,9 @@ class CategoryViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
-    val isNetworkConnectedLiveData = MutableLiveData<Boolean>()
-    private val _eventCategoryWiseLiveData = MutableLiveData<ResponseState<List<DataFetch?>?>>()
-    val eventCategoryWiseLiveData = _eventCategoryWiseLiveData
+        val isNetworkConnectedLiveData = MutableLiveData<Boolean>()
+        private val _eventCategoryWiseLiveData = MutableLiveData<ResponseState<List<DataFetch?>?>>()
+        val eventCategoryWiseLiveData = _eventCategoryWiseLiveData
 
 
     fun getEventListCategoryWise(category: String) = viewModelScope.launch {

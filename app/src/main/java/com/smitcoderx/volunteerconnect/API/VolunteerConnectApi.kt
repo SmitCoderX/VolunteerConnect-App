@@ -9,6 +9,7 @@ import com.smitcoderx.volunteerconnect.Model.Events.EventDataArrayModel
 import com.smitcoderx.volunteerconnect.Model.Events.EventDataModel
 import com.smitcoderx.volunteerconnect.Model.Forum.Forum
 import com.smitcoderx.volunteerconnect.Model.Forum.ForumData
+import com.smitcoderx.volunteerconnect.Model.Forum.ForumList
 import com.smitcoderx.volunteerconnect.Model.Requests.RequestList
 import com.smitcoderx.volunteerconnect.Model.Requests.Requests
 import com.smitcoderx.volunteerconnect.Model.Requests.RequestsData
@@ -174,5 +175,12 @@ interface VolunteerConnectApi {
         @Header("Authorization") token: String,
         @Path("id") id: String
     ): Response<Forum>
+
+    @Headers("Content-Type: Application/Json;charset=UTF-8")
+    @GET("forum/forumList/{id}")
+    suspend fun getForumListById(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): Response<ForumList>
 
 }

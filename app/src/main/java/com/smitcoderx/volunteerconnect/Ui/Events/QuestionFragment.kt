@@ -50,7 +50,11 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
         binding.btnApply.setOnClickListener {
             if (validate()) {
                 val data = RequestsData(
-                    answers = listOf(getAnswers()), recipient = eventData.id, status = 1
+                    answers = listOf(getAnswers()),
+                    recipient = eventData.user,
+                    status = 1,
+                    eventId = eventData.id,
+                    eventName = eventData.name,
                 )
                 if (eventData.isPaid == true) {
                     findNavController().navigate(

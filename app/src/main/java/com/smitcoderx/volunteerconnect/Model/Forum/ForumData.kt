@@ -4,8 +4,6 @@ package com.smitcoderx.volunteerconnect.Model.Forum
 import com.google.gson.annotations.SerializedName
 
 data class ForumData(
-    @SerializedName("desc")
-    var desc: String? = null,
     @SerializedName("event")
     var event: String? = null,
     @SerializedName("forumImg")
@@ -16,8 +14,12 @@ data class ForumData(
     var id: String? = null,
     @SerializedName("participants")
     var participants: List<String?>? = null,
+    @SerializedName("posts")
+    var posts: List<String?>? = null,
     @SerializedName("slug")
     var slug: String? = null,
+    @SerializedName("userId")
+    var userId: String? = null,
     @SerializedName("__v")
     var v: Int? = null
 )

@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class RequestsData(
     @SerializedName("answers")
-    var answers: List<Map<String, String>?> = listOf(),
+    var answers: List<Map<String, String>?>? = null,
     @SerializedName("appliedBy")
     var appliedBy: String? = null,
     @SerializedName("appliedByProfile")
@@ -25,6 +25,8 @@ data class RequestsData(
     var requester: String? = null,
     @SerializedName("status")
     var status: Int? = null,
+    @SerializedName("transactionId")
+    var transactionId: String? = null,
     @SerializedName("__v")
     var v: Int? = null
 ) : Parcelable

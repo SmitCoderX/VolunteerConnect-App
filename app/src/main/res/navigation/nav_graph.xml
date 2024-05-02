@@ -213,5 +213,9 @@
         android:id="@+id/action_community"
         android:name="com.smitcoderx.volunteerconnect.Ui.ParticipatedEvents.ParticipatedEventsFragment"
         android:label="fragment_participated_events"
-        tools:layout="@layout/fragment_participated_events" />
+        tools:layout="@layout/fragment_participated_events" >
+        <action
+            android:id="@+id/action_action_community_to_singleEventFragment"
+            app:destination="@id/singleEventFragment" />
+    </fragment>
 </navigation>
