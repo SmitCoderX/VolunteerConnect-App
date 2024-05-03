@@ -1,4 +1,4 @@
-package com.smitcoderx.volunteerconnect.Ui.ParticipatedEvents
+package com.smitcoderx.volunteerconnect.Ui.EventJobs
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,47 +10,43 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.smitcoderx.volunteerconnect.Model.Events.DataFetch
+import com.smitcoderx.volunteerconnect.Model.Forum.ForumData
 import com.smitcoderx.volunteerconnect.R
-import com.smitcoderx.volunteerconnect.Ui.Categories.CategoryEventAdapter
 import com.smitcoderx.volunteerconnect.Ui.Home.HomeViewModel
 import com.smitcoderx.volunteerconnect.Utils.Constants
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.hasInternetConnection
-import com.smitcoderx.volunteerconnect.databinding.FragmentParticipatedEventsBinding
+import com.smitcoderx.volunteerconnect.databinding.FragmentForumListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ParticipatedEventsFragment : Fragment(R.layout.fragment_participated_events),
-    CategoryEventAdapter.OnCategory, SwipeRefreshLayout.OnRefreshListener {
+class ForumListFragment : Fragment(R.layout.fragment_forum_list),
+    SwipeRefreshLayout.OnRefreshListener, ForumAdapter.OnClickHandle {
 
-    private lateinit var binding: FragmentParticipatedEventsBinding
-    private val viewModel by viewModels<ParticipatedEventViewModel>()
+    private lateinit var binding: FragmentForumListBinding
+    private val viewModel by viewModels<ForumListViewModel>()
     private val homeViewModel by viewModels<HomeViewModel>()
     private lateinit var prefs: DataStoreUtil
     private var listener: LoadingInterface? = null
-    private lateinit var categoryEventAdapter: CategoryEventAdapter
-    private lateinit var id: String
+    private lateinit var forumAdapter: ForumAdapter
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentParticipatedEventsBinding.bind(view)
+        binding = FragmentForumListBinding.bind(view)
 
         prefs = DataStoreUtil(requireContext())
-        viewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
         homeViewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
+        viewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
         homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
 
         binding.tvCategoryType.text = if (prefs.getRole()
                 .equals("organization", ignoreCase = true)
-        ) "Created Events" else "Participated Events"
+        ) "Created Forums" else "Participated Forums"
 
         binding.categorySwipeLayout.setOnRefreshListener(this)
         try {
@@ -66,18 +62,18 @@ class ParticipatedEventsFragment : Fragment(R.layout.fragment_participated_event
             e.printStackTrace()
         }
 
-        categoryEventAdapter = CategoryEventAdapter(this)
+        forumAdapter = ForumAdapter(this)
 
         handleCurrentUser()
         if (prefs.getRole().equals("organization", ignoreCase = true)) {
-            handleEventsListNGO()
+            handleForumListNGO()
         } else {
-            handleEventsListUser()
+            handleForumListUser()
         }
 
         binding.rvEvents.apply {
             setHasFixedSize(true)
-            adapter = categoryEventAdapter
+            adapter = forumAdapter
         }
 
         binding.cardRetry.setOnClickListener {
@@ -85,19 +81,29 @@ class ParticipatedEventsFragment : Fragment(R.layout.fragment_participated_event
             showLoading()
             listener?.showLoading()
             binding.shimmerEffect.startShimmerAnimation()
-            viewModel.getEventsByNgo(homeViewModel.userLiveData.value?.data?.data?.id.toString())
-            viewModel.getEventsByUser(homeViewModel.userLiveData.value?.data?.data?.id.toString())
+            viewModel.handleNGOForumList(
+                prefs.getToken().toString(),
+                homeViewModel.userLiveData.value?.data?.data?.id.toString()
+            )
+            viewModel.handleUserForumList(
+                prefs.getToken().toString(),
+                homeViewModel.userLiveData.value?.data?.data?.id.toString()
+            )
         }
 
     }
+
 
     private fun handleCurrentUser() {
         homeViewModel.userLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseState.Success -> {
-                    id = it.data?.data.toString()
-                    viewModel.getEventsByNgo(it.data?.data?.id.toString())
-                    viewModel.getEventsByUser(it.data?.data?.id.toString())
+                    viewModel.handleNGOForumList(
+                        prefs.getToken().toString(), it.data?.data?.id.toString()
+                    )
+                    viewModel.handleUserForumList(
+                        prefs.getToken().toString(), it.data?.data?.id.toString()
+                    )
 
                 }
 
@@ -111,11 +117,11 @@ class ParticipatedEventsFragment : Fragment(R.layout.fragment_participated_event
     }
 
     @SuppressLint("SetTextI18n")
-    private fun handleEventsListNGO() {
-        viewModel.eventNgoLiveData.observe(viewLifecycleOwner) {
+    private fun handleForumListNGO() {
+        viewModel.eventForumListLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseState.Success -> {
-                    Log.d(Constants.TAG, "handleEventsNGODataSuccess: ${it.data}")
+                    Log.d(Constants.TAG, "handleForumNGODataSuccess: ${it.data}")
                     binding.shimmerEffect.stopShimmerAnimation()
                     listener?.hideLoading()
                     hideLoading()
@@ -125,11 +131,11 @@ class ParticipatedEventsFragment : Fragment(R.layout.fragment_participated_event
                         binding.lottieView.setAnimation(R.raw.no_data)
                         binding.lottieView.loop(true)
                         binding.lottieView.playAnimation()
-                        binding.tvErrorMsg.text = "Oops! No Events Found To Show"
+                        binding.tvErrorMsg.text = "Oops! No Forums Found To Show"
 
                     } else {
                         binding.llError.visibility = View.GONE
-                        categoryEventAdapter.differ.submitList(it.data)
+                        forumAdapter.differ.submitList(it.data)
                     }
 
                 }
@@ -147,16 +153,17 @@ class ParticipatedEventsFragment : Fragment(R.layout.fragment_participated_event
                     binding.llError.visibility = View.VISIBLE
                     binding.tvErrorMsg.text = it.message.toString()
                 }
+
             }
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun handleEventsListUser() {
-        viewModel.eventUserLiveData.observe(viewLifecycleOwner) {
+    private fun handleForumListUser() {
+        viewModel.eventForumListUserLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseState.Success -> {
-                    Log.d(Constants.TAG, "handleEventsUserDataSuccess: ${it.data}")
+                    Log.d(Constants.TAG, "handleForumUserDataSuccess: ${it.data}")
                     binding.shimmerEffect.stopShimmerAnimation()
                     listener?.hideLoading()
                     hideLoading()
@@ -166,13 +173,12 @@ class ParticipatedEventsFragment : Fragment(R.layout.fragment_participated_event
                         binding.lottieView.setAnimation(R.raw.no_data)
                         binding.lottieView.loop(true)
                         binding.lottieView.playAnimation()
-                        binding.tvErrorMsg.text = "Oops! No Events Found To Show"
+                        binding.tvErrorMsg.text = "Oops! No Forums Found To Show"
 
                     } else {
                         binding.llError.visibility = View.GONE
-                        categoryEventAdapter.differ.submitList(it.data)
+                        forumAdapter.differ.submitList(it.data)
                     }
-
                 }
 
                 is ResponseState.Loading -> {
@@ -188,17 +194,11 @@ class ParticipatedEventsFragment : Fragment(R.layout.fragment_participated_event
                     binding.llError.visibility = View.VISIBLE
                     binding.tvErrorMsg.text = it.message.toString()
                 }
+
             }
         }
     }
 
-    override fun onEventHandleClick(eventData: DataFetch) {
-        findNavController().navigate(
-            ParticipatedEventsFragmentDirections.actionActionCommunityToSingleEventFragment(
-                eventData
-            )
-        )
-    }
 
     private fun showLoading() {
         binding.apply {
@@ -226,8 +226,14 @@ class ParticipatedEventsFragment : Fragment(R.layout.fragment_participated_event
         binding.shimmerEffect.startShimmerAnimation()
         lifecycleScope.launch {
             delay(1500)
-            viewModel.getEventsByNgo(homeViewModel.userLiveData.value?.data?.data?.id.toString())
-            viewModel.getEventsByUser(homeViewModel.userLiveData.value?.data?.data?.id.toString())
+            viewModel.handleNGOForumList(
+                prefs.getToken().toString(),
+                homeViewModel.userLiveData.value?.data?.data?.id.toString()
+            )
+            viewModel.handleUserForumList(
+                prefs.getToken().toString(),
+                homeViewModel.userLiveData.value?.data?.data?.id.toString()
+            )
             listener?.hideLoading()
             hideLoading()
             binding.categorySwipeLayout.isRefreshing = false
@@ -239,9 +245,9 @@ class ParticipatedEventsFragment : Fragment(R.layout.fragment_participated_event
     override fun onResume() {
         super.onResume()
         if (prefs.getRole().equals("organization", ignoreCase = true)) {
-            handleEventsListNGO()
+            handleForumListNGO()
         } else {
-            handleEventsListUser()
+            handleForumListUser()
         }
         binding.shimmerEffect.startShimmerAnimation()
     }
@@ -260,7 +266,7 @@ class ParticipatedEventsFragment : Fragment(R.layout.fragment_participated_event
         }
     }
 
-    override fun onEventFavClick(eventData: DataFetch) {
+    override fun onForumClick(data: ForumData) {
 
     }
 }

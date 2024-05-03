@@ -177,10 +177,9 @@ interface VolunteerConnectApi {
     ): Response<Forum>
 
     @Headers("Content-Type: Application/Json;charset=UTF-8")
-    @GET("forum/forumList/{id}")
+    @GET("forum/forumList")
     suspend fun getForumListById(
-        @Header("Authorization") token: String,
-        @Path("id") id: String
+        @Header("Authorization") token: String
     ): Response<ForumList>
 
 }

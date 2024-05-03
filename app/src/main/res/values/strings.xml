@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">VolunteerConnect</string>
     <string name="app_name_head">Volunteer \nConnect</string>
-    <string name="action_events">Particpated Events</string>
+    <string name="action_events">Events</string>
     <string name="action_all_events">All Events</string>
     <string name="action_home">Home</string>
     <string name="action_profile">Profile</string>

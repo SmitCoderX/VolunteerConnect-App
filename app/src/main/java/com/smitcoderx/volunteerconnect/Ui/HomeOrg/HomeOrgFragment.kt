@@ -230,7 +230,7 @@ class HomeOrgFragment : Fragment(R.layout.fragment_home_org), OnRefreshListener,
         binding.apply {
             tvWelcome.visibility = View.VISIBLE
             tvDate.visibility = View.VISIBLE
-            ivNotification.visibility = View.VISIBLE
+            ivNotification.visibility = View.GONE
             ivProfile.visibility = View.VISIBLE
             rvDash.visibility = View.VISIBLE
             fabAdd.visibility = View.VISIBLE

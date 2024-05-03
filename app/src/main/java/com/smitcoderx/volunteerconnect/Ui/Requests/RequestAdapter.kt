@@ -83,6 +83,7 @@ class RequestAdapter(private val listener: OnRequestHandle, private val role: St
 
                 tvAnswers.text = it.answers?.joinToString(",")
 
+
                 var drop = false
                 root.setOnClickListener {
                     val adapterPosition = holder.bindingAdapterPosition
@@ -141,6 +142,7 @@ class RequestAdapter(private val listener: OnRequestHandle, private val role: St
                 }
             }
         }
+//        TODO("Fix the Question and Answers View")
     }
 
     override fun getItemCount(): Int {

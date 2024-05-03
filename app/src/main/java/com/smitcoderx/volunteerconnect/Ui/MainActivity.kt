@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity(), LoadingInterface {
         if (prefs.getLoggedIn()) {
             if (prefs.getRole().equals("organization")) {
                 navController.navigate(R.id.homeOrgFragment)
+                binding.bottomNav.menu.findItem(R.id.homeFragment).setVisible(false)
+                binding.bottomNav.menu.findItem(R.id.homeOrgFragment).setVisible(true)
+                    .setChecked(true)
             } else {
                 navController.navigate(R.id.homeFragment)
             }
@@ -35,8 +38,15 @@ class MainActivity : AppCompatActivity(), LoadingInterface {
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (prefs.getRole().equals("organization") && destination.id == R.id.homeFragment) {
-                navController.navigate(R.id.homeOrgFragment)
+            if (prefs.getRole().equals("organization")) {
+//                navController.navigate(R.id.homeOrgFragment)
+                binding.bottomNav.menu.findItem(R.id.homeFragment).setVisible(false)
+                binding.bottomNav.menu.findItem(R.id.homeOrgFragment).setVisible(true)
+//                    .setChecked(true)
+            } else {
+                binding.bottomNav.menu.findItem(R.id.homeFragment).setVisible(true)
+//                    .setChecked(true)
+                binding.bottomNav.menu.findItem(R.id.homeOrgFragment).setVisible(false)
             }
 
             if (destination.id == R.id.homeFragment || destination.id == R.id.homeOrgFragment || destination.id == R.id.profileBottomSheetFragment || destination.id == R.id.addBottomSheetFragment || destination.id == R.id.action_jobs || destination.id == R.id.action_connections || destination.id == R.id.action_community) {

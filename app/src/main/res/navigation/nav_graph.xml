@@ -201,9 +201,9 @@
     </activity>
     <fragment
         android:id="@+id/action_jobs"
-        android:name="com.smitcoderx.volunteerconnect.Ui.EventJobs.EventsListFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.EventJobs.ForumListFragment"
         android:label="fragment_event_list"
-        tools:layout="@layout/fragment_event_list" />
+        tools:layout="@layout/fragment_forum_list" />
     <fragment
         android:id="@+id/action_connections"
         android:name="com.smitcoderx.volunteerconnect.Ui.Requests.ForumRequestFragment"
