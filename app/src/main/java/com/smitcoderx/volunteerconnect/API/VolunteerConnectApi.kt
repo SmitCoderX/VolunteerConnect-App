@@ -10,6 +10,9 @@ import com.smitcoderx.volunteerconnect.Model.Events.EventDataModel
 import com.smitcoderx.volunteerconnect.Model.Forum.Forum
 import com.smitcoderx.volunteerconnect.Model.Forum.ForumData
 import com.smitcoderx.volunteerconnect.Model.Forum.ForumList
+import com.smitcoderx.volunteerconnect.Model.Posts.PostsData
+import com.smitcoderx.volunteerconnect.Model.Posts.PostsDataList
+import com.smitcoderx.volunteerconnect.Model.Posts.PostsDataResponse
 import com.smitcoderx.volunteerconnect.Model.Requests.RequestList
 import com.smitcoderx.volunteerconnect.Model.Requests.Requests
 import com.smitcoderx.volunteerconnect.Model.Requests.RequestsData
@@ -181,5 +184,40 @@ interface VolunteerConnectApi {
     suspend fun getForumListById(
         @Header("Authorization") token: String
     ): Response<ForumList>
+
+
+    /**
+     * Posts Routes
+     **/
+
+    @Headers("Content-Type: Application/Json;charset=UTF-8")
+    @POST("posts")
+    suspend fun createPost(
+        @Header("Authorization") token: String,
+        @Body postData: PostsData
+    ): Response<PostsDataResponse>
+
+    @Headers("Content-Type: Application/Json;charset=UTF-8")
+    @PUT("posts/{id}")
+    suspend fun updatePost(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Body postData: PostsData
+    ): Response<PostsDataResponse>
+
+    @Headers("Content-Type: Application/Json;charset=UTF-8")
+    @DELETE("posts/{id}")
+    suspend fun deletePost(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): Response<PostsDataList>
+
+    @Headers("Content-Type: Application/Json;charset=UTF-8")
+    @GET("posts/{id}")
+    suspend fun getPostList(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): Response<PostsDataList>
+
 
 }

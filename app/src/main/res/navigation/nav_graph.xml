@@ -122,6 +122,9 @@
         <action
             android:id="@+id/action_addBottomSheetFragment_to_eventFragment"
             app:destination="@id/eventFragment" />
+        <action
+            android:id="@+id/action_addBottomSheetFragment_to_action_jobs"
+            app:destination="@id/action_jobs" />
     </dialog>
     <fragment
         android:id="@+id/eventFragment"
@@ -203,7 +206,11 @@
         android:id="@+id/action_jobs"
         android:name="com.smitcoderx.volunteerconnect.Ui.EventJobs.ForumListFragment"
         android:label="fragment_event_list"
-        tools:layout="@layout/fragment_forum_list" />
+        tools:layout="@layout/fragment_forum_list" >
+        <action
+            android:id="@+id/action_action_jobs_to_postsFragment"
+            app:destination="@id/postsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/action_connections"
         android:name="com.smitcoderx.volunteerconnect.Ui.Requests.ForumRequestFragment"
@@ -218,4 +225,51 @@
             android:id="@+id/action_action_community_to_singleEventFragment"
             app:destination="@id/singleEventFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/postsFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Posts.PostsFragment"
+        android:label="PostsFragment" >
+        <argument
+            android:name="forumData"
+            app:argType="com.smitcoderx.volunteerconnect.Model.Forum.ForumData"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_postsFragment_to_addPostBottomFragment"
+            app:destination="@id/addPostBottomFragment" />
+        <action
+            android:id="@+id/action_postsFragment_to_handlePostBottomFragment"
+            app:destination="@id/handlePostBottomFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/addPostBottomFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Posts.BottomSheet.AddPostBottomFragment"
+        android:label="fragment_bottom_add_post"
+        tools:layout="@layout/fragment_bottom_add_post" >
+        <argument
+            android:name="forumData"
+            app:argType="com.smitcoderx.volunteerconnect.Model.Forum.ForumData"
+            app:nullable="true" />
+        <argument
+            android:name="postData"
+            app:argType="com.smitcoderx.volunteerconnect.Model.Posts.PostsData"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_addPostBottomFragment_to_postsFragment2"
+            app:destination="@id/postsFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/handlePostBottomFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Posts.BottomSheet.HandlePostBottomFragment"
+        android:label="fragment_bottom_handle_post"
+        tools:layout="@layout/fragment_bottom_handle_post" >
+        <argument
+            android:name="postData"
+            app:argType="com.smitcoderx.volunteerconnect.Model.Posts.PostsData" />
+        <argument
+            android:name="forumData"
+            app:argType="com.smitcoderx.volunteerconnect.Model.Forum.ForumData" />
+        <action
+            android:id="@+id/action_handlePostBottomFragment_to_addPostBottomFragment"
+            app:destination="@id/addPostBottomFragment" />
+    </dialog>
 </navigation>

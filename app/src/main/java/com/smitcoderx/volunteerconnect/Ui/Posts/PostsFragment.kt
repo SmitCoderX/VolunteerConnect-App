@@ -1,4 +1,4 @@
-package com.smitcoderx.volunteerconnect.Ui.EventJobs
+package com.smitcoderx.volunteerconnect.Ui.Posts
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,43 +11,62 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.smitcoderx.volunteerconnect.Model.Forum.ForumData
+import com.smitcoderx.volunteerconnect.Model.Posts.PostsData
 import com.smitcoderx.volunteerconnect.R
-import com.smitcoderx.volunteerconnect.Ui.Home.HomeViewModel
 import com.smitcoderx.volunteerconnect.Utils.Constants
+import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.hasInternetConnection
-import com.smitcoderx.volunteerconnect.databinding.FragmentForumListBinding
+import com.smitcoderx.volunteerconnect.databinding.FragmentPostsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ForumListFragment : Fragment(R.layout.fragment_forum_list),
-    SwipeRefreshLayout.OnRefreshListener, ForumAdapter.OnClickHandle {
+class PostsFragment : Fragment(R.layout.fragment_posts), SwipeRefreshLayout.OnRefreshListener,
+    PostAdapter.OnHandleActions {
 
-    private lateinit var binding: FragmentForumListBinding
-    private val viewModel by viewModels<ForumListViewModel>()
-    private val homeViewModel by viewModels<HomeViewModel>()
+    private lateinit var binding: FragmentPostsBinding
+    private val viewModel by viewModels<PostsViewModel>()
     private lateinit var prefs: DataStoreUtil
+    private val args by navArgs<PostsFragmentArgs>()
+    private var forumData: ForumData? = null
     private var listener: LoadingInterface? = null
-    private lateinit var forumAdapter: ForumAdapter
+    private lateinit var postAdapter: PostAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentForumListBinding.bind(view)
+        binding = FragmentPostsBinding.bind(view)
 
         prefs = DataStoreUtil(requireContext())
-        homeViewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
+        forumData = args.forumData
         viewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
-        homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
+        viewModel.handlePostList(prefs.getToken().toString(), forumData?.id.toString())
 
-        binding.tvCategoryType.text = if (prefs.getRole()
-                .equals("organization", ignoreCase = true)
-        ) "Created Forums" else "Participated Forums"
+
+        if (prefs.getRole().equals("organization", ignoreCase = true)) {
+            binding.addPost.visibility = View.VISIBLE
+        } else {
+            binding.addPost.visibility = View.GONE
+        }
+
+        binding.addPost.setOnClickListener {
+            findNavController().navigate(
+                PostsFragmentDirections.actionPostsFragmentToAddPostBottomFragment(
+                    args.forumData,
+                    null
+                )
+            )
+        }
+
+
+
+        binding.tvCategoryType.text = args.forumData?.forumName.toString()
 
         binding.categorySwipeLayout.setOnRefreshListener(this)
         try {
@@ -63,18 +82,16 @@ class ForumListFragment : Fragment(R.layout.fragment_forum_list),
             e.printStackTrace()
         }
 
-        forumAdapter = ForumAdapter(this)
-
-        handleCurrentUser()
-        if (prefs.getRole().equals("organization", ignoreCase = true)) {
-            handleForumListNGO()
-        } else {
-            handleForumListUser()
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
         }
+
+        postAdapter = PostAdapter(this, prefs.getRole().toString())
+        handlePostList()
 
         binding.rvEvents.apply {
             setHasFixedSize(true)
-            adapter = forumAdapter
+            adapter = postAdapter
         }
 
         binding.cardRetry.setOnClickListener {
@@ -82,103 +99,50 @@ class ForumListFragment : Fragment(R.layout.fragment_forum_list),
             showLoading()
             listener?.showLoading()
             binding.shimmerEffect.startShimmerAnimation()
-            viewModel.handleNGOForumList(
-                prefs.getToken().toString(),
-                homeViewModel.userLiveData.value?.data?.data?.id.toString()
-            )
-            viewModel.handleUserForumList(
-                prefs.getToken().toString(),
-                homeViewModel.userLiveData.value?.data?.data?.id.toString()
-            )
+            viewModel.handlePostList(prefs.getToken().toString(), forumData?.id.toString())
         }
 
-    }
 
-
-    private fun handleCurrentUser() {
-        homeViewModel.userLiveData.observe(viewLifecycleOwner) {
-            when (it) {
-                is ResponseState.Success -> {
-                    viewModel.handleNGOForumList(
-                        prefs.getToken().toString(), it.data?.data?.id.toString()
-                    )
-                    viewModel.handleUserForumList(
-                        prefs.getToken().toString(), it.data?.data?.id.toString()
-                    )
-
-                }
-
-                is ResponseState.Error -> {
-                }
-
-                is ResponseState.Loading -> {
-                }
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("prePostDelete")
+            ?.observe(viewLifecycleOwner) {
+                viewModel.handlePostList(prefs.getToken().toString(), forumData?.id.toString())
+                postAdapter.notifyDataSetChanged()
             }
-        }
+
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("postCreate")
+            ?.observe(viewLifecycleOwner) {
+                viewModel.handlePostList(prefs.getToken().toString(), forumData?.id.toString())
+            }
+
     }
 
     @SuppressLint("SetTextI18n")
-    private fun handleForumListNGO() {
-        viewModel.eventForumListLiveData.observe(viewLifecycleOwner) {
+    private fun handlePostList() {
+        viewModel.postLiveLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseState.Success -> {
-                    Log.d(Constants.TAG, "handleForumNGODataSuccess: ${it.data}")
+                    Log.d(Constants.TAG, "handlePostList: ${it.data}")
+
                     binding.shimmerEffect.stopShimmerAnimation()
                     listener?.hideLoading()
                     hideLoading()
-                    if (it.data.isNullOrEmpty()) {
-                        binding.llError.visibility = View.VISIBLE
-                        binding.cardRetry.visibility = View.GONE
-                        binding.lottieView.setAnimation(R.raw.no_data)
-                        binding.lottieView.loop(true)
-                        binding.lottieView.playAnimation()
-                        binding.tvErrorMsg.text = "Oops! No Forums Found To Show"
-
+                    if (prefs.getRole().equals("organization", ignoreCase = true)) {
+                        binding.addPost.visibility = View.VISIBLE
                     } else {
-                        binding.llError.visibility = View.GONE
-                        forumAdapter.differ.submitList(it.data)
+                        binding.addPost.visibility = View.GONE
                     }
-
-                }
-
-                is ResponseState.Loading -> {
-                    binding.shimmerEffect.startShimmerAnimation()
-                    showLoading()
-                }
-
-                is ResponseState.Error -> {
-                    binding.shimmerEffect.stopShimmerAnimation()
-                    showLoading()
-                    listener?.hideLoading()
-                    binding.shimmerEffect.visibility = View.GONE
-                    binding.llError.visibility = View.VISIBLE
-                    binding.tvErrorMsg.text = it.message.toString()
-                }
-
-            }
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun handleForumListUser() {
-        viewModel.eventForumListUserLiveData.observe(viewLifecycleOwner) {
-            when (it) {
-                is ResponseState.Success -> {
-                    Log.d(Constants.TAG, "handleForumUserDataSuccess: ${it.data}")
-                    binding.shimmerEffect.stopShimmerAnimation()
-                    listener?.hideLoading()
-                    hideLoading()
-                    if (it.data.isNullOrEmpty()) {
+                    if (it.data?.data.isNullOrEmpty()) {
                         binding.llError.visibility = View.VISIBLE
                         binding.cardRetry.visibility = View.GONE
                         binding.lottieView.setAnimation(R.raw.no_data)
                         binding.lottieView.loop(true)
                         binding.lottieView.playAnimation()
-                        binding.tvErrorMsg.text = "Oops! No Forums Found To Show"
+                        binding.tvErrorMsg.text = "Oops! No Posts Found To Show"
 
                     } else {
                         binding.llError.visibility = View.GONE
-                        forumAdapter.differ.submitList(it.data)
+                        postAdapter.differ.submitList(it.data?.data)
                     }
                 }
 
@@ -195,11 +159,9 @@ class ForumListFragment : Fragment(R.layout.fragment_forum_list),
                     binding.llError.visibility = View.VISIBLE
                     binding.tvErrorMsg.text = it.message.toString()
                 }
-
             }
         }
     }
-
 
     private fun showLoading() {
         binding.apply {
@@ -207,6 +169,8 @@ class ForumListFragment : Fragment(R.layout.fragment_forum_list),
             binding.rvEvents.visibility = View.GONE
             binding.llError.visibility = View.GONE
             binding.tvCategoryType.visibility = View.GONE
+            binding.ivBack.visibility = View.GONE
+            binding.addPost.visibility = View.GONE
         }
     }
 
@@ -216,6 +180,8 @@ class ForumListFragment : Fragment(R.layout.fragment_forum_list),
             binding.llError.visibility = View.GONE
             binding.rvEvents.visibility = View.VISIBLE
             binding.tvCategoryType.visibility = View.VISIBLE
+            binding.ivBack.visibility = View.VISIBLE
+            binding.addPost.visibility = View.VISIBLE
 
         }
     }
@@ -227,16 +193,14 @@ class ForumListFragment : Fragment(R.layout.fragment_forum_list),
         binding.shimmerEffect.startShimmerAnimation()
         lifecycleScope.launch {
             delay(1500)
-            viewModel.handleNGOForumList(
-                prefs.getToken().toString(),
-                homeViewModel.userLiveData.value?.data?.data?.id.toString()
-            )
-            viewModel.handleUserForumList(
-                prefs.getToken().toString(),
-                homeViewModel.userLiveData.value?.data?.data?.id.toString()
-            )
+            viewModel.handlePostList(prefs.getToken().toString(), forumData?.id.toString())
             listener?.hideLoading()
             hideLoading()
+            if(prefs.getRole().equals("organization", ignoreCase = true)) {
+                binding.addPost.visibility = View.VISIBLE
+            } else {
+                binding.addPost.visibility = View.GONE
+            }
             binding.categorySwipeLayout.isRefreshing = false
             binding.shimmerEffect.stopShimmerAnimation()
             binding.llError.visibility = View.GONE
@@ -245,11 +209,7 @@ class ForumListFragment : Fragment(R.layout.fragment_forum_list),
 
     override fun onResume() {
         super.onResume()
-        if (prefs.getRole().equals("organization", ignoreCase = true)) {
-            handleForumListNGO()
-        } else {
-            handleForumListUser()
-        }
+        handlePostList()
         binding.shimmerEffect.startShimmerAnimation()
     }
 
@@ -267,10 +227,11 @@ class ForumListFragment : Fragment(R.layout.fragment_forum_list),
         }
     }
 
-    override fun onForumClick(data: ForumData) {
+    override fun onClick(data: PostsData) {
         findNavController().navigate(
-            ForumListFragmentDirections.actionActionJobsToPostsFragment(
-                data
+            PostsFragmentDirections.actionPostsFragmentToHandlePostBottomFragment(
+                data,
+                args.forumData!!
             )
         )
     }

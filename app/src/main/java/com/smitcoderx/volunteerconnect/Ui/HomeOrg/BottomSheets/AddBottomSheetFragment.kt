@@ -9,7 +9,7 @@ import com.smitcoderx.volunteerconnect.databinding.FragmentBottomSheetAddBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddBottomSheetFragment: BottomSheetDialogFragment(R.layout.fragment_bottom_sheet_add) {
+class AddBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment_bottom_sheet_add) {
 
     private lateinit var binding: FragmentBottomSheetAddBinding
 
@@ -19,6 +19,10 @@ class AddBottomSheetFragment: BottomSheetDialogFragment(R.layout.fragment_bottom
 
         binding.cardAddEvent.setOnClickListener {
             findNavController().navigate(AddBottomSheetFragmentDirections.actionAddBottomSheetFragmentToEventFragment())
+        }
+
+        binding.cardAddPost.setOnClickListener {
+            findNavController().navigate(AddBottomSheetFragmentDirections.actionAddBottomSheetFragmentToActionJobs())
         }
 
     }
