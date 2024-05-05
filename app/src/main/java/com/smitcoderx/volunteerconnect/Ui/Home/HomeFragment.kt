@@ -3,6 +3,7 @@ package com.smitcoderx.volunteerconnect.Ui.Home
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -14,8 +15,11 @@ import com.bumptech.glide.Glide
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.smitcoderx.volunteerconnect.Model.Category.CategoryData
+import com.smitcoderx.volunteerconnect.Model.Events.DataFetch
 import com.smitcoderx.volunteerconnect.Model.User.UserDataModel
 import com.smitcoderx.volunteerconnect.R
+import com.smitcoderx.volunteerconnect.Ui.Categories.CategoryEventAdapter
+import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
@@ -33,7 +37,8 @@ import java.util.Locale
 
 @ExperimentalBadgeUtils
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesAdapter.OnEvents {
+class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesAdapter.OnEvents,
+    CategoryEventAdapter.OnCategory {
 
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel by viewModels<HomeViewModel>()
@@ -41,6 +46,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
     private var listener: LoadingInterface? = null
     private lateinit var prefs: DataStoreUtil
     private var userData: UserDataModel? = null
+    private lateinit var categoryAdapter: CategoryEventAdapter
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,6 +57,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
         homeViewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
         homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
         homeViewModel.getCategoryList()
+
+        categoryAdapter = CategoryEventAdapter(this)
 
         binding.ivNotification.clipToOutline = false
         val badgeDrawable = BadgeDrawable.create(requireContext())
@@ -72,10 +80,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
 
         handleCurrentUser()
         handleCategoryData()
+        handleSavedEvents()
 
         binding.rvTypes.apply {
             setHasFixedSize(false)
             adapter = typeAdapter
+        }
+
+        binding.rvOrgs.apply {
+            setHasFixedSize(false)
+            adapter = categoryAdapter
         }
 
         binding.maps.setOnClickListener {
@@ -284,6 +298,36 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
     override fun onEventClick(category: CategoryData) {
         val action = HomeFragmentDirections.actionHomeFragmentToCategoryFragment(category)
         findNavController().navigate(action)
+    }
+
+    private fun handleSavedEvents() {
+        homeViewModel.savedEvents().observe(viewLifecycleOwner) {
+            Log.d(TAG, "handleSavedEvents: $it")
+            if (it.isNullOrEmpty()) {
+                binding.tvOrgs.visibility = View.GONE
+                binding.rvOrgs.visibility = View.GONE
+            } else {
+                binding.tvOrgs.visibility = View.VISIBLE
+                binding.rvOrgs.visibility = View.VISIBLE
+                categoryAdapter.differ.submitList(it)
+            }
+        }
+    }
+
+    override fun onEventHandleClick(eventData: DataFetch) {
+        findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToSingleEventFragment(
+                eventData
+            )
+        )
+    }
+
+    override fun onEventFavClick(eventData: DataFetch) {
+        if (eventData.isSaved) {
+            homeViewModel.insertEvent(eventData)
+        } else {
+            homeViewModel.deleteEvent(eventData)
+        }
     }
 
 

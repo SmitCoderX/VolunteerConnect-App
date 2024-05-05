@@ -25,6 +25,14 @@ class CategoryViewModel @Inject constructor(
     private val _eventLiveData = MutableLiveData<ResponseState<List<DataFetch?>?>>()
     val eventLiveData = _eventLiveData
 
+    fun saveEvent(data: DataFetch) = viewModelScope.launch {
+        categoryRepository.insert(data)
+    }
+
+    fun deleteEvent(data: DataFetch) = viewModelScope.launch {
+        categoryRepository.delete(data)
+    }
+
 
     fun getEventListCategoryWise(category: String) = viewModelScope.launch {
         if (isNetworkConnectedLiveData.value == false) {

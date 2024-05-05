@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.smitcoderx.volunteerconnect.Model.Events.Data
 import com.smitcoderx.volunteerconnect.Model.Events.DataFetch
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
@@ -36,7 +35,6 @@ class CategoryEventAdapter(private val listener: OnCategory) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CategoryEventViewHolder, position: Int) {
         val currentItem = differ.currentList[position]
-        var liked = false
         currentItem.let { item ->
 
             Glide.with(holder.itemView).load(item.eventPicture)
@@ -55,25 +53,39 @@ class CategoryEventAdapter(private val listener: OnCategory) :
                 if (item.isPaid == true) "₹${item.price}" else "Free"
             holder.binding.tvEventQuestions.text = "${item.question?.size} Questions"
 
+            if(item.isSaved) {
+                holder.binding.ivEventFav.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        holder.itemView.context, R.drawable.ic_liked
+                    )
+                )
+            } else {
+                holder.binding.ivEventFav.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        holder.itemView.context, R.drawable.heart
+                    )
+                )
+            }
+
             holder.binding.ivEventFav.setOnClickListener {
-                if (liked) {
+                if (item.isSaved) {
                     holder.binding.ivEventFav.setImageDrawable(
                         ContextCompat.getDrawable(
                             it.context, R.drawable.heart
                         )
                     )
-                    liked = false
+                    item.isSaved = false
                     Log.d(TAG, "onBindViewHolder: Unliked")
                 } else {
-                    liked = true
                     holder.binding.ivEventFav.setImageDrawable(
                         ContextCompat.getDrawable(
                             it.context, R.drawable.ic_liked
                         )
                     )
+                    item.isSaved = true
                     Log.d(TAG, "onBindViewHolder: Liked")
-                    listener.onEventFavClick(item)
                 }
+                listener.onEventFavClick(item)
             }
 
             holder.binding.root.setOnClickListener {

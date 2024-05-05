@@ -8,11 +8,11 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smitcoderx.volunteerconnect.R
-import com.smitcoderx.volunteerconnect.Ui.Register.RegisterFragmentArgs
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.databinding.FragmentBottomSheetProfileBinding
 
-class ProfileBottomSheetFragment: BottomSheetDialogFragment(R.layout.fragment_bottom_sheet_profile) {
+class ProfileBottomSheetFragment :
+    BottomSheetDialogFragment(R.layout.fragment_bottom_sheet_profile) {
 
     private lateinit var binding: FragmentBottomSheetProfileBinding
     private val args by navArgs<ProfileBottomSheetFragmentArgs>()
@@ -30,6 +30,12 @@ class ProfileBottomSheetFragment: BottomSheetDialogFragment(R.layout.fragment_bo
         binding.tvSheetName.text = userData.name?.split(" ")?.get(0) ?: userData.name
         binding.tvSheetUsername.text = "@${userData.username}"
         binding.tvSheetEmail.text = userData.email
+
+        binding.cardSaved.setOnClickListener {
+            findNavController().navigate(
+                ProfileBottomSheetFragmentDirections.actionProfileBottomSheetFragmentToSavedFragment()
+            )
+        }
 
 
         binding.btnLogout.setOnClickListener {

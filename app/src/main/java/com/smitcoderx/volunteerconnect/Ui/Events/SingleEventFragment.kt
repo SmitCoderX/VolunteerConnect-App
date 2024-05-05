@@ -72,23 +72,7 @@ class SingleEventFragment : Fragment(R.layout.fragment_single_event) {
             findNavController().popBackStack()
         }
 
-        binding.ivHeart.setOnClickListener {
-            if (isLiked) {
-                isLiked = false
-                binding.ivHeart.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(), R.drawable.heart_layer_list
-                    )
-                )
-            } else {
-                isLiked = true
-                binding.ivHeart.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(), R.drawable.heart_layer_list_liked
-                    )
-                )
-            }
-        }
+
 
         handleEventData()
         handleRequestStatus()
@@ -202,6 +186,26 @@ class SingleEventFragment : Fragment(R.layout.fragment_single_event) {
                                 prefs.getToken().toString(),
                                 data
                             )
+                        }
+                    }
+
+                    binding.ivHeart.setOnClickListener { v ->
+                        if (isLiked) {
+                            isLiked = false
+                            binding.ivHeart.setImageDrawable(
+                                ContextCompat.getDrawable(
+                                    requireContext(), R.drawable.heart_layer_list
+                                )
+                            )
+                            it.data?.let { it1 -> singleViewModel.deleteEvent(it1) }
+                        } else {
+                            isLiked = true
+                            binding.ivHeart.setImageDrawable(
+                                ContextCompat.getDrawable(
+                                    requireContext(), R.drawable.heart_layer_list_liked
+                                )
+                            )
+                            it.data?.let { it1 -> singleViewModel.saveEvent(it1) }
                         }
                     }
                 }

@@ -25,6 +25,14 @@ class SingleEventViewModel @Inject constructor(
     private val _sendRequestLiveData = MutableLiveData<ResponseState<RequestsData?>>()
     val sendRequestLiveData = _sendRequestLiveData
 
+    fun saveEvent(data: DataFetch) = viewModelScope.launch {
+        repository.insert(data)
+    }
+
+    fun deleteEvent(data: DataFetch) = viewModelScope.launch {
+        repository.delete(data)
+    }
+
     fun getEventData(id: String) = viewModelScope.launch {
         if (isNetworkConnectedLiveData.value == false) {
             _eventLiveData.value =

@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_homeFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_singleEventFragment"
+            app:destination="@id/singleEventFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
@@ -98,6 +101,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileBottomSheetFragment_to_savedFragment"
+            app:destination="@id/savedFragment" />
     </dialog>
     <fragment
         android:id="@+id/profileFragment"
@@ -289,4 +295,13 @@
             app:argType="com.smitcoderx.volunteerconnect.Model.Events.DataFetch"
             app:nullable="true" />
     </dialog>
+    <fragment
+        android:id="@+id/savedFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Saved.SavedFragment"
+        android:label="fragment_saved"
+        tools:layout="@layout/fragment_saved" >
+        <action
+            android:id="@+id/action_savedFragment_to_singleEventFragment"
+            app:destination="@id/singleEventFragment" />
+    </fragment>
 </navigation>

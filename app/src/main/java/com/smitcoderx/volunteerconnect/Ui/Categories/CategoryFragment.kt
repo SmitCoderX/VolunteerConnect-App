@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import com.smitcoderx.volunteerconnect.Model.Events.Data
 import com.smitcoderx.volunteerconnect.Model.Events.DataFetch
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
@@ -126,70 +125,80 @@ class CategoryFragment : Fragment(R.layout.fragment_category), CategoryEventAdap
 
                     }
                 }
+
+                else -> {}
             }
         }
     }
 
     override fun onEventHandleClick(eventData: DataFetch) {
-        findNavController().navigate(CategoryFragmentDirections.actionCategoryFragmentToSingleEventFragment(eventData))
+        findNavController().navigate(
+            CategoryFragmentDirections.actionCategoryFragmentToSingleEventFragment(
+                eventData
+            )
+        )
     }
 
     override fun onEventFavClick(eventData: DataFetch) {
-        Log.d(TAG, "onEventFavClick: ")
-    }
-
-    private fun showLoading() {
-        binding.apply {
-            binding.shimmerEffect.visibility = View.VISIBLE
-            binding.rvEvents.visibility = View.GONE
-            binding.llError.visibility = View.GONE
-            binding.ivBack.visibility = View.GONE
-            binding.tvCategoryType.visibility = View.GONE
+        if (eventData.isSaved) {
+            categoryViewModel.saveEvent(eventData)
+        } else {
+            categoryViewModel.deleteEvent(eventData)
         }
     }
 
-    private fun hideLoading() {
-        binding.apply {
-            binding.shimmerEffect.visibility = View.GONE
-            binding.llError.visibility = View.GONE
-            binding.rvEvents.visibility = View.VISIBLE
-            binding.ivBack.visibility = View.VISIBLE
-            binding.tvCategoryType.visibility = View.VISIBLE
+        private fun showLoading() {
+            binding.apply {
+                binding.shimmerEffect.visibility = View.VISIBLE
+                binding.rvEvents.visibility = View.GONE
+                binding.llError.visibility = View.GONE
+                binding.ivBack.visibility = View.GONE
+                binding.tvCategoryType.visibility = View.GONE
+            }
         }
-    }
 
-    override fun onRefresh() {
-        binding.llError.visibility = View.GONE
-        listener?.showLoading()
-        showLoading()
-        binding.shimmerEffect.startShimmerAnimation()
-        lifecycleScope.launch {
-            delay(1500)
-            categoryViewModel.getEventListCategoryWise(category)
-            listener?.hideLoading()
-            hideLoading()
-            binding.categorySwipeLayout.isRefreshing = false
+        private fun hideLoading() {
+            binding.apply {
+                binding.shimmerEffect.visibility = View.GONE
+                binding.llError.visibility = View.GONE
+                binding.rvEvents.visibility = View.VISIBLE
+                binding.ivBack.visibility = View.VISIBLE
+                binding.tvCategoryType.visibility = View.VISIBLE
+            }
+        }
+
+        override fun onRefresh() {
+            binding.llError.visibility = View.GONE
+            listener?.showLoading()
+            showLoading()
+            binding.shimmerEffect.startShimmerAnimation()
+            lifecycleScope.launch {
+                delay(1500)
+                categoryViewModel.getEventListCategoryWise(category)
+                listener?.hideLoading()
+                hideLoading()
+                binding.categorySwipeLayout.isRefreshing = false
+                binding.shimmerEffect.stopShimmerAnimation()
+            }
+        }
+
+        override fun onResume() {
+            super.onResume()
+            handleCategoryData()
+            binding.shimmerEffect.startShimmerAnimation()
+        }
+
+        override fun onPause() {
+            super.onPause()
             binding.shimmerEffect.stopShimmerAnimation()
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        handleCategoryData()
-        binding.shimmerEffect.startShimmerAnimation()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        binding.shimmerEffect.stopShimmerAnimation()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is LoadingInterface) {
-            listener = context
-        } else {
-            throw ClassCastException("$context must implement LoadingInterface")
+        override fun onAttach(context: Context) {
+            super.onAttach(context)
+            if (context is LoadingInterface) {
+                listener = context
+            } else {
+                throw ClassCastException("$context must implement LoadingInterface")
+            }
         }
-    }
 }

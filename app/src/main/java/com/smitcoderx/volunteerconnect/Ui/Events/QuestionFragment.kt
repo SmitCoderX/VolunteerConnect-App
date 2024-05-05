@@ -46,6 +46,10 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
             tvQuestion4.text = "4. ${eventData.question?.get(3)} *"
         }
 
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
 
         binding.btnApply.setOnClickListener {
             if (validate()) {

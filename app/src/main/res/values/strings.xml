@@ -111,6 +111,7 @@
     <string name="open_in_maps">Open in Maps</string>
     <string name="focus">Focus</string>
     <string name="go_to_event_page">Go to Event Page</string>
+    <string name="saved_events">Saved Events</string>
 
 
 </resources>

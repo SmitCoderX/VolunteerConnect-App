@@ -5,11 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.smitcoderx.volunteerconnect.Model.Category.CategoryResponse
+import com.smitcoderx.volunteerconnect.Model.Events.DataFetch
 import com.smitcoderx.volunteerconnect.Model.User.UserDataModel
-import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.errorResponse
-import com.smitcoderx.volunteerconnect.Utils.hasInternetConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -29,6 +28,16 @@ class HomeViewModel @Inject constructor(
     private val _userLiveData = MutableLiveData<ResponseState<UserDataModel?>>()
     val userLiveData: LiveData<ResponseState<UserDataModel?>>
         get() = _userLiveData
+
+    fun deleteEvent(data: DataFetch) = viewModelScope.launch {
+        homeRepository.delete(data)
+    }
+
+    fun insertEvent(data: DataFetch) = viewModelScope.launch {
+        homeRepository.insert(data)
+    }
+
+    fun savedEvents() = homeRepository.getList()
 
     fun getCurrentLoggedinUser(token: String) = viewModelScope.launch {
         if (isNetworkConnectedLiveData.value == false) {

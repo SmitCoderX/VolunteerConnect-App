@@ -98,7 +98,6 @@ class MapsFragment : Fragment(R.layout.fragment_maps), OnMapReadyCallback {
                         val selectedMarkerData =
                             it.data?.find { item -> item?.name == marker.title }
                         if (selectedMarkerData != null) {
-                            // logic to open bottom sheet
                             findNavController().navigate(
                                 MapsFragmentDirections.actionMapsFragmentToMapEventBottomFragment(
                                     selectedMarkerData

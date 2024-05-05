@@ -2,9 +2,12 @@ package com.smitcoderx.volunteerconnect.Model.Events
 
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
+@Entity(tableName = "Events")
 @Parcelize
 data class DataFetch(
     @SerializedName("address")
@@ -35,8 +38,9 @@ data class DataFetch(
     var gallery: List<String> = listOf(),
     @SerializedName("goodies")
     var goodies: String? = "",
+    @PrimaryKey
     @SerializedName("_id")
-    var id: String? = "",
+    var id: String,
     @SerializedName("isForumCreated")
     var isForumCreated: Boolean? = false,
     @SerializedName("isGoodiesProvided")
@@ -72,5 +76,56 @@ data class DataFetch(
     @SerializedName("volunteerCount")
     var volunteerCount: Int? = 0,
     @SerializedName("volunteers")
-    var volunteers: List<String?>? = listOf()
-) : Parcelable
+    var volunteers: List<String?>? = listOf(),
+    var isSaved: Boolean = false
+) : Parcelable {
+    constructor(
+        address: String?, id: String, category: List<String?>?,
+        coordinates: List<Double?>?, createdAt: String?, desc: String?,
+        email: String?, eventEndingDateAndTime: String?, eventPicture: String?,
+        eventPoint: Int?, eventStartDataAndTime: String?, forumId: String?,
+        forumName: String?, gallery: List<String>?, goodies: String?,
+        isForumCreated: Boolean?, isGoodiesProvided: Boolean?, isPaid: Boolean?,
+        isPaying: Boolean?, isResource: Boolean?, name: String?, documentType: String?,
+        payment: Int?, phone: String?, price: Int?, question: List<String?>?,
+        skills: List<String?>?, slug: String?, user: String?, v: Int?,
+        visibility: String?, volunteerCount: Int?, volunteers: List<String?>?, isSaved: Boolean
+    )
+            : this(
+        address = address,
+        category = category,
+        coordinates = coordinates,
+        createdAt = createdAt,
+        desc = desc,
+        email = email,
+        eventEndingDateAndTime = eventEndingDateAndTime,
+        eventPicture = eventPicture,
+        eventPoint = eventPoint,
+        eventStartDataAndTime = eventStartDataAndTime,
+        forumId = forumId,
+        forumName = forumName,
+        gallery = gallery ?: listOf(),
+        goodies = goodies,
+        id = id,
+        isForumCreated = isForumCreated,
+        isGoodiesProvided = isGoodiesProvided,
+        isPaid = isPaid,
+        isPaying = isPaying,
+        isResource = isResource,
+        name = name,
+        documentType = documentType,
+        payment = payment,
+        phone = phone,
+        price = price,
+        question = question,
+        skills = skills,
+        slug = slug,
+        user = user,
+        v = v,
+        visibility = visibility,
+        volunteerCount = volunteerCount,
+        volunteers = volunteers,
+        isSaved = isSaved
+    )
+
+}
