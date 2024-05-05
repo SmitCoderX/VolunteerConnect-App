@@ -19,6 +19,7 @@ import com.smitcoderx.volunteerconnect.Model.Events.DataFetch
 import com.smitcoderx.volunteerconnect.Model.User.UserDataModel
 import com.smitcoderx.volunteerconnect.R
 import com.smitcoderx.volunteerconnect.Ui.Categories.CategoryEventAdapter
+import com.smitcoderx.volunteerconnect.Ui.Categories.CategoryViewModel
 import com.smitcoderx.volunteerconnect.Utils.Constants.TAG
 import com.smitcoderx.volunteerconnect.Utils.DataStoreUtil
 import com.smitcoderx.volunteerconnect.Utils.LoadingInterface
@@ -42,11 +43,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
 
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel by viewModels<HomeViewModel>()
+    private val categoryViewModel by viewModels<CategoryViewModel>()
     private val typeAdapter = TypesAdapter(this)
     private var listener: LoadingInterface? = null
     private lateinit var prefs: DataStoreUtil
     private var userData: UserDataModel? = null
     private lateinit var categoryAdapter: CategoryEventAdapter
+    private lateinit var allEventAdapter: CategoryEventAdapter
+
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,10 +59,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
 
         prefs = DataStoreUtil(requireContext())
         homeViewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
+        categoryViewModel.isNetworkConnectedLiveData.value =
+            requireContext().hasInternetConnection()
         homeViewModel.getCurrentLoggedinUser(prefs.getToken().toString())
         homeViewModel.getCategoryList()
+        categoryViewModel.getEventList()
 
         categoryAdapter = CategoryEventAdapter(this)
+        allEventAdapter = CategoryEventAdapter(this)
 
         binding.ivNotification.clipToOutline = false
         val badgeDrawable = BadgeDrawable.create(requireContext())
@@ -80,11 +88,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
 
         handleCurrentUser()
         handleCategoryData()
+        handleAllEvents()
         handleSavedEvents()
 
         binding.rvTypes.apply {
             setHasFixedSize(false)
             adapter = typeAdapter
+        }
+
+        binding.rvReview.apply {
+            setHasFixedSize(false)
+            adapter = allEventAdapter
         }
 
         binding.rvOrgs.apply {
@@ -310,6 +324,31 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
                 binding.tvOrgs.visibility = View.VISIBLE
                 binding.rvOrgs.visibility = View.VISIBLE
                 categoryAdapter.differ.submitList(it)
+            }
+        }
+    }
+
+    private fun handleAllEvents() {
+        categoryViewModel.eventLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseState.Success -> {
+                    if (it.data.isNullOrEmpty()) {
+                        binding.tvReviews.visibility = View.GONE
+                        binding.rvReview.visibility = View.GONE
+                    } else {
+                        binding.tvReviews.visibility = View.VISIBLE
+                        binding.rvReview.visibility = View.VISIBLE
+                        allEventAdapter.differ.submitList(it.data)
+                    }
+                }
+
+                is ResponseState.Loading -> {
+
+                }
+
+                is ResponseState.Error -> {
+
+                }
             }
         }
     }

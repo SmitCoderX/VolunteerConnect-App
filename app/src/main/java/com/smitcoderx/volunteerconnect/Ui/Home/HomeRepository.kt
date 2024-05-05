@@ -15,6 +15,7 @@ class HomeRepository @Inject constructor(
     suspend fun getCurrentUser(token: String) = api.getLoggedInUser(token)
     suspend fun getCategoryList() = api.getCategoryList()
 
+
     fun getList() = db.volunteerDao().getAllEvents()
     suspend fun delete(data: DataFetch) = db.volunteerDao().delete(data)
     suspend fun insert(data: DataFetch) = db.volunteerDao().insert(data)
