@@ -143,7 +143,7 @@
                         app:layout_constraintEnd_toStartOf="@id/ll_price"
                         app:layout_constraintStart_toEndOf="@id/tv_event_date"
                         app:layout_constraintTop_toBottomOf="@id/tv_eventName"
-                        tools:text="Check Name" />
+                        android:text="@string/open_in_maps" />
 
 
                     <androidx.appcompat.widget.LinearLayoutCompat

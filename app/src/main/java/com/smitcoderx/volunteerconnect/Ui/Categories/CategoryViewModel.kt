@@ -3,7 +3,6 @@ package com.smitcoderx.volunteerconnect.Ui.Categories
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smitcoderx.volunteerconnect.Model.Events.Data
 import com.smitcoderx.volunteerconnect.Model.Events.DataFetch
 import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.errorResponse
@@ -18,9 +17,13 @@ class CategoryViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
-        val isNetworkConnectedLiveData = MutableLiveData<Boolean>()
-        private val _eventCategoryWiseLiveData = MutableLiveData<ResponseState<List<DataFetch?>?>>()
-        val eventCategoryWiseLiveData = _eventCategoryWiseLiveData
+    val isNetworkConnectedLiveData = MutableLiveData<Boolean>()
+    private val _eventCategoryWiseLiveData = MutableLiveData<ResponseState<List<DataFetch?>?>>()
+    val eventCategoryWiseLiveData = _eventCategoryWiseLiveData
+
+
+    private val _eventLiveData = MutableLiveData<ResponseState<List<DataFetch?>?>>()
+    val eventLiveData = _eventLiveData
 
 
     fun getEventListCategoryWise(category: String) = viewModelScope.launch {
@@ -48,4 +51,30 @@ class CategoryViewModel @Inject constructor(
                 ResponseState.Error("Couldn\'t reach server. Check your internet connection.")
         }
     }
+
+    fun getEventList() = viewModelScope.launch {
+        if (isNetworkConnectedLiveData.value == false) {
+            _eventLiveData.value =
+                ResponseState.Error("This app requires an active internet connection to be used.")
+        }
+        _eventLiveData.value = ResponseState.Loading()
+        try {
+            val response = categoryRepository.getEventsList()
+            if (response.isSuccessful && response.body()?.success == true) {
+                _eventLiveData.value =
+                    ResponseState.Success(response.body()!!.dataList)
+            } else {
+                _eventLiveData.value =
+                    ResponseState.Error(errorResponse(response)?.error.toString())
+            }
+        } catch (e: HttpException) {
+            _eventLiveData.value =
+                ResponseState.Error("Something went wrong. Please try again later.")
+        } catch (e: IOException) {
+            _eventLiveData.value =
+                ResponseState.Error("Couldn\'t reach server. Check your internet connection.")
+        }
+    }
+
+
 }

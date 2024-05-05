@@ -108,6 +108,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
                     binding.llError.visibility = View.GONE
                     hideLoading()
                     listener?.hideLoading()
+                    prefs.setID(it.data?.data?.id)
                     userData = it.data
                     binding.shimmerEffect.stopShimmerAnimation()
                     binding.tvWelcome.text = generateGreeting(it.data?.data?.username.toString())
@@ -266,7 +267,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnRefreshListener, TypesA
         binding.apply {
             tvWelcome.visibility = View.VISIBLE
             tvDate.visibility = View.VISIBLE
-            ivNotification.visibility = View.VISIBLE
+            ivNotification.visibility = View.GONE
             ivProfile.visibility = View.VISIBLE
             tvTitle.visibility = View.VISIBLE
             rvTypes.visibility = View.VISIBLE

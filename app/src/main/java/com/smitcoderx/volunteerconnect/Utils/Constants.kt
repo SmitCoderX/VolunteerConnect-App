@@ -12,6 +12,7 @@ object Constants {
     const val VOLUNTEER = "Volunteer"
     const val LOGGEDIN = "LoggedIn"
     const val TOKEN = "Token"
+    const val ID = "ID"
     const val ROLE = "Role"
     const val FORUM_NAME = "ForumName"
 }

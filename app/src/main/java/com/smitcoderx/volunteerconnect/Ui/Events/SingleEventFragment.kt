@@ -1,6 +1,8 @@
 package com.smitcoderx.volunteerconnect.Ui.Events
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -17,7 +19,10 @@ import com.smitcoderx.volunteerconnect.Utils.ResponseState
 import com.smitcoderx.volunteerconnect.Utils.hasInternetConnection
 import com.smitcoderx.volunteerconnect.databinding.FragmentSingleEventBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
+
 
 @AndroidEntryPoint
 class SingleEventFragment : Fragment(R.layout.fragment_single_event) {
@@ -99,6 +104,19 @@ class SingleEventFragment : Fragment(R.layout.fragment_single_event) {
             when (it) {
                 is ResponseState.Success -> {
                     hideLoading()
+
+                    if (it.data?.volunteers?.contains(prefs.getID().toString()) == true) {
+                        binding.btnApply.text = "Request Accepted"
+                        binding.btnApply.isClickable = false
+                        binding.btnApply.isEnabled = false
+                    } else {
+                        binding.btnApply.text = "Apply"
+                        binding.btnApply.isClickable = true
+                        binding.btnApply.isEnabled = true
+                    }
+
+                    binding.tvEventDate.text =
+                        dateFormatEnglish(it.data?.eventStartDataAndTime.toString())
                     binding.llError.visibility = View.GONE
                     binding.tvEventName.text = it.data?.name
                     binding.tvEventDesc.text = it.data?.desc
@@ -141,9 +159,29 @@ class SingleEventFragment : Fragment(R.layout.fragment_single_event) {
 
                     binding.tvEventPoints.text =
                         "After Completion ${it.data?.eventPoint} Points will be Credited to the Volunteer"
+
                     binding.tvEventStartEndTime.text =
-                        "Event Will Start From ${it.data?.eventStartDataAndTime} and will End At ${it.data?.eventEndingDateAndTime}"
+                        "Event Will Start From ${dateFormat(it.data?.eventStartDataAndTime.toString())} and will End At ${
+                            dateFormat(
+                                it.data?.eventEndingDateAndTime.toString()
+                            )
+                        }"
                     binding.indicator.setPageSize(binding.viewPager.adapter!!.itemCount)
+
+                    binding.tvEventAddress.setOnClickListener { v ->
+                        val strUri =
+                            "http://maps.google.com/maps?q=loc:${it.data?.coordinates?.get(0)},${
+                                it.data?.coordinates?.get(
+                                    1
+                                )
+                            }(${it.data?.name})"
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
+                        intent.setClassName(
+                            "com.google.android.apps.maps",
+                            "com.google.android.maps.MapsActivity"
+                        )
+                        startActivity(intent)
+                    }
 
                     binding.btnApply.setOnClickListener { v ->
                         if (!it.data?.question.isNullOrEmpty()) {
@@ -219,5 +257,21 @@ class SingleEventFragment : Fragment(R.layout.fragment_single_event) {
                 }
             }
         }
+    }
+
+    private fun dateFormat(timestamp: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.ENGLISH)
+
+        val date = inputFormat.parse(timestamp)
+        return outputFormat.format(date as Date)
+    }
+
+    private fun dateFormatEnglish(timestamp: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+
+        val date = inputFormat.parse(timestamp)
+        return outputFormat.format(date as Date)
     }
 }

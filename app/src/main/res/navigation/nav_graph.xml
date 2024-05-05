@@ -77,7 +77,11 @@
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Maps.MapsFragment"
-        android:label="MapsFragment" />
+        android:label="MapsFragment" >
+        <action
+            android:id="@+id/action_mapsFragment_to_mapEventBottomFragment"
+            app:destination="@id/mapEventBottomFragment" />
+    </fragment>
     <dialog
         android:id="@+id/profileBottomSheetFragment"
         android:name="com.smitcoderx.volunteerconnect.Ui.Profile.ProfileBottomSheetFragment"
@@ -271,5 +275,18 @@
         <action
             android:id="@+id/action_handlePostBottomFragment_to_addPostBottomFragment"
             app:destination="@id/addPostBottomFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/mapEventBottomFragment"
+        android:name="com.smitcoderx.volunteerconnect.Ui.Maps.MapEventBottomFragment"
+        android:label="fragment_bottom_map_event"
+        tools:layout="@layout/fragment_bottom_map_event" >
+        <action
+            android:id="@+id/action_mapEventBottomFragment_to_singleEventFragment"
+            app:destination="@id/singleEventFragment" />
+        <argument
+            android:name="EventData"
+            app:argType="com.smitcoderx.volunteerconnect.Model.Events.DataFetch"
+            app:nullable="true" />
     </dialog>
 </navigation>

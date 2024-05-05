@@ -108,6 +108,9 @@
     <string name="post_body">Post Body</string>
     <string name="delete_post">Delete Post</string>
     <string name="edit_post">Edit Post</string>
+    <string name="open_in_maps">Open in Maps</string>
+    <string name="focus">Focus</string>
+    <string name="go_to_event_page">Go to Event Page</string>
 
 
 </resources>

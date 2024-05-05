@@ -68,6 +68,7 @@
                     android:background="?selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:focusable="true"
+                    android:visibility="gone"
                     app:cardCornerRadius="@dimen/_60sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_date"
                     app:layout_constraintEnd_toStartOf="@id/iv_profile"

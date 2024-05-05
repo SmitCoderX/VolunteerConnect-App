@@ -1,9 +1,14 @@
 package com.smitcoderx.volunteerconnect.Ui.EventsCreation
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -12,6 +17,8 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TimePicker
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
 import androidx.core.view.children
@@ -19,6 +26,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
@@ -54,7 +64,25 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
     private var listener: LoadingInterface? = null
     private var forumName: String = ""
     private var questionsList = mutableListOf<String>()
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var lat = 0.0
+    private var long = 0.0
 
+    private val requestLocationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            // Permission granted, request location updates
+            requestLocationUpdates()
+        } else {
+            // Permission denied
+            Toast.makeText(
+                requireContext(),
+                "Location permission denied",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,6 +93,15 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
         prefs = DataStoreUtil(requireContext())
         eventViewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
         homeViewModel.isNetworkConnectedLiveData.value = requireContext().hasInternetConnection()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        if (checkLocationPermissions()) {
+            requestLocationUpdates()
+        } else {
+            // Request the missing permissions
+            requestLocationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+
         homeViewModel.getCategoryList()
         handleCategoryData()
         handleChipGroups()
@@ -107,7 +144,7 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
                 address = eventDataModel.address,
                 category = binding.chipCategory.children.map { (it as Chip).text.toString() }
                     .toList(),
-                coordinates = listOf(24.32342, 10.3423423),
+                coordinates = listOf(lat, long),
                 desc = eventDataModel.desc,
                 email = eventDataModel.email,
                 phone = eventDataModel.phone,
@@ -128,8 +165,8 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
                 isGoodiesProvided = binding.etGoodies.text?.isNotEmpty(),
                 isResource = binding.checkboxResource.isChecked,
                 goodies = binding.etGoodies.text.toString(),
-                eventStartDataAndTime = Date(binding.etStart.text.toString()).toString(),
-                eventEndingDateAndTime = Date(binding.etEnd.text.toString()).toString(),
+                eventStartDataAndTime = dateFormat(binding.etStart.text.toString()),
+                eventEndingDateAndTime = dateFormat(binding.etEnd.text.toString()),
                 isForumCreated = binding.checkboxForum.isChecked,
                 forumName = forumName,
                 gallery = listOf(
@@ -149,6 +186,96 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
         }
 
     }
+
+    private fun checkLocationPermissions(): Boolean {
+        return (ActivityCompat.checkSelfPermission(
+            requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED)
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestLocationUpdates() {
+        if (isLocationEnabled()) {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location ->
+                    if (location != null) {
+                        // Got last known location
+                        lat = location.latitude
+                        long = location.longitude
+                        // Do something with latitude and longitude
+                    } else {
+                        // Last location is null, request current location
+                        fusedLocationClient.requestLocationUpdates(
+                            createLocationRequest(),
+                            locationCallback,
+                            null
+                        )
+                    }
+                }
+        } else {
+            // Location is disabled, prompt user to enable it
+            Toast.makeText(
+                requireContext(),
+                "Location is disabled. Please enable location services",
+                Toast.LENGTH_LONG
+            ).show()
+            // Open location settings
+            val settingsIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            startActivity(settingsIntent)
+        }
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+
+    private val locationCallback = object : com.google.android.gms.location.LocationCallback() {
+        override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
+            super.onLocationResult(locationResult)
+            // Get current location
+            val location = locationResult.lastLocation
+            lat = location?.latitude ?: 0.0
+            long = location?.longitude ?: 0.0
+            // Do something with latitude and longitude
+            // Remove location updates to stop getting continuous updates
+            fusedLocationClient.removeLocationUpdates(this)
+        }
+    }
+
+    private fun createLocationRequest(): LocationRequest {
+        // Create location request parameters
+        // You can customize these parameters as needed
+        val locationRequest = LocationRequest.create().apply {
+            interval = 10000 // Update interval in milliseconds
+            fastestInterval = 5000 // Fastest update interval in milliseconds
+            priority =
+                LocationRequest.PRIORITY_HIGH_ACCURACY // GPS accuracy
+        }
+        return locationRequest
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_LOCATION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, request location updates
+                requestLocationUpdates()
+            } else {
+                // Permission denied
+                Toast.makeText(
+                    requireContext(), "Location permission denied", Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
 
     private fun handleCategoryData() {
         val arrayAdapter =
@@ -347,9 +474,19 @@ class EventVolunteerFragment : Fragment(R.layout.fragment_event_volunteer),
     }
 
     companion object {
+        private const val PERMISSION_REQUEST_LOCATION = 100
+
         fun RadioGroup.getCheckedRadioText(id: Int): String {
             val radioBtn = this.findViewById<RadioButton>(id)
             return radioBtn.text.toString().lowercase()
         }
+    }
+
+    private fun dateFormat(timestamp: String): String {
+        val inputFormat = SimpleDateFormat("dd/MM/yyyy, HH:mm", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+
+        val date = inputFormat.parse(timestamp)
+        return outputFormat.format(date as Date)
     }
 }
