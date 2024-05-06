@@ -1,5 +1,6 @@
 package com.smitcoderx.volunteerconnect.Ui.Requests
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ class RequestAdapter(private val listener: OnRequestHandle, private val role: St
         return RequestViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RequestViewHolder, position: Int) {
         val currentItem = differ.currentList[position]
 
@@ -75,13 +77,16 @@ class RequestAdapter(private val listener: OnRequestHandle, private val role: St
                         )
                     ) "Sended a request to Join the Event" else "Will Notify when you request will be updated."
 
-//                it.answers.forEach { map ->
-//                    map?.entries?.forEach { (k, v) ->
-//                        tvAnswers.append("$k: $v \n")
-//                    }
-//                }
+                val stringBuilder = StringBuilder()
+                for (qa in it.answers ?: listOf()) {
+                    if (qa != null) {
+                        for ((question, answer) in qa) {
+                            stringBuilder.append("$question\nAnswer: $answer\n\n")
+                        }
+                    }
+                }
 
-                tvAnswers.text = it.answers?.joinToString(",")
+                tvAnswers.text = stringBuilder.toString()
 
 
                 var drop = false
@@ -142,7 +147,6 @@ class RequestAdapter(private val listener: OnRequestHandle, private val role: St
                 }
             }
         }
-//        TODO("Fix the Question and Answers View")
     }
 
     override fun getItemCount(): Int {
